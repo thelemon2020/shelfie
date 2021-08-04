@@ -17,8 +17,8 @@ class Release extends Model
         'thumbnail',
     ];
 
-    public function Genre()
+    public function genre()
     {
-        return $this->hasOne('App\Genre', 'id', 'genre');
+        return $this->belongsTo(Genre::class);
     }
 }
