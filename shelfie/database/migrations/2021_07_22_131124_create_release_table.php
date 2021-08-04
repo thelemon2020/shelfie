@@ -21,7 +21,6 @@ class CreateReleaseTable extends Migration
             $table->string('genre');
             $table->string('release_year');
             $table->string('thumbnail');
-            $table->foreignId('user_id');
         });
     }
 
