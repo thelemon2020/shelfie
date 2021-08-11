@@ -18,7 +18,7 @@ class CreateGenreTable extends Migration
             $table->timestamps();
             $table->string('name');
             $table->string('folder_number');
-            $table->foreignId('user_id');
+            $table->unsignedBigInteger('user_id');
         });
     }
 

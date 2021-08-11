@@ -6,6 +6,7 @@
     "license": "MIT",
     "require": {
         "php": "^8.0",
+        "fico7489/laravel-eloquent-join": "^4.1",
         "fideloper/proxy": "^4.4",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
@@ -14,8 +15,7 @@
         "laravel/ui": "^3.3",
         "league/oauth1-client": "^1.9",
         "league/oauth2-client": "^2.6",
-        "socialiteproviders/discogs": "^4.1",
-      "ext-http": "*"
+        "socialiteproviders/discogs": "^4.1"
     },
     "require-dev": {
         "facade/ignition": "^2.5",
@@ -33,6 +33,10 @@
         }
     },
     "autoload-dev": {
+        "classmap": [
+            "tests",
+            "database/"
+        ],
         "psr-4": {
             "Tests\\": "tests/"
         }

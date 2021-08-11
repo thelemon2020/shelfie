@@ -18,9 +18,9 @@ class CreateReleaseTable extends Migration
             $table->timestamps();
             $table->string('artist');
             $table->string('title');
-            $table->string('genre');
             $table->string('release_year');
             $table->string('thumbnail');
+            $table->unsignedBigInteger('genre_id');
         });
     }
 

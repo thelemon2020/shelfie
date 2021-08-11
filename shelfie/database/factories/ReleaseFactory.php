@@ -24,7 +24,7 @@ class ReleaseFactory extends Factory
         return [
             'artist' => '',
             'title' => '',
-            'genre' => '',
+            'genre_id' => $this->faker->uuid,
             'release_year' => $this->faker->year,
             'thumbnail' => 'https://placehold.it/50x50',
         ];

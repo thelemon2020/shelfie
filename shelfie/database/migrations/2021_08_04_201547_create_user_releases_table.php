@@ -27,6 +27,6 @@ class CreateUserReleasesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_releases');
+        Schema::dropIfExists('release_user');
     }
 }

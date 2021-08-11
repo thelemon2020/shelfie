@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Genre;
 use App\Models\Release;
+use App\Models\UserRelease;
 use Carbon\Carbon;
 use Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
@@ -13,7 +15,7 @@ use Ramsey\Uuid\Uuid;
 
 class CollectionController extends Controller
 {
-    public function retrieveCollection(Request $request)
+    public function buildCollection(Request $request)
     {
         $user = Auth::user();
         $oauthToken = $user->discogs_token;
@@ -26,69 +28,38 @@ class CollectionController extends Controller
             ['oauth_consumer_key', $consumerKey],
             ['oauth_nonce', Uuid::uuid4()->toString()],
             ['oauth_token', $oauthToken],
-            ['oauth_signature', $consumerSecret.'&'. $oAuthSecret],
+            ['oauth_signature', $consumerSecret . '&' . $oAuthSecret],
             ['oauth_signature_method', "PLAINTEXT"],
             ['oauth_timestamp', Carbon::now()->timestamp],
         ]);
         $auth = 'OAuth ' . $this->authHeader->map(fn(array $header) => implode('=', $header))->implode(',');
-        if (!$user->discogs_username)
-        {
+        if (!$user->discogs_username) {
             $this->getUsername($auth, $user);
         }
 
-        if (!Genre::query()->get()->where('user_id', $user->id)->first())
-        {
-            $response = Http::withHeaders([
-                'Content-Type' => 'application/x-www-form-urlencoded',
-                'Authorization' => $auth,
-                'User-Agent' => 'RecordCollectionDisplay/0.2 +https://github.com/thelemon2020/RecordCollectionDisplay'
-            ])->get("https://api.discogs.com/users/$user->discogs_username/collection/folders");
-
-            $folders = json_decode($response->body())->folders;
-            foreach($folders as $folder){
-                Genre::query()->create([
-                'genre'=>$folder->name,
-                'folder_number'=>$folder->id,
-                        'user_id'=>$user->id
-                        ]
-                );
-            }
+        if (!Genre::query()->get()->where('user_id', $user->id)->first()) {
+            $this->getGenres($auth, $user);
 
         }
-        else
-        {
-            $nextPage = "https://api.discogs.com/users/$user->discogs_username/collection/folders/$genre/releases?page=$pageNumber&sort=artist";
-            while($nextPage != null){
-                $response = Http::withHeaders([
-                    'Content-Type' => 'application/x-www-form-urlencoded',
-                    'Authorization' => $auth,
-                    'User-Agent' => 'RecordCollectionDisplay/0.2 +https://github.com/thelemon2020/RecordCollectionDisplay'
-                ])->get($nextPage);
-                $releasesArray = json_decode($response->body());
-                $folderNums = collect($releasesArray)->pluck('folder_id');
-                $nextPage = $releasesArray->pagination->urls->next;
-                $releases = collect($releasesArray->releases)->pluck('basic_information');
-                $folderNums->
-                dd($releases);
-                foreach ($releases as $release)
-                {
-                    dd($release);
-                    $releaseEntry = new  Release([
-                        'artist'=>$release['artists'][0],
-                        'title'=>$release['title'],
-                        'release_year'=>$release['year'],
-                        'genre'=> '1',
-                        'thumbanil' => ''
-                        ]);
-                }
-            }
+        $this->getReleases($user, $genre, $pageNumber, $auth);
+        return route('collection.index');
+    }
 
-            //return view('collection', $response->body());
+    public function showCollection(Request $request)
+    {
+        $user = Auth::user();
+        $sort = $request->query('sort') ?? 'artist';
+        $paginationNumber =  ($request->query('pagination')) ?? 50;
+        if ($sort=='genre'){
+            $sort = $sort.'.name';
         }
+        else if ($sort == 'shelf'){
+            $sort = 'genre.shelf_order';
+        }
+        $releases = $user->releases()->orderByJoin($sort)->paginate((int)$paginationNumber);
+        $releases->appends(array('sort'=>$sort, 'pagination'=>$paginationNumber))->links();
 
-
-
-
+        return view('index', ['releases'=>$releases]);
     }
 
     public function getUsername(string $auth, ?Authenticatable $user): void
@@ -104,5 +75,67 @@ class CollectionController extends Controller
         $username = str_replace('"', '', $username);
         $user->discogs_username = $username;
         $user->save();
+    }
+
+    /**
+     * @param string $auth
+     * @param Authenticatable|null $user
+     */
+    public function getGenres(string $auth, ?Authenticatable $user): void
+    {
+        $response = Http::withHeaders([
+            'Content-Type' => 'application/x-www-form-urlencoded',
+            'Authorization' => $auth,
+            'User-Agent' => 'RecordCollectionDisplay/0.2 +https://github.com/thelemon2020/RecordCollectionDisplay'
+        ])->get("https://api.discogs.com/users/$user->discogs_username/collection/folders");
+
+        $folders = json_decode($response->body())->folders;
+        foreach ($folders as $folder) {
+            Genre::query()->create([
+                    'name' => $folder->name,
+                    'folder_number' => $folder->id,
+                    'user_id' => $user->id
+                ]
+            );
+        }
+    }
+
+    /**
+     * @param Authenticatable|null $user
+     * @param array|int|string $genre
+     * @param array|string $pageNumber
+     * @param string $auth
+     */
+    public function getReleases(?Authenticatable $user, array|int|string $genre, array|string $pageNumber, string $auth): void
+    {
+        $nextPage = "https://api.discogs.com/users/$user->discogs_username/collection/folders/$genre/releases?page=$pageNumber&sort=artist";
+        $i = 0;
+        while ($nextPage != null) {
+            $response = Http::withHeaders([
+                'Content-Type' => 'application/x-www-form-urlencoded',
+                'Authorization' => $auth,
+                'User-Agent' => 'RecordCollectionDisplay/0.2 +https://github.com/thelemon2020/RecordCollectionDisplay'
+            ])->get($nextPage);
+            $releasesArray = json_decode($response->body());
+            if ($i > 9){
+                dump($releasesArray->pagination);
+            }
+            $i++;
+            $nextPage = $releasesArray->pagination->urls->next ?? null;
+            $releases = collect($releasesArray->releases);
+            $releases->each(function ($item, $key) use ($user){
+                $newRelease = Release::query()->updateOrCreate([
+                    'artist' => $item->basic_information->artists[0]->name,
+                    'title' => $item->basic_information->title,
+                    'release_year' => $item->basic_information->year,
+                    'genre_id' => Genre::query()->where('folder_number', $item->folder_id)->first()->id,
+                    'thumbnail' => $item->basic_information->thumb,
+                ]);
+                UserRelease::query()->create([
+                    'user_id'=>$user->id,
+                    'release_id'=> $newRelease->id,
+                    ]);
+            });
+        }
     }
 }

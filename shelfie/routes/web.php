@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\CollectionController;
 use App\Http\Controllers\DiscogsController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -49,6 +50,9 @@ Route::post('/login', [LoginController::class, 'login'])->name('login');
 Route::get('index/discogsauth', [DiscogsController::class, 'authenticate'])->name('discogsauth');
 
 Route::get('/discogs/token', [DiscogsController::class, 'token'])->name('discogs.token');
+
 Route::get('/discogs/callback', [DiscogsController::class, 'callback'])->name('discogs.callback');
 
-Route::get('/collection', [\App\Http\Controllers\CollectionController::class, 'retrieveCollection'])->name('collection.get');
+Route::get('/collection/build', [CollectionController::class, 'buildCollection'])->name('collection.build');
+
+Route::get('/collection/index',[CollectionController::class, 'showCollection'])->name('collection.index');
