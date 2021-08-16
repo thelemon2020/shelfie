@@ -23,9 +23,10 @@ class GenreFactory extends Factory
     public function definition()
     {
         return [
-            'name' => 'jazz',
+            'name' => $this->faker->word(),
             'folder_number' => $this->faker->uuid(),
             'user_id' => User::factory(),
+            'shelf_order' => $this->faker->unique()->numberBetween(1, 10),
         ];
     }
 }

@@ -32,4 +32,14 @@ class CollectionManageTest extends TestCase
             $response->assertSee($genre);
         }
     }
+
+    public function testItReturnsACollectionOfGenresInOrder()
+    {
+        $user = User::factory()->create();
+        $genres = collect(Genre::factory(5)->create([
+            'user_id' => $user->id,
+        ]))->sortBy('shelf_order')->pluck('name');
+        dump($genres);
+       $this->actingAs($user)->get(route('collection.manage.index'))->assertSeeInOrder($genres->toArray());
+    }
 }
