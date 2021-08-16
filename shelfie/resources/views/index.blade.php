@@ -11,10 +11,11 @@
                 Sort By
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item" href="#">Artist</a>
-                <a class="dropdown-item" href="#">Title</a>
-                <a class="dropdown-item" href="#">Genre</a>
-                <a class="dropdown-item" href="#">Year</a>
+                <a class="dropdown-item" href="{{route('collection.index', ['sort'=>'artist'])}}#">Artist</a>
+                <a class="dropdown-item" href="{{route('collection.index', ['sort'=>'title'])}}">Title</a>
+                <a class="dropdown-item" href="{{route('collection.index', ['sort'=>'genre'])}}">Genre</a>
+                <a class="dropdown-item" href="{{route('collection.index', ['sort'=>'release_year'])}}">Year</a>
+                <a class="dropdown-item" href="{{route('collection.index', ['sort'=>'shelf'])}}">Shelf Order</a>
             </div>
         </div>
         <table class="table">

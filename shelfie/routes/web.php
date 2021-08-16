@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\CollectionController;
+use App\Http\Controllers\CollectionManage;
 use App\Http\Controllers\DiscogsController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -56,3 +57,5 @@ Route::get('/discogs/callback', [DiscogsController::class, 'callback'])->name('d
 Route::get('/collection/build', [CollectionController::class, 'buildCollection'])->name('collection.build');
 
 Route::get('/collection/index',[CollectionController::class, 'showCollection'])->name('collection.index');
+
+Route::get('collection/manage', [CollectionManage::class, 'loadPage'])->middleware('auth')->name('collection.manage.index');

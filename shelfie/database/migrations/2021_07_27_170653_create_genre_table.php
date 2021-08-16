@@ -19,6 +19,7 @@ class CreateGenreTable extends Migration
             $table->string('name');
             $table->string('folder_number');
             $table->unsignedBigInteger('user_id');
+            $table->integer('shelf_order')->nullable();
         });
     }
 

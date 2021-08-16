@@ -42,7 +42,7 @@ class CollectionController extends Controller
 
         }
         $this->getReleases($user, $genre, $pageNumber, $auth);
-        return route('collection.index');
+        return $this->showCollection($request);
     }
 
     public function showCollection(Request $request)
@@ -59,6 +59,9 @@ class CollectionController extends Controller
         $releases = $user->releases()->orderByJoin($sort)->paginate((int)$paginationNumber);
         $releases->appends(array('sort'=>$sort, 'pagination'=>$paginationNumber))->links();
 
+        if (!$releases){
+            return route('collection.build');
+        }
         return view('index', ['releases'=>$releases]);
     }
 
@@ -69,7 +72,6 @@ class CollectionController extends Controller
             'Authorization' => $auth,
             'User-Agent' => 'RecordCollectionDisplay/0.2 +https://github.com/thelemon2020/RecordCollectionDisplay'
         ])->get('https://api.discogs.com/oauth/identity');
-
         $usernameArrayElement = explode(': ', $response->body())[2];
         $username = explode('",', $usernameArrayElement)[0];
         $username = str_replace('"', '', $username);
@@ -88,7 +90,6 @@ class CollectionController extends Controller
             'Authorization' => $auth,
             'User-Agent' => 'RecordCollectionDisplay/0.2 +https://github.com/thelemon2020/RecordCollectionDisplay'
         ])->get("https://api.discogs.com/users/$user->discogs_username/collection/folders");
-
         $folders = json_decode($response->body())->folders;
         foreach ($folders as $folder) {
             Genre::query()->create([
@@ -117,9 +118,6 @@ class CollectionController extends Controller
                 'User-Agent' => 'RecordCollectionDisplay/0.2 +https://github.com/thelemon2020/RecordCollectionDisplay'
             ])->get($nextPage);
             $releasesArray = json_decode($response->body());
-            if ($i > 9){
-                dump($releasesArray->pagination);
-            }
             $i++;
             $nextPage = $releasesArray->pagination->urls->next ?? null;
             $releases = collect($releasesArray->releases);
@@ -131,7 +129,7 @@ class CollectionController extends Controller
                     'genre_id' => Genre::query()->where('folder_number', $item->folder_id)->first()->id,
                     'thumbnail' => $item->basic_information->thumb,
                 ]);
-                UserRelease::query()->create([
+                UserRelease::query()->updateOrCreate([
                     'user_id'=>$user->id,
                     'release_id'=> $newRelease->id,
                     ]);

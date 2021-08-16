@@ -121,7 +121,7 @@
   <component name="PhpProjectSharedConfiguration" php_language_level="8.0" />
   <component name="PhpUnit">
     <phpunit_settings>
-      <PhpUnitSettings load_method="PHPUNIT_PHAR" custom_loader_path="$PROJECT_DIR$/shelfie/vendor/autoload.php" phpunit_phar_path="$PROJECT_DIR$/shelfie/vendor/bin/phpunit.phar" />
+      <PhpUnitSettings custom_loader_path="$PROJECT_DIR$/shelfie/vendor/autoload.php" phpunit_phar_path="$USER_HOME$/AppData/Roaming/Composer/vendor/phpunit/phpunit/phpunit" />
     </phpunit_settings>
   </component>
 </project>
