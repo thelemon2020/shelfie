@@ -69,6 +69,6 @@ class DiscogsController extends Controller
         $user->discogs_token = str_replace('oauth_token=', '', $oauthStuff[0]);
         $user->discogs_token_secret = str_replace('oauth_token_secret=', '', $oauthStuff[1]);
         $user->save();
-        return redirect('/collection/index');
+        return redirect(route('collection.build'));
     }
 }

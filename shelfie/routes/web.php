@@ -59,3 +59,5 @@ Route::get('/collection/build', [CollectionController::class, 'buildCollection']
 Route::get('/collection/index',[CollectionController::class, 'showCollection'])->name('collection.index');
 
 Route::get('collection/manage', [CollectionManage::class, 'loadPage'])->middleware('auth')->name('collection.manage.index');
+
+Route::post('collection/manage/shelf', [CollectionManage::class, 'updateShelfOrder'])->middleware('auth')->name('collection.manage.shelf');

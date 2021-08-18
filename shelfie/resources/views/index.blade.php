@@ -2,12 +2,14 @@
 <h1 class="text-center">What's on your shelf?</h1>
 @if(auth()->user()->discogs_token)
     @if(!auth()->user()->releases)
-    <div class="text-center">
-        <button type="button" onclick="window.location={{route('collection.build')}}">Build Collection</button>
-    </div>
+        <div class="text-center">
+            <button type="button" onclick="window.location={{route('collection.build')}}">Build Collection</button>
+        </div>
     @else
+        <div class="d-flex align-items-end"><a href="{{route('collection.manage.index')}}">Manage Collection</a></div>
         <div class="dropdown show">
-            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Sort By
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">

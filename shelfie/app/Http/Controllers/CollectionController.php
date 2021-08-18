@@ -7,7 +7,6 @@ use App\Models\Release;
 use App\Models\UserRelease;
 use Carbon\Carbon;
 use Illuminate\Contracts\Auth\Authenticatable;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
@@ -42,27 +41,26 @@ class CollectionController extends Controller
 
         }
         $this->getReleases($user, $genre, $pageNumber, $auth);
-        return $this->showCollection($request);
+        return redirect(route('collection.index'));
     }
 
     public function showCollection(Request $request)
     {
         $user = Auth::user();
         $sort = $request->query('sort') ?? 'artist';
-        $paginationNumber =  ($request->query('pagination')) ?? 50;
-        if ($sort=='genre'){
-            $sort = $sort.'.name';
-        }
-        else if ($sort == 'shelf'){
+        $paginationNumber = ($request->query('pagination')) ?? 50;
+        if ($sort == 'genre') {
+            $sort = $sort . '.name';
+        } else if ($sort == 'shelf') {
             $sort = 'genre.shelf_order';
         }
         $releases = $user->releases()->orderByJoin($sort)->paginate((int)$paginationNumber);
-        $releases->appends(array('sort'=>$sort, 'pagination'=>$paginationNumber))->links();
+        $releases->appends(array('sort' => $sort, 'pagination' => $paginationNumber))->links();
 
-        if (!$releases){
+        if (!$releases) {
             return route('collection.build');
         }
-        return view('index', ['releases'=>$releases]);
+        return view('index', ['releases' => $releases]);
     }
 
     public function getUsername(string $auth, ?Authenticatable $user): void
@@ -92,6 +90,9 @@ class CollectionController extends Controller
         ])->get("https://api.discogs.com/users/$user->discogs_username/collection/folders");
         $folders = json_decode($response->body())->folders;
         foreach ($folders as $folder) {
+            if ($folder->name == 'All') {
+                continue;
+            }
             Genre::query()->create([
                     'name' => $folder->name,
                     'folder_number' => $folder->id,
@@ -121,7 +122,7 @@ class CollectionController extends Controller
             $i++;
             $nextPage = $releasesArray->pagination->urls->next ?? null;
             $releases = collect($releasesArray->releases);
-            $releases->each(function ($item, $key) use ($user){
+            $releases->each(function ($item, $key) use ($user) {
                 $newRelease = Release::query()->updateOrCreate([
                     'artist' => $item->basic_information->artists[0]->name,
                     'title' => $item->basic_information->title,
@@ -130,9 +131,9 @@ class CollectionController extends Controller
                     'thumbnail' => $item->basic_information->thumb,
                 ]);
                 UserRelease::query()->updateOrCreate([
-                    'user_id'=>$user->id,
-                    'release_id'=> $newRelease->id,
-                    ]);
+                    'user_id' => $user->id,
+                    'release_id' => $newRelease->id,
+                ]);
             });
         }
     }
