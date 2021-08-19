@@ -54,13 +54,9 @@ class CollectionManageTest extends TestCase
             $genre->shelf_order = $i;
             $i--;
         }
-        $genres->sortBy('shelf_order');
-        $updatedGenres = [];
-        foreach ($genres as $genre){
-            $updatedGenres[]= [$genre->name, $genre->shelf_order];
-        }
         $genreNames = $genres->sortBy('shelf_order')->pluck('name');
-        $this->actingAs($user)->post(route('collection.manage.shelf'), ['updatedGenres'=>$updatedGenres])->assertSuccessful();
+        $genreShelfOrder = $genres->sortBy('shelf_order')->pluck('shelf_order');
+        $this->actingAs($user)->post(route('collection.manage.shelf'), ['genreNames'=>$genreNames, 'genreShelfOrder' => $genreShelfOrder])->assertSuccessful();
         $this->actingAs($user)->get(route('collection.manage.index'))->assertSeeInOrder($genreNames->toArray());
     }
 }

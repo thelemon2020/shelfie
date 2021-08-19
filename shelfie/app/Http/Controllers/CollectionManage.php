@@ -17,12 +17,13 @@ class CollectionManage extends Controller
 
     public function updateShelfOrder(Request $request): string
     {
-        $genresToUpdate = $request->input('updatedGenres');
-        foreach ($genresToUpdate as $genreToUpdate){
-            $genre = Genre::query()->where('name',$genreToUpdate[0])->first();
-            $genre->shelf_order = $genreToUpdate[1];
+        $genreNames = $request->input('genreNames');
+        $genreShelfOrder = $request->input('genreShelfOrder');
+        for ($i=0; $i < count($genreNames); $i++){
+            $genre = Genre::query()->where('name',$genreNames[$i])->first();
+            $genre->shelf_order = $genreShelfOrder[$i];
             $genre->save();
         }
-        return route('collection.manage.index');
+        return redirect(route('collection.manage.index'));
     }
 }
