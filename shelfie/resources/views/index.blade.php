@@ -6,14 +6,13 @@
             <button type="button" onclick="window.location={{route('collection.build')}}">Build Collection</button>
         </div>
     @else
-        <div class="d-flex align-items-end"><a href="{{route('collection.manage.index')}}">Manage Collection</a></div>
         <div class="dropdown show">
             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Sort By
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item" href="{{route('collection.index', ['sort'=>'artist'])}}#">Artist</a>
+                <a class="dropdown-item" href="{{route('collection.index', ['sort'=>'artist'])}}">Artist</a>
                 <a class="dropdown-item" href="{{route('collection.index', ['sort'=>'title'])}}">Title</a>
                 <a class="dropdown-item" href="{{route('collection.index', ['sort'=>'genre'])}}">Genre</a>
                 <a class="dropdown-item" href="{{route('collection.index', ['sort'=>'release_year'])}}">Year</a>
@@ -43,6 +42,7 @@
             </tbody>
         </table>
         {{ $releases->links() }}
+        <div class="d-flex align-items-end"><a href="{{route('collection.manage.index')}}">Manage Collection</a></div>
     @endif
 @else
     <div class="align-content-md-center">

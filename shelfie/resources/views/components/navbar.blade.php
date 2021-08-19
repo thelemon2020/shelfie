@@ -28,7 +28,7 @@
                 <li class="nav-item"><a class="nav-link" href="login">Log In</a></li>
                 <li class="nav-item"><a class="nav-link" href="register">Register</a></li>
             @else
-                <li class="nav-item"><a class="nav-link" href="login">Log Out</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{route('login')}}">Log Out</a></li>
             @endguest
 
         </ul>
