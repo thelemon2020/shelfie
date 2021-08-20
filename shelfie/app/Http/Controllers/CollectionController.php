@@ -51,7 +51,7 @@ class CollectionController extends Controller
         $paginationNumber = ($request->query('pagination')) ?? 50;
         if ($sort == 'genre') {
             $sort = $sort . '.name';
-        } else if ($sort == 'shelf') {
+        } else if ($sort == 'shelf_order') {
             $sort = 'genre.shelf_order';
         }
         $releases = $user->releases()->orderByJoin($sort)->paginate((int)$paginationNumber);

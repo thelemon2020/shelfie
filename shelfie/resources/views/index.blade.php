@@ -9,14 +9,14 @@
         <div class="dropdown show">
             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Sort By
+                {{ucwords(str_replace("_", " ", app('request')->input('sort'))) ?? 'Sort By'}}
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                 <a class="dropdown-item" href="{{route('collection.index', ['sort'=>'artist'])}}">Artist</a>
                 <a class="dropdown-item" href="{{route('collection.index', ['sort'=>'title'])}}">Title</a>
                 <a class="dropdown-item" href="{{route('collection.index', ['sort'=>'genre'])}}">Genre</a>
                 <a class="dropdown-item" href="{{route('collection.index', ['sort'=>'release_year'])}}">Year</a>
-                <a class="dropdown-item" href="{{route('collection.index', ['sort'=>'shelf'])}}">Shelf Order</a>
+                <a class="dropdown-item" href="{{route('collection.index', ['sort'=>'shelf_order'])}}">Shelf Order</a>
             </div>
         </div>
         <table class="table">
