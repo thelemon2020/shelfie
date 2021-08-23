@@ -23,6 +23,7 @@ class CreateUsersTable extends Migration
             $table->string('discogs_username')->nullable();
             $table->string('discogs_token')->nullable();
             $table->string('discogs_token_secret')->nullable();
+            $table->integer('shelf_order');
             $table->rememberToken();
             $table->timestamps();
         });

@@ -111,7 +111,7 @@ class CollectionController extends Controller
     public function getReleases(?Authenticatable $user, array|int|string $genre, array|string $pageNumber, string $auth): void
     {
         $nextPage = "https://api.discogs.com/users/$user->discogs_username/collection/folders/$genre/releases?page=$pageNumber&sort=artist";
-        $i = 0;
+        $i = 1;
         while ($nextPage != null) {
             $response = Http::withHeaders([
                 'Content-Type' => 'application/x-www-form-urlencoded',
@@ -119,17 +119,18 @@ class CollectionController extends Controller
                 'User-Agent' => 'RecordCollectionDisplay/0.2 +https://github.com/thelemon2020/RecordCollectionDisplay'
             ])->get($nextPage);
             $releasesArray = json_decode($response->body());
-            $i++;
             $nextPage = $releasesArray->pagination->urls->next ?? null;
             $releases = collect($releasesArray->releases);
-            $releases->each(function ($item, $key) use ($user) {
+            $releases->each(function ($item, $key) use ($user, &$i) {
                 $newRelease = Release::query()->updateOrCreate([
                     'artist' => $item->basic_information->artists[0]->name,
                     'title' => $item->basic_information->title,
                     'release_year' => $item->basic_information->year,
                     'genre_id' => Genre::query()->where('folder_number', $item->folder_id)->first()->id,
                     'thumbnail' => $item->basic_information->thumb,
+                    'shelf_order' => $i,
                 ]);
+                $i++;
                 UserRelease::query()->updateOrCreate([
                     'user_id' => $user->id,
                     'release_id' => $newRelease->id,

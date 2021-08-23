@@ -9,7 +9,7 @@
         <div class="dropdown show">
             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                {{ucwords(str_replace("_", " ", app('request')->input('sort'))) ?? 'Sort By'}}
+                {{(ucwords(str_replace("_", " ", app('request')->input('sort')))) ?? 'Sort By'}}
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                 <a class="dropdown-item" href="{{route('collection.index', ['sort'=>'artist'])}}">Artist</a>
@@ -45,7 +45,7 @@
         <div class="d-flex align-items-end"><a href="{{route('collection.manage.index')}}">Manage Collection</a></div>
     @endif
 @else
-    <div class="align-content-md-center">
+    <div class="d-flex align-items-center">
         <p>Please Authenticate with Discogs</p>
         <button type="button" onclick="window.location='{{url("/discogs/token")}}'">Authenicate</button>
     </div>
