@@ -1,16 +1,18 @@
 <x-navbar></x-navbar>
 <h1 class="text-center">What's on your shelf?</h1>
-@if($user = \App\Models\User::query()->first()->discogs_token)
-    @if(count($user->releases) === 0)
+@if(\App\Models\User::query()->first()->discogs_token)
+    @if(count($releases) === 0)
         <div class="text-center">
-            <button type="button" onclick="window.location={{route('collection.build')}}">Build Collection</button>
+            <a class="btn btn-primary" href="{{route('loadingScreen')}}">Build
+                Collection
+            </a>
         </div>
     @else
         <div style="display: flex; justify-content: space-between">
             <div class="dropdown show">
                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                   @if(app('request')->input('sort') != "")
+                    @if(app('request')->input('sort') != "")
                         {{ucwords(str_replace("_", " ", app('request')->input('sort')))}}
                     @else
                         Sort By
@@ -21,7 +23,8 @@
                     <a class="dropdown-item" href="{{route('collection.index', ['sort'=>'title'])}}">Title</a>
                     <a class="dropdown-item" href="{{route('collection.index', ['sort'=>'genre'])}}">Genre</a>
                     <a class="dropdown-item" href="{{route('collection.index', ['sort'=>'release_year'])}}">Year</a>
-                    <a class="dropdown-item" href="{{route('collection.index', ['sort'=>'shelf_order'])}}">Shelf Order</a>
+                    <a class="dropdown-item" href="{{route('collection.index', ['sort'=>'shelf_order'])}}">Shelf
+                        Order</a>
                 </div>
             </div>
             <div>

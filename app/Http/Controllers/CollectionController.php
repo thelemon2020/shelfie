@@ -124,7 +124,7 @@ class CollectionController extends Controller
                     'artist' => $item->basic_information->artists[0]->name,
                     'title' => $item->basic_information->title,
                     'release_year' => $item->basic_information->year,
-                    'genre_id' => $i,
+                    'genre_id' => Genre::query()->where('folder_number', $item->folder_id)->first()->id,
                     'thumbnail' => $item->basic_information->thumb,
                     'shelf_order' => $i,
                 ]);

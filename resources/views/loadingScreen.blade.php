@@ -1,10 +1,8 @@
 <x-navbar></x-navbar>
 <script lang="js">
     window.onload = () => {
-        console.log("we are alive");
         axios.get('/api/collection/build')
             .then(() => {
-                console.log("we got here");
                 window.location.replace("/collection/index")
             })
             .catch(error => {
@@ -12,3 +10,12 @@
             })
     }
 </script>
+<div class="text-center">
+    <div class="spinner-border" role="status">
+        <span class="sr-only">Loading...</span>
+    </div>
+    <div>
+        <p>Building Collection</p>
+    </div>
+</div>
+
