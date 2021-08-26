@@ -69,10 +69,10 @@
 @else
     <div class="text-center ">
         <h3>Please Authenticate with Discogs</h3>
-        <form action="{{route('discogs.authenticate')}}" method="post">
+        <form action="{{route('api.discogs.authenticate')}}" method="post">
             <div class="form-group justify-content-lg-center">
                 <label for="userNameInput">Discogs Username</label>
-                <input type="email" style="margin-left: auto; margin-right: auto" class="form-control w-25" id="userNameInput" name="username">
+                <input type="text" style="margin-left: auto; margin-right: auto" class="form-control w-25" id="userNameInput" name="username">
                 @isset($message)
                     <span class="invalid-feedback" role="alert">
                          <strong>{{ $message }}</strong>

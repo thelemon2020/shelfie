@@ -41,8 +41,6 @@ Route::post('/register', [RegisterController::class, 'register'])->name('registe
 
 Route::post('/login', [LoginController::class, 'login'])->name('login');
 
-Route::get('/discogs/authenticate', [DiscogsController::class, 'authenticate'])->name('discogs.authenticate');
-
 Route::get('/discogs/callback', [DiscogsController::class, 'callback'])->name('discogs.callback');
 
 Route::get('/collection/build', [CollectionController::class, 'buildCollection'])->name('collection.build');
