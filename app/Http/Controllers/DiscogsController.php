@@ -16,8 +16,11 @@ use Ramsey\Uuid\Uuid;
 class DiscogsController extends Controller
 {
 
-    public function authenticate()
+    public function authenticate(Request $request)
     {
+        $user = User::all()->first();
+        $user->discogs_username = $request->input('username');
+        $user->save();
         $consumerKey = 'DtnKgLrTlfWnVIkyirOB';
         $consumerSecret = 'eUydCQVQhzKYDnCBdEQOTLfVWedyIlRa';
         $authHeader = collect([
@@ -71,6 +74,45 @@ class DiscogsController extends Controller
         $user->discogs_token = str_replace('oauth_token=', '', $oauthStuff[0]);
         $user->discogs_token_secret = str_replace('oauth_token_secret=', '', $oauthStuff[1]);
         $user->save();
-        return redirect(route('collection.build'));
+        if (!$this->checkUserIdentity($user))
+        {
+            $user->discogs_token = null;
+            $user->discogs_token_secret = null;
+            $user->discogs_username = null;
+            $user->save();
+            return redirect(route('collection.index'), ['message'=>'Username did not match authentication attempt']);
+        }
+        return redirect(route('loadingPage'));
+    }
+
+    public function checkUserIdentity(User $user)
+    {
+        $oauthToken = $user->discogs_token;
+        $oAuthSecret = $user->discogs_token_secret;
+        $consumerSecret = config('auth.discogs_API_secret');
+        $consumerKey = config('auth.discogs_API_key');
+        $this->authHeader = collect([
+            ['oauth_consumer_key', $consumerKey],
+            ['oauth_nonce', Uuid::uuid4()->toString()],
+            ['oauth_token', $oauthToken],
+            ['oauth_signature', $consumerSecret . '&' . $oAuthSecret],
+            ['oauth_signature_method', "PLAINTEXT"],
+            ['oauth_timestamp', Carbon::now()->timestamp],
+        ]);
+        $auth = 'OAuth ' . $this->authHeader->map(fn(array $header) => implode('=', $header))->implode(',');
+        $response = Http::withHeaders([
+            'Content-Type' => 'application/x-www-form-urlencoded',
+            'Authorization' => $auth,
+            'User-Agent' => config('User-Agent')
+        ])->get('https://api.discogs.com/oauth/identity');
+        $usernameArrayElement = explode(': ', $response->body())[2];
+        $username = explode('",', $usernameArrayElement)[0];
+        $username = str_replace('"', '', $username);
+        if ($user->discogs_username != $username)
+        {
+            return false;
+        }
+
+        return true;
     }
 }

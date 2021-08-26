@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\CollectionController;
 use App\Http\Controllers\CollectionManage;
 use App\Http\Controllers\DiscogsController;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoadingPage;
@@ -24,6 +25,10 @@ Route::get('/', function () {
 });
 
 Route::get('/register', function (){
+    if (User::all()->first())
+    {
+        return route('home');
+    }
     return view('register');
 });
 

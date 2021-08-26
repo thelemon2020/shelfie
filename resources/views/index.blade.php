@@ -69,6 +69,12 @@
 @else
     <div class="text-center">
         <p>Please Authenticate with Discogs</p>
-        <button type="button" onclick="window.location='{{route('discogs.authenticate')}}'">Authenticate</button>
+        <form action="{{route('discogs.authenticate')}}, @method("post")">
+            <div class="form-group">
+                <label for="userNameInput">Discogs Username</label>
+                <input type="email" class="form-control" id="userNameInput" name="username">
+            </div>
+            <button type="submit" class="btn btn-primary">Authenticate</button>
+        </form>
     </div>
 @endif

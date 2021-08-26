@@ -15,7 +15,7 @@ use Ramsey\Uuid\Uuid;
 
 class CollectionController extends Controller
 {
-    public function buildCollection(Request $request)
+    public function buildCollection()
     {
         $user = User::query()->first();
         $oauthToken = $user->discogs_token;
