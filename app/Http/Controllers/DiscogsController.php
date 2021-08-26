@@ -80,7 +80,7 @@ class DiscogsController extends Controller
             $user->discogs_token_secret = null;
             $user->discogs_username = null;
             $user->save();
-            return redirect(route('collection.index'), ['message'=>'Username did not match authentication attempt']);
+            return route(('collection.index'), ['message'=>'Username did not match authentication attempt']);
         }
         return redirect(route('loadingPage'));
     }

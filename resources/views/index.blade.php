@@ -67,12 +67,17 @@
         </div>
     @endif
 @else
-    <div class="text-center">
-        <p>Please Authenticate with Discogs</p>
-        <form action="{{route('discogs.authenticate')}}, @method("post")">
-            <div class="form-group">
+    <div class="text-center ">
+        <h3>Please Authenticate with Discogs</h3>
+        <form action="{{route('discogs.authenticate')}}" method="post">
+            <div class="form-group justify-content-lg-center">
                 <label for="userNameInput">Discogs Username</label>
-                <input type="email" class="form-control" id="userNameInput" name="username">
+                <input type="email" style="margin-left: auto; margin-right: auto" class="form-control w-25" id="userNameInput" name="username">
+                @isset($message)
+                    <span class="invalid-feedback" role="alert">
+                         <strong>{{ $message }}</strong>
+                    </span>
+                @endisset
             </div>
             <button type="submit" class="btn btn-primary">Authenticate</button>
         </form>
