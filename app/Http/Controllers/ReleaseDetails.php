@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Release;
 use Illuminate\Http\Request;
 
 class ReleaseDetails extends Controller
 {
-    public function __invoke($id)
+    public function __invoke(Request $request, $id)
     {
-        return response([], 200);
+        $release = Release::query()->where('id', $id)->first();
+        return view('releaseDetails', ['release' => $release]);
     }
 }

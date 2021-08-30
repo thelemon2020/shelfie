@@ -22,8 +22,8 @@ class ReleaseFactory extends Factory
     public function definition()
     {
         return [
-            'artist' => '',
-            'title' => '',
+            'artist' => $this->faker->firstName,
+            'title' => $this->faker->word,
             'genre_id' => $this->faker->uuid,
             'release_year' => $this->faker->year,
             'thumbnail' => 'https://placehold.it/50x50',

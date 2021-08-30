@@ -15,4 +15,12 @@ class ReleaseDetailsTest extends TestCase
         $this->get(route('release.show', ['id' => $release->id]))
             ->assertSuccessful();
     }
+
+    public function testItReturnsAView()
+    {
+        $this->withoutExceptionHandling();
+        $release = Release::factory()->create();
+        $this->get(route('release.show', ['id' => $release->id]))
+            ->assertViewIs('releaseDetails');
+    }
 }
