@@ -15,15 +15,13 @@ use Ramsey\Uuid\Uuid;
 
 class CollectionController extends Controller
 {
-    public function buildCollection(Request $request)
+    public function buildCollection()
     {
         $user = User::query()->first();
         $oauthToken = $user->discogs_token;
         $oAuthSecret = $user->discogs_token_secret;
         $consumerSecret = config('auth.discogs_API_secret');
         $consumerKey = config('auth.discogs_API_key');
-        $pageNumber = $request->query('page') ?: '1';
-        $genre = $request->query('genre') ?: 0;
         $this->authHeader = collect([
             ['oauth_consumer_key', $consumerKey],
             ['oauth_nonce', Uuid::uuid4()->toString()],
@@ -37,11 +35,11 @@ class CollectionController extends Controller
             $this->getUsername($auth, $user);
         }
 
-        if (Genre::query()->get()->where('user_id', $user->id)->first() === null ) {
+        if (!$user->genres ) {
             $this->getGenres($auth, $user);
 
         }
-        $this->getReleases($user, $genre, $pageNumber, $auth);
+        $this->getReleases($user, $auth);
         return response()->json();
     }
 
@@ -66,7 +64,7 @@ class CollectionController extends Controller
         $response = Http::withHeaders([
             'Content-Type' => 'application/x-www-form-urlencoded',
             'Authorization' => $auth,
-            'User-Agent' => 'RecordCollectionDisplay/0.2 +https://github.com/thelemon2020/RecordCollectionDisplay'
+            'User-Agent' => config('User-Agent')
         ])->get('https://api.discogs.com/oauth/identity');
         $usernameArrayElement = explode(': ', $response->body())[2];
         $username = explode('",', $usernameArrayElement)[0];
@@ -84,7 +82,7 @@ class CollectionController extends Controller
         $response = Http::withHeaders([
             'Content-Type' => 'application/x-www-form-urlencoded',
             'Authorization' => $auth,
-            'User-Agent' => 'RecordCollectionDisplay/0.2 +https://github.com/thelemon2020/RecordCollectionDisplay'
+            'User-Agent' => config('User-Agent')
         ])->get("https://api.discogs.com/users/$user->discogs_username/collection/folders");
         $folders = json_decode($response->body())->folders;
         foreach ($folders as $folder) {
@@ -106,15 +104,15 @@ class CollectionController extends Controller
      * @param array|string $pageNumber
      * @param string $auth
      */
-    public function getReleases(?Authenticatable $user, array|int|string $genre, array|string $pageNumber, string $auth): void
+    public function getReleases(?Authenticatable $user,string $auth): void
     {
-        $nextPage = "https://api.discogs.com/users/$user->discogs_username/collection/folders/$genre/releases?page=$pageNumber&sort=artist";
+        $nextPage = "https://api.discogs.com/users/$user->discogs_username/collection/folders/0/releases?page=1&sort=artist";
         $i = 1;
         while ($nextPage != null) {
             $response = Http::withHeaders([
                 'Content-Type' => 'application/x-www-form-urlencoded',
                 'Authorization' => $auth,
-                'User-Agent' => 'RecordCollectionDisplay/0.2 +https://github.com/thelemon2020/RecordCollectionDisplay'
+                'User-Agent' => config('User-Agent')
             ])->get($nextPage);
             $releasesArray = json_decode($response->body());
             $nextPage = $releasesArray->pagination->urls->next ?? null;

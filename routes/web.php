@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\CollectionController;
 use App\Http\Controllers\CollectionManage;
 use App\Http\Controllers\DiscogsController;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoadingPage;
@@ -24,6 +25,10 @@ Route::get('/', function () {
 });
 
 Route::get('/register', function (){
+    if (User::all()->first())
+    {
+        return route('home');
+    }
     return view('register');
 });
 
@@ -35,8 +40,6 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'home'])->name(
 Route::post('/register', [RegisterController::class, 'register'])->name('register');
 
 Route::post('/login', [LoginController::class, 'login'])->name('login');
-
-Route::get('/discogs/authenticate', [DiscogsController::class, 'authenticate'])->name('discogs.authenticate');
 
 Route::get('/discogs/callback', [DiscogsController::class, 'callback'])->name('discogs.callback');
 
