@@ -12,7 +12,7 @@ class CollectionManage extends Controller
     public function loadPage()
     {
         $user = User::query()->first();
-        $genres = Genre::query()->where('user_id', $user->id)->orderBy('shelf_order', 'asc')->get();
+        $genres = Genre::query()->where('user_id', $user->id)->orderBy('shelf_order')->get();
         return view('manageCollection', ['genres' => $genres]);
     }
 

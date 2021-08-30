@@ -35,7 +35,7 @@ class CollectionController extends Controller
             $this->getUsername($auth, $user);
         }
 
-        if (Genre::query()->get()->where('user_id', $user->id)->first() === null ) {
+        if (!$user->genres ) {
             $this->getGenres($auth, $user);
 
         }

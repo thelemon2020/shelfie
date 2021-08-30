@@ -8,6 +8,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Collection;
 use Ramsey\Uuid\Uuid;
@@ -43,8 +44,8 @@ class DiscogsController extends Controller
         ])->get('https://api.discogs.com/oauth/request_token');
         $oauthStuff = explode('&',$response->body());
         $oauthToken =str_replace('oauth_token=', '', $oauthStuff[0]);
-        session(['Discogs_OAuth_Token' => $oauthToken]);
-        session(['Discogs_OAuth_Secret'=> str_replace('oauth_token_secret=', '', $oauthStuff[1])]);
+        Cache::put('Discogs_OAuth_Token', $oauthToken);
+        Cache::put('Discogs_OAuth_Secret', str_replace('oauth_token_secret=', '', $oauthStuff[1]));
         return redirect("https://discogs.com/oauth/authorize?oauth_token=$oauthToken");
     }
 
@@ -56,8 +57,8 @@ class DiscogsController extends Controller
         $this->authHeader = collect([
             ['oauth_consumer_key', $consumerKey],
             ['oauth_nonce', Uuid::uuid4()->toString()],
-            ['oauth_token', session('Discogs_OAuth_Token')],
-            ['oauth_signature', $consumerSecret.'&'. session('Discogs_OAuth_Secret')],
+            ['oauth_token', Cache::pull('Discogs_OAuth_Token')],
+            ['oauth_signature', $consumerSecret.'&'. Cache::pull('Discogs_OAuth_Secret')],
             ['oauth_signature_method', "PLAINTEXT"],
             ['oauth_timestamp', Carbon::now()->timestamp],
             ['oauth_callback', \route('discogs.callback')],
@@ -80,9 +81,9 @@ class DiscogsController extends Controller
             $user->discogs_token_secret = null;
             $user->discogs_username = null;
             $user->save();
-            return route(('collection.index'), ['message'=>'Username did not match authentication attempt']);
+            return view('index', ['message'=>'Username did not match authentication attempt']);
         }
-        return redirect(route('loadingPage'));
+        return redirect(route('loadingScreen'));
     }
 
     public function checkUserIdentity(User $user)
