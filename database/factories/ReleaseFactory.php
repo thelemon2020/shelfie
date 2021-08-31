@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Release;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class ReleaseFactory extends Factory
@@ -27,6 +28,8 @@ class ReleaseFactory extends Factory
             'genre_id' => $this->faker->uuid,
             'release_year' => $this->faker->year,
             'thumbnail' => 'https://placehold.it/50x50',
+            'times_played'=> $this->faker->numberBetween(0, 10),
+            'last_played_at' => Carbon::now()->toString()
         ];
     }
 }

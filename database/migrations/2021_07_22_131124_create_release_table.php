@@ -20,8 +20,11 @@ class CreateReleaseTable extends Migration
             $table->string('title');
             $table->string('release_year');
             $table->string('thumbnail');
+            $table->string('full_image');
             $table->integer('shelf_order')->nullable();
             $table->unsignedBigInteger('genre_id');
+            $table->dateTime('last_played_at')->nullable();
+            $table->unsignedBigInteger('times_played')->nullable();
         });
     }
 

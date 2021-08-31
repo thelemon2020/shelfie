@@ -54,7 +54,7 @@
                 <tbody>
                 @foreach($releases as $release)
                     <tr>
-                        <td><img src="{{$release->thumbnail}}" alt="{{$release->artist . "-" . $release->title}}"></td>
+                        <td><a href="{{route('release.show', ['id' => $release->id])}}"><img src="{{$release->thumbnail}}" alt="{{$release->artist . "-" . $release->title}}"></a></td>
                         <td>{{$release->artist}}</td>
                         <td>{{$release->title}}</td>
                         <td>{{$release->genre->name}}</td>
@@ -73,11 +73,11 @@
             <div class="form-group justify-content-lg-center">
                 <label for="userNameInput">Discogs Username</label>
                 <input type="text" style="margin-left: auto; margin-right: auto" class="form-control w-25" id="userNameInput" name="username">
-                @if($message)
+                @isset($message)
                     <span class="invalid-feedback d-block" role="alert">
                          <strong>{{ $message }}</strong>
                     </span>
-                @endif
+                @endisset
             </div>
             <button type="submit" class="btn btn-primary">Authenticate</button>
         </form>
