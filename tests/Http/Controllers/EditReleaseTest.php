@@ -15,4 +15,11 @@ class EditReleaseTest extends TestCase
         $this->get(route("release.edit.show", ['id' => $release->id]))
             ->assertSuccessful();
     }
+
+    public function testItReturnsTheCorrectView()
+    {
+        $release = Release::factory()->create();
+        $this->get(route("release.edit.show", ['id' => $release->id]))
+            ->assertViewIs('editRelease');
+    }
 }
