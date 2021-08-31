@@ -5,12 +5,10 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\CollectionController;
 use App\Http\Controllers\CollectionManage;
 use App\Http\Controllers\DiscogsController;
-use App\Http\Controllers\LoadingPage;
-use App\Http\Controllers\Release\Update\Show;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\LoadingPage;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -26,8 +24,9 @@ Route::get('/', function () {
     return view('home');
 });
 
-Route::get('/register', function () {
-    if (User::all()->first()) {
+Route::get('/register', function (){
+    if (User::all()->first())
+    {
         return route('home');
     }
     return view('register');
@@ -46,7 +45,7 @@ Route::get('/discogs/callback', [DiscogsController::class, 'callback'])->name('d
 
 Route::get('/collection/build', [CollectionController::class, 'buildCollection'])->name('collection.build');
 
-Route::get('/collection/index', [CollectionController::class, 'showCollection'])->name('collection.index');
+Route::get('/collection/index',[CollectionController::class, 'showCollection'])->name('collection.index');
 
 Route::get('collection/manage', [CollectionManage::class, 'loadPage'])->name('collection.manage.index');
 
@@ -55,3 +54,4 @@ Route::post('collection/manage/shelf', [CollectionManage::class, 'updateShelfOrd
 Route::get('/loadingScreen', LoadingPage::class)->name('loadingScreen');
 
 Route::get('/release/edit/{id}', Show::class)->name('editRelease');
+
