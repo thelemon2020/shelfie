@@ -1,7 +1,12 @@
 <x-navbar></x-navbar>
-<div class="container">
-    <div class="text-center">
-        <h1>{{$release->artist }} - {{$release->title}}</h1>
+<div class="row">
+    <div class="col-3">
+        <a class="btn btn-primary" href="{{session()->previousUrl()}}">Back</a>
+    </div>
+    <div class="col-6">
+        <div class="text-center">
+            <h1>{{$release->artist }} - {{$release->title}}</h1>
+        </div>
     </div>
 </div>
 <div class="container text-center">

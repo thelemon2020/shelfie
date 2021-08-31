@@ -28,6 +28,7 @@ class ReleaseFactory extends Factory
             'genre_id' => $this->faker->uuid,
             'release_year' => $this->faker->year,
             'thumbnail' => 'https://placehold.it/50x50',
+            'full_image' => 'https://placehold.it/50x50',
             'times_played'=> $this->faker->numberBetween(0, 10),
             'last_played_at' => Carbon::now()->toString()
         ];
