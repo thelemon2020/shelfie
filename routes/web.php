@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\CollectionController;
 use App\Http\Controllers\CollectionManage;
 use App\Http\Controllers\DiscogsController;
+use App\Http\Controllers\Release\Update\Show;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -53,5 +54,4 @@ Route::post('collection/manage/shelf', [CollectionManage::class, 'updateShelfOrd
 
 Route::get('/loadingScreen', LoadingPage::class)->name('loadingScreen');
 
-Route::get('/release/edit/{id}', Show::class)->name('editRelease');
-
+Route::get("/release/{id}/edit",Show::class)->name('release.edit.show');

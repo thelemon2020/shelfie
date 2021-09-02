@@ -22,4 +22,20 @@ class EditReleaseTest extends TestCase
         $this->get(route("release.edit.show", ['id' => $release->id]))
             ->assertViewIs('editRelease');
     }
+
+    public function testTheBladeHasTheCorrectData()
+    {
+        $this->withoutExceptionHandling();
+        $release = Release::factory()->create([
+            'shelf_order' => 5,
+        ]);
+
+        $this->get(route("release.edit.show", ['id' => $release->id]))
+            ->assertViewIs('editRelease')
+            ->assertSeeInOrder([
+                $release->artist,
+                $release->title,
+                $release->shelf_order
+            ]);
+    }
 }
