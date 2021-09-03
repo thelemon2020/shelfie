@@ -10,6 +10,6 @@ class ReleaseDetails extends Controller
     public function __invoke(Request $request, $id)
     {
         $release = Release::query()->where('id', $id)->first();
-        return view('releaseDetails', ['release' => $release]);
+        return json_encode($release);
     }
 }

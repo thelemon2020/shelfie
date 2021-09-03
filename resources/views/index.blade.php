@@ -1,4 +1,21 @@
 <x-navbar></x-navbar>
+<script>
+    invoke = (id) => {
+        console.log('id', id);
+        axios.get(`/api/release/${id}`)
+            .then((release) => {
+                $('#exampleModalLong').modal('show')
+                $('#modal-title').text(`${release.data.artist} - ${release.data.title}`)
+            })
+            .finally((release) => {
+
+            })
+            .catch(error => {
+                console.log(error);
+            })
+    }
+
+</script>
 <h1 class="text-center">What's on your shelf?</h1>
 @if(\App\Models\User::query()->first()->discogs_token)
     @if(count($releases) === 0)
@@ -41,6 +58,8 @@
             </div>
         </div>
         <div>
+
+            <x-modal></x-modal>
             <table class="table">
                 <thead>
                 <tr>
@@ -54,7 +73,13 @@
                 <tbody>
                 @foreach($releases as $release)
                     <tr>
-                        <td><a href="{{route('release.show', ['id' => $release->id])}}"><img src="{{$release->thumbnail}}" alt="{{$release->artist . "-" . $release->title}}"></a></td>
+                        <td>
+                            <img
+                                onClick="invoke({{$release->id}})"
+                                src="{{$release->thumbnail}}"
+                                alt="{{$release->artist . "-" . $release->title}}"/>
+
+                        </td>
                         <td>{{$release->artist}}</td>
                         <td>{{$release->title}}</td>
                         <td>{{$release->genre->name}}</td>
@@ -72,7 +97,8 @@
         <form action="{{route('api.discogs.authenticate')}}" method="post">
             <div class="form-group justify-content-lg-center">
                 <label for="userNameInput">Discogs Username</label>
-                <input type="text" style="margin-left: auto; margin-right: auto" class="form-control w-25" id="userNameInput" name="username">
+                <input type="text" style="margin-left: auto; margin-right: auto" class="form-control w-25"
+                       id="userNameInput" name="username">
                 @isset($message)
                     <span class="invalid-feedback d-block" role="alert">
                          <strong>{{ $message }}</strong>

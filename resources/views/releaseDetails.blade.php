@@ -12,7 +12,7 @@
 <div class="container text-center">
     <div class="row">
         <div class="col-auto align-items-md-center">
-            <img src={{$release->full_image}}>
+            <img src={{$release->thumbnail}}>
         </div>
         <div class="col-auto align-self-center">
             <label>Times Played</label>
