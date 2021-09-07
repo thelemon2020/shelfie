@@ -73,11 +73,11 @@
             <div class="form-group justify-content-lg-center">
                 <label for="userNameInput">Discogs Username</label>
                 <input type="text" style="margin-left: auto; margin-right: auto" class="form-control w-25" id="userNameInput" name="username">
-                @if($message)
+                @isset($message)
                     <span class="invalid-feedback d-block" role="alert">
                          <strong>{{ $message }}</strong>
                     </span>
-                @endif
+                @endisset
             </div>
             <button type="submit" class="btn btn-primary">Authenticate</button>
         </form>
