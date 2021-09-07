@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Models;
+namespace Tests\Http\Controllers;
 
 use App\Models\Genre;
 use App\Models\User;
