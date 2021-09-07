@@ -1,11 +1,15 @@
 <x-navbar></x-navbar>
 <script>
     invoke = (id) => {
-        console.log('id', id);
         axios.get(`/api/release/${id}`)
             .then((release) => {
+                console.log('release', release.data)
                 $('#exampleModalLong').modal('show')
-                $('#modal-title').text(`${release.data.artist} - ${release.data.title}`)
+                $('#thumbnail').attr("src", release.data.thumbnail)
+                $('#artist').text(release.data.artist)
+                $('#title').text(release.data.title)
+                $('#timesPlayed').text(release.data.times_played ?? "0")
+                $('#lastPlayed').text(release.data.last_played_at ?? "Never")
             })
             .finally((release) => {
 
@@ -58,8 +62,6 @@
             </div>
         </div>
         <div>
-
-            <x-modal></x-modal>
             <table class="table">
                 <thead>
                 <tr>
@@ -78,7 +80,6 @@
                                 onClick="invoke({{$release->id}})"
                                 src="{{$release->thumbnail}}"
                                 alt="{{$release->artist . "-" . $release->title}}"/>
-
                         </td>
                         <td>{{$release->artist}}</td>
                         <td>{{$release->title}}</td>
@@ -90,6 +91,7 @@
             </table>
             {{ $releases->links() }}
         </div>
+        <x-modal></x-modal>
     @endif
 @else
     <div class="text-center ">
