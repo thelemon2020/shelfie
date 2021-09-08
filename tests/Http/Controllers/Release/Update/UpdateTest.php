@@ -10,7 +10,19 @@ class UpdateTest extends TestCase
     public function testItCanReturnSuccess()
     {
         $release = Release::factory()->create();
-        $this->getJson(route("api.release.edit", ["id" => $release->id]))
+        $this->get(route("release.edit.show", ["id" => $release->id]))
             ->assertSuccessful();
+    }
+
+    public function testItReturnsTheCorrectView()
+    {
+        $release = Release::factory()->create();
+        $this->get(route("release.edit.show", ["id" => $release->id]))
+            ->assertViewIs('editRelease');
+    }
+
+    public function testItLoadsTheCorrectRelease()
+    {
+
     }
 }

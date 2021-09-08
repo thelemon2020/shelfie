@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\CollectionController;
 use App\Http\Controllers\DiscogsController;
+use App\Http\Controllers\Release\Update\Show;
+use App\Http\Controllers\ReleaseDetails;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
