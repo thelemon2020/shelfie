@@ -34,7 +34,7 @@ class CollectionController extends Controller
             $this->getUsername($auth, $user);
         }
 
-        if (!$user->genres ) {
+        if (count($user->genres) == 0) {
             $this->getGenres($auth, $user);
 
         }
@@ -123,6 +123,7 @@ class CollectionController extends Controller
                     'release_year' => $item->basic_information->year,
                     'genre_id' => Genre::query()->where('folder_number', $item->folder_id)->first()->id,
                     'thumbnail' => $item->basic_information->thumb,
+                    'full_image' => $item->basic_information->cover_image,
                     'shelf_order' => $i,
                 ]);
                 $i++;
