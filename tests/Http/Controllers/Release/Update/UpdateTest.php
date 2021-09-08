@@ -23,6 +23,12 @@ class UpdateTest extends TestCase
 
     public function testItLoadsTheCorrectRelease()
     {
-
+        $release = Release::factory()->create();
+        $this->get(route("release.edit.show", ["id" => $release->id]))
+            ->assertSeeInOrder([
+                $release->artist,
+                $release->title,
+                $release->shelf_order
+            ]);
     }
 }
