@@ -3,10 +3,14 @@
 namespace Tests\Http\Controllers\Release\Update;
 
 use App\Models\Release;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class UpdateTest extends TestCase
 {
+    use withFaker;
+    use RefreshDatabase;
 
     public function testItCanReturnASuccess()
     {
@@ -17,5 +21,16 @@ class UpdateTest extends TestCase
     public function testItCanUpdateARelease()
     {
         $release = Release::factory()->create();
+        $newArtist = $this->faker->name;
+        $newTitle = $this->faker->sentence;
+        $this->post(route('api.release.edit', $release->id), [
+            'artist' => $newArtist,
+            'title' => $newTitle
+        ]);
+        $this->assertDatabaseHas('releases', [
+            'id' => $release->id,
+            'artist' => $newArtist,
+            'title' => $newTitle,
+        ]);
     }
 }
