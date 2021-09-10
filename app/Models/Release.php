@@ -11,14 +11,7 @@ class Release extends Model
     use HasFactory;
     use EloquentJoin;
 
-    protected $fillable = [
-        'artist',
-        'title',
-        'genre',
-        'thumbnail',
-        'shelf_order',
-        'full_image',
-    ];
+    protected $guarded = [];
 
     public function genre()
     {

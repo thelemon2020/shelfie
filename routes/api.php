@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CollectionController;
 use App\Http\Controllers\DiscogsController;
+use App\Http\Controllers\Release\Images;
 use App\Http\Controllers\Release\Update\Update;
 use App\Http\Controllers\ReleaseDetails;
 use Illuminate\Http\Request;
@@ -30,3 +31,5 @@ Route::post('/discogs/authenticate', [DiscogsController::class, 'authenticate'])
 Route::get('/release/{id}', ReleaseDetails::class)->name('release.show');
 
 Route::post("/release/{id}/edit", Update::class)->name('release.edit');
+
+Route::get('/release/images', Images::class)->name('images.index');
