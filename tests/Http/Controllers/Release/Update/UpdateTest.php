@@ -7,28 +7,15 @@ use Tests\TestCase;
 
 class UpdateTest extends TestCase
 {
-    public function testItCanReturnSuccess()
+
+    public function testItCanReturnASuccess()
     {
         $release = Release::factory()->create();
-        $this->get(route("release.edit.show", ["id" => $release->id]))
-            ->assertSuccessful();
+        $this->post(route('api.release.edit', $release->id))->assertSuccessful();
     }
 
-    public function testItReturnsTheCorrectView()
+    public function testItCanUpdateARelease()
     {
         $release = Release::factory()->create();
-        $this->get(route("release.edit.show", ["id" => $release->id]))
-            ->assertViewIs('editRelease');
-    }
-
-    public function testItLoadsTheCorrectRelease()
-    {
-        $release = Release::factory()->create();
-        $this->get(route("release.edit.show", ["id" => $release->id]))
-            ->assertSeeInOrder([
-                $release->artist,
-                $release->title,
-                $release->shelf_order
-            ]);
     }
 }

@@ -26,6 +26,8 @@
                 <input type="number" class="form-control-sm" id="shelf_order" min="1"
                        max="{{count(\App\Models\Release::all())}}" value="{{$release->shelf_order}}">
             </div>
+            <input type="hidden" name="thumbnail" value="{{$release->thumbnail}}">
+            <input type="hidden" name="full_image" value="{{$release->full_image}}">
         </div>
     </div>
     <div class="row justify-content-center">
