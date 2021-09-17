@@ -1,10 +1,24 @@
 <x-navbar></x-navbar>
 <script>
     invoke = () => {
-         axios.get("/api/release/images", )
-        .then((images) =>{
-          console.log(images.data)
+        axios.get("/api/release/images", {
+            params: {
+                artist: $("#artist").val(),
+                title: $("#title").val(),
+            }
         })
+            .then((images) => {
+                console.log(images.data)
+                let htmlInsert = ''
+                images.data.forEach((image, index) => {
+                    htmlInsert += index !== 0 ?
+                        `<div class='carousel-item'><img src="${image.thumbnail}"></div>` :
+                        `<div class='carousel-item active'><img src="${image.thumbnail}"></div>`
+                })
+                $('#image-carousel > .carousel-inner').html(htmlInsert)
+
+                $('#image-carousel').carousel()
+            })
     }
 </script>
 <h1 class="text-center">Edit Release</h1>
@@ -23,12 +37,12 @@
             <div class="form-group">
                 <label for="artist">Artist</label>
                 <br>
-                <input type="text" class="form-control" id="artist" value="{{$release->artist}}">
+                <input type="text" class="form-control" name="artist" id="artist" value="{{$release->artist}}">
             </div>
             <div class="form-group">
                 <label for="title">Title</label>
                 <br>
-                <input type="text" class="form-control" id="title" value="{{$release->title}}">
+                <input type="text" class="form-control" name="title" id="title" value="{{$release->title}}">
             </div>
             <div class="form-group">
                 <label for="shelf_order">Shelf Position</label>
