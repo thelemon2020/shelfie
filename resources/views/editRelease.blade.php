@@ -1,7 +1,7 @@
 <x-navbar></x-navbar>
 <script>
     invoke = () => {
-         axios.get("/api/release/images", {params: {artist: $('#artist').value, title: $('#title').value}})
+         axios.get("/api/release/images", )
         .then((images) =>{
           console.log(images.data)
         })
@@ -47,26 +47,20 @@
          aria-hidden="true" id="imageModal">
         <div class="modal-dialog modal-dialog-centered" style="max-width: max-content; min-width: 27%" role="document">
             <div class="modal-content">
-                <div class="carousel" data-interval="false" id="carousel-of-hope-and-friendship">
+                <div class="carousel lazy" data-interval="false" id="image-carousel">
                     <div class="carousel-inner">
                         <div class="carousel-item active">
-                            <img
-                                src="https://img.discogs.com/jKTmuxcsYe2TqcahU3QqVXJLssU=/fit-in/600x600/filters:strip_icc():format(jpeg):mode_rgb():quality(90)/discogs-images/R-1873013-1471100381-3022.jpeg.jpg">
+                            <img src="">
                         </div>
                         <div class="carousel-item">
-                            <img
-                                 src="https://img.discogs.com/CeFTpRsYLhibJZRaFEDyXP3DLeM=/fit-in/600x600/filters:strip_icc():format(jpeg):mode_rgb():quality(90)/discogs-images/R-1873013-1627994684-3522.jpeg.jpg">
-                        </div>
-                        <div class="carousel-item">
-                            <img
-                                 src="https://img.discogs.com/adx12vdubjXCOB9nmwVFCL7X4kI=/fit-in/600x600/filters:strip_icc():format(jpeg):mode_rgb():quality(90)/discogs-images/R-1873013-1471101128-7297.jpeg.jpg">
+                            <img data-src="">
                         </div>
                     </div>
-                    <a class="carousel-control-prev" href="#carousel-of-hope-and-friendship" role="button" data-slide="prev">
+                    <a class="carousel-control-prev" href="#image-carousel" role="button" data-slide="prev">
                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                         <span class="sr-only">Previous</span>
                     </a>
-                    <a class="carousel-control-next" href="#carousel-of-hope-and-friendship" role="button" data-slide="next">
+                    <a class="carousel-control-next" href="#image-carousel" role="button" data-slide="next">
                         <span class="carousel-control-next-icon" aria-hidden="true"></span>
                         <span class="sr-only">Next</span>
                     </a>
