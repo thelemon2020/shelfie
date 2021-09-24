@@ -8,9 +8,9 @@
             }
         })
             .then((images) => {
-                let htmlInsert = `<div class='carousel-item active'><img src="${$('#thumbnail').val()}" alt="${$('#full_image').val()}"></div>`
+                let htmlInsert = `<div class='carousel-item active'><img class="d-block w-100 img-thumbnail" alt="${$('#thumbnail').val()}" src="${$('#full_image').val()}"></div>`
                 images.data.forEach((image) => {
-                    htmlInsert +=`<div class='carousel-item'><img src="${image.thumbnail}" alt="${image.image}"></div>`
+                    htmlInsert +=`<div class='carousel-item'><img class="d-block w-100 img-thumbnail" alt="${image.thumbnail}" src="${image.image}"></div>`
                 })
                 $('#image-carousel > .carousel-inner').html(htmlInsert)
 
@@ -28,16 +28,16 @@
 <h1 class="text-center">Edit Release</h1>
 <form class="col-lg-6 offset-lg-3 " method="post" action="{{route('api.release.edit', ['id'=>$release->id])}}">
     <div class="row justify-content-center">
-        <div class="col-auto">
+        <div class="col-6">
             <label>Cover Image</label>
             <br>
-            <img id="coverImage" src="{{$release->full_image}}">
+            <img id="coverImage" class="img-fluid" src="{{$release->full_image}}">
             <br>
             <btn class="btn btn-primary mt-2" onclick="invoke()" data-toggle="modal"
                  data-target="#imageModal">Change Cover Image
             </btn>
         </div>
-        <div class="col-5 align-self-center">
+        <div class="col-6 align-self-center">
             <div class="form-group">
                 <label for="artist">Artist</label>
                 <br>
