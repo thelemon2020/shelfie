@@ -3,12 +3,13 @@
 namespace Tests\Http\Controllers;
 
 use App\Models\Release;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 
 class EditReleaseTest extends TestCase
 {
-
+    use RefreshDatabase;
     public function testItReturnsSuccess()
     {
         $release = Release::factory()->create();

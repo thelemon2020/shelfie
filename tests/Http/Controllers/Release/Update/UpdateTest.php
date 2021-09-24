@@ -20,13 +20,14 @@ class UpdateTest extends TestCase
 
     public function testItCanUpdateARelease()
     {
+        $this->withoutExceptionHandling();
         $release = Release::factory()->create();
         $newArtist = $this->faker->name;
         $newTitle = $this->faker->sentence;
-        $this->post(route('api.release.edit', $release->id), [
+        $this->postJson(route('api.release.edit', $release->id), [
             'artist' => $newArtist,
-            'title' => $newTitle
-        ]);
+            'title' => $newTitle,
+        ])->assertSuccessful();
         $this->assertDatabaseHas('releases', [
             'id' => $release->id,
             'artist' => $newArtist,

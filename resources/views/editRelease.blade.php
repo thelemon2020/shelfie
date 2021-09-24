@@ -8,17 +8,21 @@
             }
         })
             .then((images) => {
-                console.log(images.data)
-                let htmlInsert = ''
-                images.data.forEach((image, index) => {
-                    htmlInsert += index !== 0 ?
-                        `<div class='carousel-item'><img src="${image.thumbnail}"></div>` :
-                        `<div class='carousel-item active'><img src="${image.thumbnail}"></div>`
+                let htmlInsert = `<div class='carousel-item active'><img src="${$('#thumbnail').val()}" alt="${$('#full_image').val()}"></div>`
+                images.data.forEach((image) => {
+                    htmlInsert +=`<div class='carousel-item'><img src="${image.thumbnail}" alt="${image.image}"></div>`
                 })
                 $('#image-carousel > .carousel-inner').html(htmlInsert)
 
                 $('#image-carousel').carousel()
             })
+    }
+
+    setImage = () => {
+        const selectedImage = $('.carousel-item.active').children('img')[0]
+        $('#thumbnail').val(selectedImage.src)
+        $('#full_image').val(selectedImage.alt)
+        $('#coverImage').attr("src", selectedImage.alt)
     }
 </script>
 <h1 class="text-center">Edit Release</h1>
@@ -27,7 +31,7 @@
         <div class="col-auto">
             <label>Cover Image</label>
             <br>
-            <img src="{{$release->full_image}}">
+            <img id="coverImage" src="{{$release->full_image}}">
             <br>
             <btn class="btn btn-primary mt-2" onclick="invoke()" data-toggle="modal"
                  data-target="#imageModal">Change Cover Image
@@ -50,38 +54,34 @@
                 <input type="number" class="form-control-sm" id="shelf_order" min="1"
                        max="{{count(\App\Models\Release::all())}}" value="{{$release->shelf_order}}">
             </div>
-            <input type="hidden" name="thumbnail" value="{{$release->thumbnail}}">
-            <input type="hidden" name="full_image" value="{{$release->full_image}}">
+            <input type="hidden" id='thumbnail' name="thumbnail" value="{{$release->thumbnail}}">
+            <input type="hidden" id='full_image' name="full_image" value="{{$release->full_image}}">
         </div>
     </div>
     <div class="row justify-content-center">
         <input type="submit">
     </div>
-    <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="imageModal"
-         aria-hidden="true" id="imageModal">
-        <div class="modal-dialog modal-dialog-centered" style="max-width: max-content; min-width: 27%" role="document">
-            <div class="modal-content">
-                <div class="carousel lazy" data-interval="false" id="image-carousel">
-                    <div class="carousel-inner">
-                        <div class="carousel-item active">
-                            <img src="">
-                        </div>
-                        <div class="carousel-item">
-                            <img data-src="">
-                        </div>
-                    </div>
-                    <a class="carousel-control-prev" href="#image-carousel" role="button" data-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="sr-only">Previous</span>
-                    </a>
-                    <a class="carousel-control-next" href="#image-carousel" role="button" data-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="sr-only">Next</span>
-                    </a>
+</form>
+<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="imageModal"
+     aria-hidden="true" id="imageModal">
+    <div class="modal-dialog modal-dialog-centered" style="max-width: max-content; min-width: 27%" role="document">
+        <div class="modal-content">
+            <div class="carousel lazy" data-interval="false" id="image-carousel">
+                <div class="carousel-inner">
                 </div>
+                <a class="carousel-control-prev" href="#image-carousel" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#image-carousel" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
             </div>
+            <button class="btn btn-primary" onclick="setImage()" data-toggle="modal"
+                    data-target="#imageModal">Select
+            </button>
         </div>
     </div>
-</form>
-
+</div>
 

@@ -10,14 +10,13 @@ class Update extends Controller
 {
     public function __invoke(Request $request, $id)
     {
+        foreach ($request->all() as $key => $value){
+            if (!$value){
+                $request->request->remove($key);
+            }
+        }
         $release = Release::query()->where('id', $id)->first();
-        var_dump($release->toArray());
-        $release->artist = $request->input('artist');
-        $release->title = $request->input('title');
-        $release->shelf_order = $request->input('shelf_order');
-        $release->thumbnail = $request->input('thumbnail');
-        $release->full_image = $request->input('full_image');
-        dd($release->toArray());
-        $release->save();
+        $release->update($request->all());
+        return redirect(route('release.edit.show', $release->id));
     }
 }
