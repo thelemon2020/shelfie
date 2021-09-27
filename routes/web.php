@@ -54,4 +54,6 @@ Route::post('collection/manage/shelf', [CollectionManage::class, 'updateShelfOrd
 
 Route::get('/loadingScreen', LoadingPage::class)->name('loadingScreen');
 
-Route::get('/release/edit/{id}', Show::class)->name('editRelease');
+Route::get('/foobar', function () {
+    return view('foobar');
+});
