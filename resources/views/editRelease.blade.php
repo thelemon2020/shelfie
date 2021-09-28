@@ -20,9 +20,9 @@
 
     setImage = () => {
         const selectedImage = $('.carousel-item.active').children('img')[0]
-        $('#thumbnail').val(selectedImage.src)
-        $('#full_image').val(selectedImage.alt)
-        $('#coverImage').attr("src", selectedImage.alt)
+        $('#thumbnail').val(selectedImage.alt)
+        $('#full_image').val(selectedImage.src)
+        $('#coverImage').attr("src", selectedImage.src)
     }
 </script>
 @if(request()->query('message') === 'success')
