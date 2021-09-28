@@ -13,7 +13,7 @@ class Search extends Component
     public function render()
     {
         return view('livewire.search', [
-            'releases' => Release::query()->where("title", "LIKE", "%$this->search%")->orderBy($this->sort, 'ASC')->paginate()
+            'releases' => Release::query()->where($this->sort, "LIKE", "%$this->search%")->orderBy($this->sort, 'ASC')->paginate()
         ]);
     }
 }

@@ -1,5 +1,5 @@
 <x-navbar></x-navbar>
-@livewireStyles
+@livewireStyles()
 <script>
     invoke = (id) => {
         axios.get(`/api/release/${id}`)
@@ -33,6 +33,7 @@
         </div>
     @else
         @livewire('search')
+        <x-modal></x-modal>
     @endif
 @else
     <div class="text-center ">
@@ -52,4 +53,4 @@
         </form>
     </div>
 @endif
-@livewireScripts
+@livewireScripts()
