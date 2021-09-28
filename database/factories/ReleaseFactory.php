@@ -14,6 +14,7 @@ class ReleaseFactory extends Factory
      * @var string
      */
     protected $model = Release::class;
+    private static int $shelf_order = 1;
 
     /**
      * Define the model's default state.
@@ -30,7 +31,8 @@ class ReleaseFactory extends Factory
             'thumbnail' => 'https://placehold.it/50x50',
             'full_image' => 'https://placehold.it/50x50',
             'times_played' => $this->faker->numberBetween(0, 10),
-            'last_played_at' => Carbon::now()->toString()
+            'last_played_at' => Carbon::now()->toString(),
+            'shelf_order' => self::$shelf_order++,
         ];
     }
 }
