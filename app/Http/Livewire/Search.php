@@ -14,8 +14,14 @@ class Search extends Component
 
     public $search = '';
     public $sort = 'artist';
+    public $pagination = 50;
 
-    public function updatingSearch()
+    public function updatingSort()
+    {
+        $this->resetPage();
+    }
+
+    public function updatingPagination()
     {
         $this->resetPage();
     }
@@ -27,9 +33,9 @@ class Search extends Component
                 ->join('genres', 'releases.genre_id', '=', 'genres.id')
                 ->where('genres.name', "LIKE", "%$this->search%")
                 ->orderBy('genres.name', 'ASC')
-                ->paginate();
+                ->paginate($this->pagination);
         } else {
-            $releases = Release::query()->where($this->sort, "LIKE", "%$this->search%")->orderBy($this->sort, 'ASC')->paginate();
+            $releases = Release::query()->where($this->sort, "LIKE", "%$this->search%")->orderBy($this->sort, 'ASC')->paginate($this->pagination);
         }
         return view('livewire.search', [
             'releases' => $releases

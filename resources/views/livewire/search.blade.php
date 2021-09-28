@@ -1,7 +1,8 @@
 <div>
     <div style="display: flex; justify-content: space-between">
         <div class="d-flex m-1">
-            <input wire:model="search" type="text" placeholder="Search records..."/>
+            <input wire:model="search" type="text"
+                   placeholder="Search records..." {{$sort == 'shelf_order' ? 'disabled' : ''}}/>
             <div class="dropdown show">
                 <select class="form-control ml-1" wire:model="sort">
                     <option value="artist">Artist</option>
@@ -13,7 +14,16 @@
             </div>
         </div>
         <div>
-            <div>
+            <div class="d-flex mr-1">
+                <div class="dropdown show mr-1">
+                    <select class="form-control" wire:model="pagination">
+                        <option value=10>10</option>
+                        <option value=25>25</option>
+                        <option selected value=50>50</option>
+                        <option value=75>75</option>
+                        <option value=100>100</option>
+                    </select>
+                </div>
                 <a href="{{route('collection.manage.index')}}" type="button" class="btn btn-info">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                          class="bi bi-gear"
