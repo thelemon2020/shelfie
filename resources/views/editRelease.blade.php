@@ -10,7 +10,7 @@
             .then((images) => {
                 let htmlInsert = `<div class='carousel-item active'><img class="d-block w-100 img-thumbnail" alt="${$('#thumbnail').val()}" src="${$('#full_image').val()}"></div>`
                 images.data.forEach((image) => {
-                    htmlInsert +=`<div class='carousel-item'><img class="d-block w-100 img-thumbnail" alt="${image.thumbnail}" src="${image.image}"></div>`
+                    htmlInsert += `<div class='carousel-item'><img class="d-block w-100 img-thumbnail" alt="${image.thumbnail}" src="${image.image}"></div>`
                 })
                 $('#image-carousel > .carousel-inner').html(htmlInsert)
 
@@ -25,7 +25,21 @@
         $('#coverImage').attr("src", selectedImage.alt)
     }
 </script>
-<h1 class="text-center">Edit Release</h1>
+@if(request()->query('message') === 'success')
+    <div class="alert alert-success alert-dismissible fade show text-center">Record Updated Successfully
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+@endif
+<div class="row">
+    <div class="col-2">
+        <a class="btn-primary btn m-2" href="{{route('collection.index')}}">Back</a>
+    </div>
+    <div class="col-8">
+        <h1 class="text-center">Edit Release</h1>
+    </div>
+</div>
 <form class="col-lg-6 offset-lg-3 " method="post" action="{{route('api.release.edit', ['id'=>$release->id])}}">
     <div class="row justify-content-center">
         <div class="col-6">
@@ -76,7 +90,6 @@
                             <p>Loading Images</p>
                         </div>
                     </div>
-
                 </div>
                 <a class="carousel-control-prev" href="#image-carousel" role="button" data-slide="prev">
                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>

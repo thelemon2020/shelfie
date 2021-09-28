@@ -14,7 +14,7 @@ class Images extends Controller
     {
         $artist = $request->input('artist');
         $title = $request->input('title');
-        $requestUrl = "http://musicbrainz.org/ws/2/release/?query=artist:" . $artist . "AND" . "release:" . $title;
+        $requestUrl = "http://musicbrainz.org/ws/2/release/?query=artist:" . $artist . " AND " . "release:" . $title;
         $cachedResults = Cache::get($requestUrl);
         if ($cachedResults)
         {

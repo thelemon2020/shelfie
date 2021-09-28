@@ -21,7 +21,7 @@ class Update extends Controller
             $this->changeShelfOrder($originalPosition, $request->input('shelf_order'));
         }
         $release->update($request->all());
-        return redirect(route('release.edit.show', $release->id));
+        return redirect(route('release.edit.show', ['id' => $release->id, 'message' => 'success']));
     }
 
     private function changeShelfOrder($originalPosition, $newPosition)
