@@ -63,6 +63,12 @@
                 <input type="text" class="form-control" name="title" id="title" value="{{$release->title}}">
             </div>
             <div class="form-group">
+                <label for="release_year">Title</label>
+                <br>
+                <input type="number" class="form-control" name="release_year" id="release_year"
+                       value="{{$release->release_year}}">
+            </div>
+            <div class="form-group">
                 <label for="shelf_order">Shelf Position</label>
                 <br>
                 <input type="number" class="form-control-sm" id="shelf_order" min="1"
