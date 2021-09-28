@@ -4,11 +4,13 @@ namespace Tests\Feature\Models;
 
 use App\Models\Release;
 use App\Models\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
 use Tests\TestCase;
 
 class UserTest extends TestCase
 {
+    use RefreshDatabase;
     /** @test */
     public function it_has_many_releases()
     {

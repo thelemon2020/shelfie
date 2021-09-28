@@ -12,10 +12,7 @@
                 $('#genre').text(release.data.genre)
                 $('#timesPlayed').text(release.data.times_played ?? "0")
                 $('#lastPlayed').text(release.data.last_played_at ?? "Never")
-                $('#edit').attr("href", `/release/edit/${release.data.id}`)
-            })
-            .finally((release) => {
-
+                $('#edit').attr("href", `/release/${release.data.id}/edit`)
             })
             .catch(error => {
                 console.log(error);

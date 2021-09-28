@@ -1002,6 +1002,7 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/laravel/framework/zipball/60a7e00488167ce2babf3a2aeb3677e48aaf39be",
                 "reference": "60a7e00488167ce2babf3a2aeb3677e48aaf39be",
+
                 "shasum": ""
             },
             "require": {
@@ -8422,7 +8423,8 @@
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
-        "php": "^8.0"
+        "php": "^8.0",
+        "ext-xml": "*"
     },
     "platform-dev": [],
     "plugin-api-version": "2.1.0"
