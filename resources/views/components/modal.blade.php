@@ -15,7 +15,7 @@
                 <div class="container ">
                     <div class="row">
                         <div class="col-auto align-self-center">
-                            <img id="thumbnail" src="">
+                            <img id="thumbnail" style="width: auto; height: 50%" src="">
                         </div>
                         <div class="col-auto align-self-center">
                             <label><b>Artist</b></label>

@@ -6,7 +6,7 @@
             .then((release) => {
                 console.log('release', release.data)
                 $('#exampleModalLong').modal('show')
-                $('#thumbnail').attr("src", release.data.thumbnail)
+                $('#thumbnail').attr("src", release.data.full_image)
                 $('#artist').text(release.data.artist)
                 $('#title').text(release.data.title)
                 $('#genre').text(release.data.genre)

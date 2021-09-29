@@ -1,4 +1,4 @@
-<div>
+<div xmlns:wire="http://www.w3.org/1999/xhtml">
     <div style="display: flex; justify-content: space-between">
         <div class="d-flex m-1">
             <input wire:model="search" type="text"
@@ -41,21 +41,21 @@
         <table class="table">
             <thead>
             <tr>
-                <th>Image</th>
-                <th>Artist</th>
-                <th>Title</th>
-                <th>Genre</th>
-                <th>Year</th>
+                <th scope="col">Image</th>
+                <th scope="col">Artist</th>
+                <th scope="col">Title</th>
+                <th scope="col">Genre</th>
+                <th scope="col">Year</th>
             </tr>
             </thead>
             <tbody>
             @foreach($releases as $release)
                 <tr>
                     <td>
-                        <img class="img-thumbnail" style="height: 200px; width: 200px"
+                        <img class="img-thumbnail img-fluid w-25 h-25"
                              onClick="invoke({{$release->id}})"
-                            src="{{$release->thumbnail}}"
-                            alt="{{$release->artist . "-" . $release->title}}"/>
+                             src="{{$release->full_image}}"
+                             alt="{{$release->artist . "-" . $release->title}}"/>
                     </td>
                     <td>{{$release->artist}}</td>
                     <td>{{$release->title}}</td>
