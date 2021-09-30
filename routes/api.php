@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CollectionController;
 use App\Http\Controllers\DiscogsController;
+use App\Http\Controllers\Release\Play;
 use App\Http\Controllers\Release\Update\Images;
 use App\Http\Controllers\Release\Update\Update;
 use App\Http\Controllers\ReleaseDetails;
@@ -33,5 +34,7 @@ Route::get('/release/images', Images::class)->name('release.images');
 Route::get('/release/{id}', ReleaseDetails::class)->name('release.show');
 
 Route::post("/release/{id}/edit", Update::class)->name('release.edit');
+
+Route::get('/release/{id}/play', Play::class)->name('release.play');
 
 

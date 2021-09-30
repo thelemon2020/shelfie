@@ -5,11 +5,12 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\CollectionController;
 use App\Http\Controllers\CollectionManage;
 use App\Http\Controllers\DiscogsController;
+use App\Http\Controllers\LoadingPage;
 use App\Http\Controllers\Release\Update\Show;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\LoadingPage;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -21,17 +22,14 @@ use App\Http\Controllers\LoadingPage;
 |
 */
 
-Route::get('/', function () {
-    return view('home');
-});
+Route::get('/', [App\Http\Controllers\HomeController::class, 'home'])->name('home');
 
-Route::get('/register', function (){
-    if (User::all()->first())
-    {
+Route::get('/register', function () {
+    if (User::all()->first()) {
         return route('home');
     }
     return view('register');
-});
+})->name('register');
 
 
 Auth::routes();

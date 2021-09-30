@@ -3,7 +3,6 @@
 namespace Database\Factories;
 
 use App\Models\Release;
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class ReleaseFactory extends Factory
@@ -28,10 +27,10 @@ class ReleaseFactory extends Factory
             'title' => $this->faker->word,
             'genre_id' => $this->faker->uuid,
             'release_year' => $this->faker->year,
-            'thumbnail' => 'https://placehold.it/50x50',
-            'full_image' => 'https://placehold.it/50x50',
+            'thumbnail' => $this->faker->imageUrl,
+            'full_image' => $this->faker->imageUrl,
             'times_played' => $this->faker->numberBetween(0, 10),
-            'last_played_at' => Carbon::now()->toString(),
+            'last_played_at' => $this->faker->dateTime,
             'shelf_order' => self::$shelf_order++,
         ];
     }
