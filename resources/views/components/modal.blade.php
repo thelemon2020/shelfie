@@ -28,6 +28,7 @@
                             <p id="timesPlayed"></p>
                             <label><b>Last Played At</b></label>
                             <p id="lastPlayed"></p>
+                            <input id="releaseId" hidden value="">
                         </div>
                     </div>
                 </div>
@@ -37,11 +38,24 @@
                         <a class="btn btn-secondary" id="edit" href="">Edit</a>
                     </div>
                     <div class="align-self-end">
-                        <button type="button" class="btn btn-primary">Play Album</button>
+                        <button type="button" onclick="playRecord()" data-dismiss="modal" class="btn btn-primary">Play
+                            Album
+                        </button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+<script>
+    function playRecord() {
+        let id = $('#releaseId').val()
+        axios.get(`/api/release/${id}/play`)
+            .then((response) => {
+                if (response.data.message === 'success') {
+                    window.location.replace("/")
+                }
+            })
+    }
+</script>
 </html>

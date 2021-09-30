@@ -41,7 +41,7 @@
         <table class="table">
             <thead>
             <tr>
-                <th scope="col">Image</th>
+                <th class="w-25" scope="col">Image</th>
                 <th scope="col">Artist</th>
                 <th scope="col">Title</th>
                 <th scope="col">Genre</th>
@@ -52,7 +52,7 @@
             @foreach($releases as $release)
                 <tr>
                     <td>
-                        <img class="img-thumbnail img-fluid w-25 h-25"
+                        <img class="img-thumbnail img-fluid" style="width: 250px; height: 250px"
                              onClick="invoke({{$release->id}})"
                              src="{{$release->full_image}}"
                              alt="{{$release->artist . "-" . $release->title}}"/>

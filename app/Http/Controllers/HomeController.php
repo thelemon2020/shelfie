@@ -2,19 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Models\Release;
+use App\Models\User;
 
 class HomeController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-
-    }
 
     /**
      * Show the application dashboard.
@@ -23,7 +15,11 @@ class HomeController extends Controller
      */
     public function home()
     {
-        return view('home');
+        $user = User::query()->first();
+        $lastPlayed = Release::query()->latest('last_played_at')->whereNotNull('last_played_at')->first();
+        $mostPlayed = Release::query()->orderBy('times_played', 'desc')->whereNotNull('times_played')->take(5)->get();
+
+        return view('home', ['user' => $user, 'lastPlayed' => $lastPlayed, 'mostPlayed' => $mostPlayed]);
     }
 
     public function index()
