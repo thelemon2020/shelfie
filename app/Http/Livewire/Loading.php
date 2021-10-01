@@ -47,7 +47,7 @@ class Loading extends Component
 
         }
         $this->getReleases($user, $auth);
-        return response()->json();
+        return redirect(route('home'));
     }
 
     public function showCollection(Request $request)
@@ -134,6 +134,7 @@ class Loading extends Component
                     'full_image' => $item->basic_information->cover_image,
                     'shelf_order' => $i,
                 ]);
+                sleep(.5);
                 $i++;
                 UserRelease::query()->updateOrCreate([
                     'user_id' => $user->id,

@@ -7,9 +7,15 @@ use Livewire\Component;
 
 class LatestRelease extends Component
 {
+    public $release;
+
+    public function getLatest()
+    {
+        $this->release = Release::query()->latest('id')->first();
+    }
+
     public function render()
     {
-        $release = Release::query()->latest()->first();
-        return view('livewire.latest-release', ['release' => $release]);
+        return view('livewire.latest-release', ['release' => $this->release]);
     }
 }

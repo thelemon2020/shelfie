@@ -1,5 +1,5 @@
-<div>
-    <button wire:click="buildCollection">Build Collection</button>
+<div class="container">
+    <div wire:init="buildCollection"></div>
     <div wire:loading>
         <livewire:latest-release/>
     </div>
