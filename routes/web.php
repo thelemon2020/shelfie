@@ -44,7 +44,7 @@ Route::get('/discogs/callback', [DiscogsController::class, 'callback'])->name('d
 
 Route::get('/collection/build', [CollectionController::class, 'buildCollection'])->name('collection.build');
 
-Route::get('/collection/index',[CollectionController::class, 'showCollection'])->name('collection.index');
+Route::get('/collection/index', [CollectionController::class, 'showCollection'])->name('collection.index');
 
 Route::get('collection/manage', [CollectionManage::class, 'loadPage'])->name('collection.manage.index');
 
@@ -52,4 +52,8 @@ Route::post('collection/manage/shelf', [CollectionManage::class, 'updateShelfOrd
 
 Route::get('/loadingScreen', LoadingPage::class)->name('loadingScreen');
 
-Route::get("/release/{id}/edit",Show::class)->name('release.edit.show');
+Route::get("/release/{id}/edit", Show::class)->name('release.edit.show');
+
+Route::get('testing', function () {
+    return view('testing');
+});

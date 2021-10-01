@@ -1,0 +1,146 @@
+<?php
+
+namespace App\Http\Livewire;
+
+use App\Models\Genre;
+use App\Models\Release;
+use App\Models\User;
+use App\Models\UserRelease;
+use Carbon\Carbon;
+use Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
+use Livewire\Component;
+use Ramsey\Uuid\Uuid;
+
+class Loading extends Component
+{
+    public $currentRelease;
+
+    public function render()
+    {
+        return view('livewire.loading');
+    }
+
+    public function buildCollection()
+    {
+        $user = User::query()->first();
+        $oauthToken = $user->discogs_token;
+        $oAuthSecret = $user->discogs_token_secret;
+        $consumerSecret = config('auth.discogs_API_secret');
+        $consumerKey = config('auth.discogs_API_key');
+        $this->authHeader = collect([
+            ['oauth_consumer_key', $consumerKey],
+            ['oauth_nonce', Uuid::uuid4()->toString()],
+            ['oauth_token', $oauthToken],
+            ['oauth_signature', $consumerSecret . '&' . $oAuthSecret],
+            ['oauth_signature_method', "PLAINTEXT"],
+            ['oauth_timestamp', Carbon::now()->timestamp],
+        ]);
+        $auth = 'OAuth ' . $this->authHeader->map(fn(array $header) => implode('=', $header))->implode(',');
+        if (!$user->discogs_username) {
+            $this->getUsername($auth, $user);
+        }
+
+        if (count($user->genres) == 0) {
+            $this->getGenres($auth, $user);
+
+        }
+        $this->getReleases($user, $auth);
+        return redirect(route('home'));
+    }
+
+    public function showCollection(Request $request)
+    {
+        $user = User::query()->first();
+        $sort = $request->query('sort') ?? 'artist';
+        $paginationNumber = ($request->query('pagination')) ?? 50;
+        if ($sort == 'genre') {
+            $sort = $sort . '.name';
+        } else if ($sort == 'shelf_order') {
+            $sort = 'genre.shelf_order';
+        }
+        $releases = $user->releases()->orderByJoin($sort)->paginate((int)$paginationNumber);
+        $releases->appends(array('sort' => $sort, 'pagination' => $paginationNumber))->links();
+
+        return view('index', ['releases' => $releases]);
+    }
+
+    public function getUsername(string $auth, ?Authenticatable $user): void
+    {
+        $response = Http::withHeaders([
+            'Content-Type' => 'application/x-www-form-urlencoded',
+            'Authorization' => $auth,
+            'User-Agent' => config('User-Agent')
+        ])->get('https://api.discogs.com/oauth/identity');
+        $usernameArrayElement = explode(': ', $response->body())[2];
+        $username = explode('",', $usernameArrayElement)[0];
+        $username = str_replace('"', '', $username);
+        $user->discogs_username = $username;
+        $user->save();
+    }
+
+    /**
+     * @param string $auth
+     * @param Authenticatable|null $user
+     */
+    public function getGenres(string $auth, ?Authenticatable $user): void
+    {
+        $response = Http::withHeaders([
+            'Content-Type' => 'application/x-www-form-urlencoded',
+            'Authorization' => $auth,
+            'User-Agent' => config('User-Agent')
+        ])->get("https://api.discogs.com/users/$user->discogs_username/collection/folders");
+        $folders = json_decode($response->body())->folders;
+        foreach ($folders as $folder) {
+            if ($folder->name == 'All') {
+                continue;
+            }
+            Genre::query()->create([
+                    'name' => $folder->name,
+                    'folder_number' => $folder->id,
+                    'user_id' => $user->id
+                ]
+            );
+        }
+    }
+
+    /**
+     * @param Authenticatable|null $user
+     * @param array|int|string $genre
+     * @param array|string $pageNumber
+     * @param string $auth
+     */
+    public function getReleases(?Authenticatable $user, string $auth): void
+    {
+        $nextPage = "https://api.discogs.com/users/$user->discogs_username/collection/folders/0/releases?page=1&sort=artist";
+        $i = 1;
+        while ($nextPage != null) {
+            $response = Http::withHeaders([
+                'Content-Type' => 'application/x-www-form-urlencoded',
+                'Authorization' => $auth,
+                'User-Agent' => config('User-Agent')
+            ])->get($nextPage);
+            $releasesArray = json_decode($response->body());
+            $nextPage = $releasesArray->pagination->urls->next ?? null;
+            $releases = collect($releasesArray->releases);
+            $releases->each(function ($item, $key) use ($user, &$i) {
+                $this->currentRelease = Release::query()->updateOrCreate([
+                    'artist' => $item->basic_information->artists[0]->name,
+                    'title' => $item->basic_information->title,
+                    'release_year' => $item->basic_information->year,
+                    'genre_id' => Genre::query()->where('folder_number', $item->folder_id)->first()->id,
+                    'thumbnail' => $item->basic_information->thumb,
+                    'full_image' => $item->basic_information->cover_image,
+                    'shelf_order' => $i,
+                ]);
+                sleep(.5);
+                $i++;
+                UserRelease::query()->updateOrCreate([
+                    'user_id' => $user->id,
+                    'release_id' => $this->currentRelease->id,
+                ]);
+            });
+        }
+    }
+}
