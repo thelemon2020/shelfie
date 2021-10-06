@@ -37,21 +37,21 @@
                 @error('release.shelf_order') <span class="error">{{ $message }}</span> @enderror
             </div>
             <input type="hidden" id='thumbnail' name="thumbnail" wire:model="release.thumbnail">
-            <input type="hidden" id='full_image' name="full_image"  wire:model="release.full_image">
+            <input type="hidden" id='full_image' name="full_image" wire:model="release.full_image">
         </div>
-        @if (session()->has('message'))
-            <div class="alert alert-success">
-                {{ session('message') }}
-            </div>
-        @endif
-        @if (session()->has('error'))
-            <div class="alert alert-danger">
-                {{ session('error') }}
-            </div>
-        @endif
     </div>
     <div class="row justify-content-center">
         <input type="submit">
     </div>
+    @if (session()->has('message'))
+        <div class="alert alert-success">
+            {{ session('message') }}
+        </div>
+    @endif
+    @if (session()->has('error'))
+        <div class="alert alert-danger">
+            {{ session('error') }}
+        </div>
+    @endif
 </form>
 
