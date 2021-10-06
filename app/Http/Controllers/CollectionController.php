@@ -30,10 +30,6 @@ class CollectionController extends Controller
             ['oauth_timestamp', Carbon::now()->timestamp],
         ]);
         $auth = 'OAuth ' . $this->authHeader->map(fn(array $header) => implode('=', $header))->implode(',');
-        if (!$user->discogs_username) {
-            $this->getUsername($auth, $user);
-        }
-
         if (count($user->genres) == 0) {
             $this->getGenres($auth, $user);
 
@@ -56,20 +52,6 @@ class CollectionController extends Controller
         $releases->appends(array('sort' => $sort, 'pagination' => $paginationNumber))->links();
 
         return view('index', ['releases' => $releases]);
-    }
-
-    public function getUsername(string $auth, ?Authenticatable $user): void
-    {
-        $response = Http::withHeaders([
-            'Content-Type' => 'application/x-www-form-urlencoded',
-            'Authorization' => $auth,
-            'User-Agent' => config('User-Agent')
-        ])->get('https://api.discogs.com/oauth/identity');
-        $usernameArrayElement = explode(': ', $response->body())[2];
-        $username = explode('",', $usernameArrayElement)[0];
-        $username = str_replace('"', '', $username);
-        $user->discogs_username = $username;
-        $user->save();
     }
 
     /**
@@ -103,7 +85,7 @@ class CollectionController extends Controller
      * @param array|string $pageNumber
      * @param string $auth
      */
-    public function getReleases(?Authenticatable $user,string $auth): void
+    public function getReleases(?Authenticatable $user, string $auth): void
     {
         $nextPage = "https://api.discogs.com/users/$user->discogs_username/collection/folders/0/releases?page=1&sort=artist";
         $i = 1;
@@ -117,15 +99,18 @@ class CollectionController extends Controller
             $nextPage = $releasesArray->pagination->urls->next ?? null;
             $releases = collect($releasesArray->releases);
             $releases->each(function ($item, $key) use ($user, &$i) {
-                $newRelease = Release::query()->updateOrCreate([
-                    'artist' => $item->basic_information->artists[0]->name,
-                    'title' => $item->basic_information->title,
-                    'release_year' => $item->basic_information->year,
-                    'genre_id' => Genre::query()->where('folder_number', $item->folder_id)->first()->id,
-                    'thumbnail' => $item->basic_information->thumb,
-                    'full_image' => $item->basic_information->cover_image,
-                    'shelf_order' => $i,
-                ]);
+                $newRelease = Release::query()->updateOrCreate(
+                    [
+                        'artist' => $item->basic_information->artists[0]->name,
+                        'title' => $item->basic_information->title,
+                    ],
+                    [
+                        'release_year' => $item->basic_information->year,
+                        'genre_id' => Genre::query()->where('folder_number', $item->folder_id)->first()->id,
+                        'thumbnail' => $item->basic_information->thumb,
+                        'full_image' => $item->basic_information->cover_image,
+                        'shelf_order' => $i,
+                    ]);
                 $i++;
                 UserRelease::query()->updateOrCreate([
                     'user_id' => $user->id,

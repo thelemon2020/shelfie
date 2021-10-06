@@ -7,7 +7,6 @@ use App\Http\Controllers\CollectionManage;
 use App\Http\Controllers\DiscogsController;
 use App\Http\Controllers\LoadingPage;
 use App\Http\Controllers\Release\Update\Show;
-use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -25,9 +24,6 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [App\Http\Controllers\HomeController::class, 'home'])->name('home');
 
 Route::get('/register', function () {
-    if (User::all()->first()) {
-        return route('home');
-    }
     return view('register');
 })->name('register');
 

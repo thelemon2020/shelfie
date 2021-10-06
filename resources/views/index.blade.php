@@ -22,33 +22,15 @@
 
 </script>
 <h1 class="text-center">What's on your shelf?</h1>
-@if(\App\Models\User::query()->first()->discogs_token)
-    @if(count($releases) === 0)
-        <div class="text-center">
-            <a class="btn btn-primary" href="{{route('loadingScreen')}}">Build
-                Collection
-            </a>
-        </div>
-    @else
-        @livewire('search')
-        <x-modal></x-modal>
-    @endif
-@else
-    <div class="text-center ">
-        <h3>Please Authenticate with Discogs</h3>
-        <form action="{{route('api.discogs.authenticate')}}" method="post">
-            <div class="form-group justify-content-lg-center">
-                <label for="userNameInput">Discogs Username</label>
-                <input type="text" style="margin-left: auto; margin-right: auto" class="form-control w-25"
-                       id="userNameInput" name="username">
-                @isset($message)
-                    <span class="invalid-feedback d-block" role="alert">
-                         <strong>{{ $message }}</strong>
-                    </span>
-                @endisset
-            </div>
-            <button type="submit" class="btn btn-primary">Authenticate</button>
-        </form>
+@if(count($releases) === 0)
+    <div class="text-center">
+        <a class="btn btn-primary"{{\App\Models\User::query()->first()->discogs_token ? "href=/loadingScreen" : "href=/release/add"}}>
+            Build
+            Collection
+        </a>
     </div>
+@else
+    @livewire('search')
+    <x-modal></x-modal>
 @endif
 @livewireScripts()
