@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Add;
 use App\Http\Controllers\CollectionController;
 use App\Http\Controllers\DiscogsController;
 use App\Http\Controllers\Release\Play;
@@ -36,5 +37,7 @@ Route::get('/release/{id}', ReleaseDetails::class)->name('release.show');
 Route::post("/release/{id}/edit", Update::class)->name('release.edit');
 
 Route::get('/release/{id}/play', Play::class)->name('release.play');
+
+Route::get('/release/create', Add::class)->name('release.create');
 
 

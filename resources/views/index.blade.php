@@ -24,10 +24,24 @@
 <h1 class="text-center">What's on your shelf?</h1>
 @if(count($releases) === 0)
     <div class="text-center">
-        <a class="btn btn-primary"{{\App\Models\User::query()->first()->discogs_token ? "href=/loadingScreen" : "href=/release/add"}}>
-            Build
-            Collection
-        </a>
+        <div class="d-block row">
+            <div class="col-12">Nothing Here! Let's Start Building Your Collection</div>
+        </div>
+        <div class="row">
+            <div class="col-5 justify-content-start">
+                <a class="btn btn-primary" href={{route('api.release.create')}}>
+                    Build Collection
+                </a>
+            </div>
+            <div class="col-2">
+                <strong>OR</strong>
+            </div>
+            <div class="col-5 justify-content-end">
+                <a class="btn btn-primary" href={{route('api.discogs.authenticate')}}>
+                    Authenticate With Discogs
+                </a>
+            </div>
+        </div>
     </div>
 @else
     @livewire('search')
