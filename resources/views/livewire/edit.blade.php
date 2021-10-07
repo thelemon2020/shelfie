@@ -1,13 +1,14 @@
-<form class="col-lg-6 offset-lg-3 " method="post" action="{{route('api.release.edit', ['id'=>$release->id])}}" wire:submit.prevent="submit">
+<form class="col-lg-6 offset-lg-3" wire:submit.prevent="submit">
     <div class="row justify-content-center">
         <div class="col-6">
             <label>Cover Image</label>
             <br>
-            <img id="coverImage" class="img-fluid" src="{{$release->full_image}}">
+            <img id="coverImage" class="img-fluid" src="{{$release->full_image ?? ''}}">
             <br>
             <btn class="btn btn-primary mt-2" onclick="invoke()" data-toggle="modal"
                  data-target="#imageModal">Change Cover Image
             </btn>
+            @error('release.full_image')<span class="error">{{ $message }}</span> @enderror
         </div>
         <div class="col-6 align-self-center">
             <div class="form-group">

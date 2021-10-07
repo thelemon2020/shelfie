@@ -29,7 +29,7 @@
         </div>
         <div class="row">
             <div class="col-5 justify-content-start">
-                <a class="btn btn-primary" href={{route('api.release.create')}}>
+                <a class="btn btn-primary" href={{route('release.create')}}>
                     Build Collection
                 </a>
             </div>

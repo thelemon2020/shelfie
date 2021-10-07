@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Add;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\CollectionController;
@@ -48,8 +49,7 @@ Route::post('collection/manage/shelf', [CollectionManage::class, 'updateShelfOrd
 
 Route::get('/loadingScreen', LoadingPage::class)->name('loadingScreen');
 
+Route::get('/release/create', Add::class)->name('release.create');
+
 Route::get("/release/{id}/edit", Show::class)->name('release.edit.show');
 
-Route::get('testing', function () {
-    return view('testing');
-});

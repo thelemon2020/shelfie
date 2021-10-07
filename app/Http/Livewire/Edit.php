@@ -4,8 +4,9 @@ namespace App\Http\Livewire;
 
 use App\Models\Release;
 use Carbon\Carbon;
+use Exception;
 use Livewire\Component;
-use mysql_xdevapi\Exception;
+
 
 class Edit extends Component
 {
@@ -25,6 +26,7 @@ class Edit extends Component
     {
         $this->validate();
         try {
+            dd('trying to save ', $this->release);
             $this->release->save();
         } catch (Exception $e) {
             session()->flash('error', 'Release could not be updated.');
@@ -39,7 +41,7 @@ class Edit extends Component
             'release.artist' => 'required',
             'release.title' => 'required',
             'release.release_year' => ['required', 'integer', 'max:' . Carbon::now()->year],
-            'release.shelf_order' => ['required', 'integer', 'max:' . Release::query()->count()],
+            'release.shelf_order' => ['required', 'integer', 'max:' . Release::query()->count() + 1],
             'release.thumbnail' => ['required', 'url'],
             'release.full_image' => ['required', 'url'],
         ];
