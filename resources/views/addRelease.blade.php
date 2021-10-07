@@ -43,14 +43,7 @@
         <div class="modal-content">
             <div class="carousel lazy" data-interval="false" id="image-carousel">
                 <div class="carousel-inner">
-                    <div class="text-center">
-                        <div class="spinner-border" role="status">
-                            <span class="sr-only">Loading...</span>
-                        </div>
-                        <div>
-                            <p>Loading Images</p>
-                        </div>
-                    </div>
+
                 </div>
                 <a class="carousel-control-prev" href="#image-carousel" role="button" data-slide="prev">
                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
