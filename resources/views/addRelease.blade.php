@@ -1,21 +1,14 @@
 @livewireStyles()
 <x-navbar></x-navbar>
-@if(request()->query('message') === 'success')
-    <div class="alert alert-success alert-dismissible fade show text-center">Record Updated Successfully
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
-@endif
 <div class="row">
     <div class="col-2">
         <a class="btn-primary btn m-2" href="{{route('collection.index')}}">Back</a>
     </div>
     <div class="col-8">
-        <h1 class="text-center">Edit Release</h1>
+        <h1 class="text-center">Add Release</h1>
     </div>
 </div>
-<livewire:edit :release="$release"/>
+<livewire:edit/>
 <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="imageModal"
      aria-hidden="true" id="imageModal">
     <div class="modal-dialog modal-dialog-centered" style="max-width: max-content; min-width: 27%" role="document">
