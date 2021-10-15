@@ -4,7 +4,7 @@
             <label for="genre">Add a Genre</label>
             <br>
             <input type="text" class="form-control" name="genre" id="genre" wire:model="genre">
-            @error('genre') <span class="error">{{ $message }}</span> @enderror
+            @error('genre') <span class="error"><strong>{{ $message }}</strong></span> @enderror
         </div>
         <div class="modal-footer">
             <div class="mr-auto">
