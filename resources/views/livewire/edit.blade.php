@@ -39,8 +39,7 @@
                 <br>
                 <img id="coverImage" class="img-fluid" src="{{$full_image ?? ''}}">
                 <br>
-                <btn class="btn btn-primary mt-2" onclick="invoke()" data-toggle="modal"
-                     data-target="#imageModal">Change Cover Image
+                <btn class="btn btn-primary mt-2" wire:click="openImageModal">Change Cover Image
                 </btn>
                 @error('release.full_image')<span class="error">{{ $message }}</span> @enderror
             </div>
@@ -116,5 +115,6 @@
             </div>
         </div>
     </div>
+    <livewire:images/>
 </div>
 

@@ -26,6 +26,11 @@ class Edit extends Component
         return ['genreAdded' => 'newGenre'];
     }
 
+    public function openImageModal()
+    {
+        $this->emitTo('images', 'openModal', $this->artist, $this->title);
+    }
+
     public function mount($release = null)
     {
         $this->release = $release;
