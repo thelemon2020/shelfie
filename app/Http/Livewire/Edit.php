@@ -30,6 +30,15 @@ class Edit extends Component
     {
         $this->release = $release;
         $this->allGenres = Genre::all();
+        if ($release) {
+            $this->artist = $release->artist;
+            $this->title = $release->title;
+            $this->release_year = $release->release_year;
+            $this->shelf_order = $release->shelf_order;
+            $this->full_image = $release->full_image;
+            $this->thumbnail = $release->thumbnail;
+            $this->genre = Genre::query()->where('id', $release->genre->id)->first()->id;
+        }
     }
 
     public function render()
@@ -52,10 +61,11 @@ class Edit extends Component
 
     public function submit()
     {
+
+        $this->validate();
         if ($this->release === null) {
             $this->release = Release::query()->make();
         }
-        $this->validate();
         try {
             $this->release->updateOrCreate([
                 'artist' => $this->artist,
@@ -66,8 +76,9 @@ class Edit extends Component
                     'thumbnail' => $this->thumbnail,
                     'full_image' => $this->full_image,
                     'shelf_order' => $this->shelf_order,
-                    'genre_id' => Genre::query()->where('name', $this->genre)->first()->id
+                    'genre_id' => Genre::query()->where('id', $this->genre)->first()->id
                 ]);
+            $this->release->save();
         } catch (Exception $e) {
             session()->flash('error', 'Release could not be updated.');
             return false;

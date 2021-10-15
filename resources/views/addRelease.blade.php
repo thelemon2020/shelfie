@@ -1,33 +1,5 @@
 @livewireStyles()
 <x-navbar></x-navbar>
-<script>
-    invoke = () => {
-        axios.get("/api/release/images", {
-            params: {
-                artist: $("#artist").val(),
-                title: $("#title").val(),
-            }
-        })
-            .then((images) => {
-                let htmlInsert = ''
-                images.data.forEach((image, index) => {
-                    index === 0 ? htmlInsert += `<div class='carousel-item active'><img class="d-block w-100 img-thumbnail" alt="${image.thumbnail}" src="${image.image}"></div>`
-                        : htmlInsert += `<div class='carousel-item'><img class="d-block w-100 img-thumbnail" alt="${image.thumbnail}" src="${image.image}"></div>`
-                })
-                $('#image-carousel > .carousel-inner').html(htmlInsert)
-
-                $('#image-carousel').carousel()
-            })
-    }
-
-    setImage = () => {
-        const selectedImage = $('.carousel-item.active').children('img')[0]
-        $('#thumbnail').val(selectedImage.alt)
-        $('#full_image').val(selectedImage.src)
-        $('#coverImage').attr("src", selectedImage.src)
-        console.log($('#full_image').val())
-    }
-</script>
 <div class="row">
     <div class="col-2">
         <a class="btn-primary btn m-2" href="{{route('collection.index')}}">Back</a>

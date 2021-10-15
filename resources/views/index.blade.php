@@ -22,7 +22,7 @@
 
 </script>
 <h1 class="text-center">What's on your shelf?</h1>
-@if(count($releases) === 0)
+@if(count(\App\Models\Release::all()) === 0)
     <div class="text-center">
         <div class="d-block row">
             <div class="col-12">Nothing Here! Let's Start Building Your Collection</div>
