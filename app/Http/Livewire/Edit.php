@@ -5,13 +5,12 @@ namespace App\Http\Livewire;
 use App\Models\Genre;
 use App\Models\Release;
 use Carbon\Carbon;
-use Exception;
 use Livewire\Component;
 
 
 class Edit extends Component
 {
-    protected $release;
+    private $release;
     public $artist;
     public $title;
     public $release_year;
@@ -23,7 +22,22 @@ class Edit extends Component
 
     protected function getListeners()
     {
-        return ['genreAdded' => 'newGenre'];
+        return [
+            'genreAdded' => 'newGenre',
+            'imageSelected' => 'changeImage',
+        ];
+    }
+
+    public function changeImage($newImage, $newThumbnail)
+    {
+        $this->full_image = $newImage;
+        $this->thumbnail = $newThumbnail;
+        $this->render();
+    }
+
+    public function loadImages()
+    {
+        $this->emitTo('images', 'getImages', $this->artist, $this->title);
     }
 
     public function mount($release = null)
@@ -43,7 +57,7 @@ class Edit extends Component
 
     public function render()
     {
-        return view('livewire.edit', ['release' => $this->release]);
+        return view('livewire.edit');
     }
 
     public function updated($propertyName)
@@ -61,25 +75,45 @@ class Edit extends Component
 
     public function submit()
     {
-
+        dd($this->release);
         $this->validate();
-        if ($this->release === null) {
-            $this->release = Release::query()->make();
-        }
         try {
-            $this->release->updateOrCreate([
-                'artist' => $this->artist,
-                'title' => $this->title,
-                'release_year' => $this->release_year,
-            ],
-                [
-                    'thumbnail' => $this->thumbnail,
-                    'full_image' => $this->full_image,
-                    'shelf_order' => $this->shelf_order,
-                    'genre_id' => Genre::query()->where('id', $this->genre)->first()->id
-                ]);
-            $this->release->save();
-        } catch (Exception $e) {
+            if ($this->release === null) {
+                Release::query()->create(
+                    [
+                        'artist' => $this->artist,
+                        'title' => $this->title,
+                        'release_year' => $this->release_year,
+                        'thumbnail' => $this->thumbnail,
+                        'full_image' => $this->full_image,
+                        'shelf_order' => $this->shelf_order,
+                        'genre_id' => Genre::query()->where('id', $this->genre)->first()->id
+                    ]);
+                $this->reset(
+                    [
+                        'artist',
+                        'title',
+                        'release_year',
+                        'thumbnail',
+                        'full_image',
+                        'shelf_order',
+                        'genre',
+                    ]);
+            } else {
+                $this->release->updateOrCreate([
+                    'artist' => $this->artist,
+                    'title' => $this->title,
+                    'release_year' => $this->release_year,
+                ],
+                    [
+                        'thumbnail' => $this->thumbnail,
+                        'full_image' => $this->full_image,
+                        'shelf_order' => $this->shelf_order,
+                        'genre_id' => Genre::query()->where('id', $this->genre)->first()->id
+                    ]);
+            }
+        } catch
+        (Exception $e) {
             session()->flash('error', 'Release could not be updated.');
             return false;
         }
