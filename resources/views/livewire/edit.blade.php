@@ -4,42 +4,18 @@
             console.log('here')
             $('#genreModal').modal('toggle')
         })
-        invoke = () => {
-            axios.get("/api/release/images", {
-                params: {
-                    artist: $("#artist").val(),
-                    title: $("#title").val(),
-                }
-            })
-                .then((images) => {
-                    let htmlInsert = ''
-                    images.data.forEach((image, index) => {
-                        index === 0 ? htmlInsert += `<div class='carousel-item active'><img class="d-block w-100 img-thumbnail" alt="${image.thumbnail}" src="${image.image}"></div>`
-                            : htmlInsert += `<div class='carousel-item'><img class="d-block w-100 img-thumbnail" alt="${image.thumbnail}" src="${image.image}"></div>`
-                    })
-                    $('#image-carousel > .carousel-inner').html(htmlInsert)
-
-                    $('#image-carousel').carousel()
-                })
-        }
-
-        setImage = () => {
-            const selectedImage = $('.carousel-item.active').children('img')[0]
-        @this.thumbnail
-            = selectedImage.alt
-        @this.full_image
-            = selectedImage.src
-            $('#coverImage').attr("src", selectedImage.src)
-        }
     </script>
     <form class="col-lg-6 offset-lg-3" wire:submit.prevent="submit">
         <div class="row justify-content-center">
             <div class="col-6">
                 <label>Cover Image</label>
                 <br>
-                <img id="coverImage" class="img-fluid" src="{{$full_image ?? ''}}">
+                <img id="coverImage" class="img-thumbnail img-fluid"
+                     style="min-width: 400px; min-height: 400px; max-width: 400px; max-height: 400px"
+                     src="{{$full_image ?? ''}}">
                 <br>
-                <btn class="btn btn-primary mt-2" wire:click="openImageModal">Change Cover Image
+                <btn class="btn btn-primary mt-2" wire:click="loadImages" data-toggle="modal" data-target="#imageModal">
+                    Change Cover Image
                 </btn>
                 @error('release.full_image')<span class="error">{{ $message }}</span> @enderror
             </div>
@@ -115,6 +91,12 @@
             </div>
         </div>
     </div>
-    <livewire:images/>
+    <div class="modal fade" role="dialog" id="imageModal">
+        <div class="modal-dialog modal-dialog-centered" style="max-width: max-content; min-width: 27%" role="document">
+            <div class="modal-content w-auto">
+                <livewire:images/>
+            </div>
+        </div>
+    </div>
 </div>
 

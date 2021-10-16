@@ -2,41 +2,44 @@
 
 namespace App\Http\Livewire;
 
-use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
 use Livewire\Component;
 
 class Images extends Component
 {
-    public $artist;
-    public $title;
     public $images;
-    public $isHidden = true;
+    public $activeImage;
+
 
     public function getListeners()
     {
-        return ['openModal' => 'openModal'];
+        return [
+            'getImages' => 'getImages',
+            'nextImage' => 'nextImage',
+            'previousImage' => 'previousImage'
+        ];
+    }
+
+    public function selectImage()
+    {
+        $this->emitUp('imageSelected', $this->images[$this->activeImage]['image'], $this->images[$this->activeImage]['thumbnail']);
+        $this->reset();
     }
 
     public function render()
     {
-        return view('livewire.images');
+        return view('livewire.images', ['image' => $this->images[$this->activeImage] ?? null]);
     }
 
-    public function openModal($artist, $title)
+    public function getImages($artist = null, $title = null)
     {
-        $this->isHidden = false;
-        $this->artist = $artist;
-        $this->title = $title;
-    }
-
-    public function getImages()
-    {
-        $requestUrl = "http://musicbrainz.org/ws/2/release/?query=artist:" . $this->artist . " AND " . "release:" . $this->title;
+        $this->activeImage = 0;
+        $requestUrl = "http://musicbrainz.org/ws/2/release/?query=artist:" . $artist . " AND " . "release:" . $title;
         $cachedResults = Cache::get($requestUrl);
         if ($cachedResults) {
-            return new JsonResponse($cachedResults);
+            $this->images = $cachedResults;
+            return;
         }
         $response = Http::withHeaders(['accept' => 'application/json'])->get($requestUrl);
         $jsonArray = json_decode($response->body(), true);
@@ -57,4 +60,25 @@ class Images extends Component
         Cache::put($requestUrl, $imageArray);
         $this->images = $imageArray;
     }
+
+    public function nextImage()
+    {
+        if ($this->activeImage === count($this->images) - 1) {
+            $this->activeImage = 0;
+        } else {
+            $this->activeImage++;
+        }
+        $this->render();
+    }
+
+    public function previousImage()
+    {
+        if ($this->activeImage === 0) {
+            $this->activeImage = count($this->images) - 1;
+        } else {
+            $this->activeImage--;
+        }
+        $this->render();
+    }
+
 }
