@@ -5,18 +5,14 @@ namespace App\Http\Livewire;
 use App\Models\Genre;
 use App\Models\Release;
 use Carbon\Carbon;
+use Exception;
 use Livewire\Component;
 
 
 class Edit extends Component
 {
-    private $release;
-    public $artist;
-    public $title;
-    public $release_year;
-    public $shelf_order;
+    public $release;
     public $full_image;
-    public $thumbnail;
     public $allGenres;
     public $genre;
 
@@ -24,40 +20,38 @@ class Edit extends Component
     {
         return [
             'genreAdded' => 'newGenre',
-            'imageSelected' => 'changeImage',
+            'changeImage' => 'changeImage',
         ];
     }
 
     public function changeImage($newImage, $newThumbnail)
     {
         $this->full_image = $newImage;
-        $this->thumbnail = $newThumbnail;
-        $this->render();
+        $this->release->full_image = $newImage;
+        $this->release->thumbnail = $newThumbnail;
     }
 
     public function loadImages()
     {
-        $this->emitTo('images', 'getImages', $this->artist, $this->title);
+        $this->dispatchBrowserEvent('image-modal');
+        $this->emitTo('images', 'getImages', $this->release['artist'], $this->release['title']);
     }
 
     public function mount($release = null)
     {
+        if ($release) {
+            $this->full_image = $release->full_image;
+            $this->genre = Genre::query()->where('id', $release->genre->id)->first()->id;
+        } else {
+            $release = Release::query()->make();
+        }
         $this->release = $release;
         $this->allGenres = Genre::all();
-        if ($release) {
-            $this->artist = $release->artist;
-            $this->title = $release->title;
-            $this->release_year = $release->release_year;
-            $this->shelf_order = $release->shelf_order;
-            $this->full_image = $release->full_image;
-            $this->thumbnail = $release->thumbnail;
-            $this->genre = Genre::query()->where('id', $release->genre->id)->first()->id;
-        }
     }
 
     public function render()
     {
-        return view('livewire.edit');
+        return view('livewire.edit', ['release' => $this->release]);
     }
 
     public function updated($propertyName)
@@ -67,50 +61,44 @@ class Edit extends Component
 
     public function updatedGenre()
     {
-        if ($this->genre === "add-modal") {
+        if ($this->release->genre === "add-modal") {
             $this->dispatchBrowserEvent('add-genre');
+            $this->release->genre = null;
         }
-
     }
 
     public function submit()
     {
-        dd($this->release);
         $this->validate();
         try {
-            if ($this->release === null) {
-                Release::query()->create(
+            if (!$this->release->exists) {
+                $this->release->create(
                     [
-                        'artist' => $this->artist,
-                        'title' => $this->title,
-                        'release_year' => $this->release_year,
-                        'thumbnail' => $this->thumbnail,
+                        'artist' => $this->release->artist,
+                        'title' => $this->release->title,
+                        'release_year' => $this->release->release_year,
+                        'thumbnail' => $this->release->thumbnail,
                         'full_image' => $this->full_image,
-                        'shelf_order' => $this->shelf_order,
-                        'genre_id' => Genre::query()->where('id', $this->genre)->first()->id
+                        'shelf_order' => $this->release->shelf_order,
+                        'genre_id' => $this->release->genre_id
                     ]);
                 $this->reset(
                     [
-                        'artist',
-                        'title',
-                        'release_year',
-                        'thumbnail',
                         'full_image',
-                        'shelf_order',
                         'genre',
+                        'release',
                     ]);
+                $this->release = Release::query()->make();
             } else {
-                $this->release->updateOrCreate([
-                    'artist' => $this->artist,
-                    'title' => $this->title,
-                    'release_year' => $this->release_year,
-                ],
-                    [
-                        'thumbnail' => $this->thumbnail,
-                        'full_image' => $this->full_image,
-                        'shelf_order' => $this->shelf_order,
-                        'genre_id' => Genre::query()->where('id', $this->genre)->first()->id
-                    ]);
+                $this->release->update([
+                    'artist' => $this->release->artist,
+                    'title' => $this->release->title,
+                    'release_year' => $this->release->release_year,
+                    'thumbnail' => $this->release->thumbnail,
+                    'full_image' => $this->full_image,
+                    'shelf_order' => $this->release->shelf_order,
+                    'genre_id' => $this->release->genre_id
+                ]);
             }
         } catch
         (Exception $e) {
@@ -118,6 +106,7 @@ class Edit extends Component
             return false;
         }
         session()->flash('message', 'Release successfully updated.');
+        $this->dispatchBrowserEvent('refreshPage');
     }
 
     public function newGenre()
@@ -129,13 +118,13 @@ class Edit extends Component
     protected function rules()
     {
         return [
-            'artist' => 'required',
-            'title' => 'required',
-            'release_year' => ['required', 'integer', 'max:' . Carbon::now()->year],
-            'shelf_order' => ['required', 'integer', 'max:' . Release::query()->count() + 1],
-            'thumbnail' => ['required', 'url'],
-            'full_image' => ['required', 'url'],
-            'genre' => 'required'
+            'release.artist' => 'required',
+            'release.title' => 'required',
+            'release.release_year' => ['required', 'integer', 'max:' . Carbon::now()->year],
+            'release.shelf_order' => ['required', 'integer', 'max:' . Release::query()->count() + 1],
+            'release.thumbnail' => ['required', 'url'],
+            'release.full_image' => ['required', 'url'],
+            'release.genre_id' => 'required'
         ];
     }
 }
