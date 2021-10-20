@@ -1,5 +1,10 @@
 @livewireStyles()
 <x-navbar></x-navbar>
+<script>
+    window.addEventListener('refreshPage', event => {
+        location.reload()
+    })
+</script>
 @if(request()->query('message') === 'success')
     <div class="alert alert-success alert-dismissible fade show text-center">Record Updated Successfully
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">

@@ -8,33 +8,32 @@ use Livewire\Component;
 
 class Images extends Component
 {
-    public $images;
-    public $activeImage;
+    protected $images;
 
 
     public function getListeners()
     {
         return [
             'getImages' => 'getImages',
-            'nextImage' => 'nextImage',
-            'previousImage' => 'previousImage'
+            'imageSelected' => 'imageSelected'
         ];
     }
 
-    public function selectImage()
+    public function imageSelected()
     {
-        $this->emitUp('imageSelected', $this->images[$this->activeImage]['image'], $this->images[$this->activeImage]['thumbnail']);
+        $this->dispatchBrowserEvent('image-selected');
         $this->reset();
+        $this->render();
     }
 
     public function render()
     {
-        return view('livewire.images', ['image' => $this->images[$this->activeImage] ?? null]);
+        return view('livewire.images', ['images' => $this->images ?? null]);
     }
 
     public function getImages($artist = null, $title = null)
     {
-        $this->activeImage = 0;
+        $this->images = null;
         $requestUrl = "http://musicbrainz.org/ws/2/release/?query=artist:" . $artist . " AND " . "release:" . $title;
         $cachedResults = Cache::get($requestUrl);
         if ($cachedResults) {
@@ -60,25 +59,4 @@ class Images extends Component
         Cache::put($requestUrl, $imageArray);
         $this->images = $imageArray;
     }
-
-    public function nextImage()
-    {
-        if ($this->activeImage === count($this->images) - 1) {
-            $this->activeImage = 0;
-        } else {
-            $this->activeImage++;
-        }
-        $this->render();
-    }
-
-    public function previousImage()
-    {
-        if ($this->activeImage === 0) {
-            $this->activeImage = count($this->images) - 1;
-        } else {
-            $this->activeImage--;
-        }
-        $this->render();
-    }
-
 }

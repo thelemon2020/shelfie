@@ -15,6 +15,8 @@
         </div>
         <div>
             <div class="d-flex mr-1">
+                <a href="{{route(\App\Models\User::all()->first->discogs_username ? 'collection.update' : 'release.create')}}"
+                   type="button" class="btn btn-info mr-1">+</a>
                 <div class="dropdown show mr-1">
                     <select class="form-control" wire:model="pagination">
                         <option value=10>10</option>
