@@ -79,12 +79,6 @@ class CollectionController extends Controller
         }
     }
 
-    /**
-     * @param Authenticatable|null $user
-     * @param array|int|string $genre
-     * @param array|string $pageNumber
-     * @param string $auth
-     */
     public function getReleases(?Authenticatable $user, string $auth): void
     {
         $nextPage = "https://api.discogs.com/users/$user->discogs_username/collection/folders/0/releases?page=1&sort=artist";
@@ -98,14 +92,14 @@ class CollectionController extends Controller
             $releasesArray = json_decode($response->body());
             $nextPage = $releasesArray->pagination->urls->next ?? null;
             $releases = collect($releasesArray->releases);
-            $releases->each(function ($item, $key) use ($user, &$i) {
+            $releases->each(function ($item) use ($user, &$i) {
                 $newRelease = Release::query()->updateOrCreate(
                     [
                         'artist' => $item->basic_information->artists[0]->name,
                         'title' => $item->basic_information->title,
+                        'release_year' => $item->basic_information->year,
                     ],
                     [
-                        'release_year' => $item->basic_information->year,
                         'genre_id' => Genre::query()->where('folder_number', $item->folder_id)->first()->id,
                         'thumbnail' => $item->basic_information->thumb,
                         'full_image' => $item->basic_information->cover_image,
