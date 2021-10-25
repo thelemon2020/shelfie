@@ -15,6 +15,7 @@ class Edit extends Component
     public $full_image;
     public $allGenres;
     public $genre;
+    private $originalShelfOrder;
 
     protected function getListeners()
     {
@@ -46,6 +47,7 @@ class Edit extends Component
             $release = Release::query()->make();
         }
         $this->release = $release;
+        $this->originalShelfOrder = $release->shelf_order;
         $this->allGenres = Genre::all();
     }
 
@@ -82,6 +84,7 @@ class Edit extends Component
                         'shelf_order' => $this->release->shelf_order,
                         'genre_id' => $this->release->genre_id
                     ]);
+                $this->changeShelfOrder();
                 $this->reset(
                     [
                         'full_image',
@@ -90,6 +93,7 @@ class Edit extends Component
                     ]);
                 $this->release = Release::query()->make();
             } else {
+                $this->changeExistingShelfOrder();
                 $this->release->update([
                     'artist' => $this->release->artist,
                     'title' => $this->release->title,
@@ -126,6 +130,18 @@ class Edit extends Component
             'release.full_image' => ['required', 'url'],
             'release.genre_id' => 'required'
         ];
+    }
+
+    private function changeShelfOrder()
+    {
+        $releasesToLowerInOrder = Release::query()->where('shelf_order', '>=', $this->release->shelf_order)->where('id', '!=', $this->release->id)->get();
+        $releasesToLowerInOrder->each(fn($release) => $release->update(['shelf_order' => (int)$release->shelf_order + 1]));
+    }
+
+    private function changeExistingShelfOrder()
+    {
+        $releasesToLowerInOrder = Release::query()->whereBetween('shelf_order', [$this->originalShelfOrder + 1, $this->release->shelf_order])->get();
+        $releasesToLowerInOrder->each(fn($release) => $release->update(['shelf_order' => (int)$release->shelf_order - 1]));
     }
 }
 
