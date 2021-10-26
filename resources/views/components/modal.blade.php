@@ -36,6 +36,7 @@
                     <div class="mr-auto">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                         <a class="btn btn-secondary" id="edit" href="">Edit</a>
+                        <button type="button" class="btn btn-danger" onclick="deleteRecord()">Delete</button>
                     </div>
                     <div class="align-self-end">
                         <button type="button" onclick="playRecord()" data-dismiss="modal" class="btn btn-primary">Play
@@ -54,6 +55,16 @@
             .then((response) => {
                 if (response.data.message === 'success') {
                     window.location.replace("/")
+                }
+            })
+    }
+
+    function deleteRecord() {
+        let id = $('#releaseId').val()
+        axios.get(`/api/release/${id}/delete`)
+            .then((response) => {
+                if (response.data.message === 'success') {
+                    location.reload()
                 }
             })
     }
