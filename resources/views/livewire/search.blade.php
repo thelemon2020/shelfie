@@ -51,9 +51,6 @@
             </div>
         </div>
     </div>
-    <div wire:loading wire:target="refreshCollection">
-        <h1>Refreshing Database</h1>
-    </div>
     <div wire:loading.remove>
         <table class="table">
             <thead>
@@ -83,5 +80,15 @@
             </tbody>
         </table>
         {{ $releases->links() }}
+    </div>
+    <div class="d-inline text-center" wire:loading wire:target="refreshCollection">
+        <div>
+            <div class="spinner-border" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+            <div>
+                <h1>Refreshing Collection</h1>
+            </div>
+        </div>
     </div>
 </div>
