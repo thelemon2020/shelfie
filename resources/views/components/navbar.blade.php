@@ -36,7 +36,6 @@
             <span class="navbar-toggler-icon"></span>
         </button>
     </div>
-    </div>
 </nav>
 </body>
 </html>

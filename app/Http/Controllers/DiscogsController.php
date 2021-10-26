@@ -4,8 +4,10 @@
 namespace App\Http\Controllers;
 
 
+use App\Models\Genre;
 use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
@@ -84,6 +86,27 @@ class DiscogsController extends Controller
         return redirect(route('loadingScreen'));
     }
 
+    public function getGenres(string $auth, ?Authenticatable $user): void
+    {
+        $response = Http::withHeaders([
+            'Content-Type' => 'application/x-www-form-urlencoded',
+            'Authorization' => $auth,
+            'User-Agent' => config('User-Agent')
+        ])->get("https://api.discogs.com/users/$user->discogs_username/collection/folders");
+        $folders = json_decode($response->body())->folders;
+        foreach ($folders as $folder) {
+            if ($folder->name == 'All') {
+                continue;
+            }
+            Genre::query()->create([
+                    'name' => $folder->name,
+                    'folder_number' => $folder->id,
+                    'user_id' => $user->id
+                ]
+            );
+        }
+    }
+
     public function getDiscogsUserName(User $user)
     {
         try {
@@ -105,16 +128,13 @@ class DiscogsController extends Controller
                 'Authorization' => $auth,
                 'User-Agent' => config('User-Agent')
             ])->get('https://api.discogs.com/oauth/identity');
-            $usernameArrayElement = explode(': ', $response->body())[2];
-            $username = explode('",', $usernameArrayElement)[0];
-            $username = str_replace('"', '', $username);
-            $user->discogs_username = $username;
-
+            $jsonUsername = json_decode($response->body());
+            $user->discogs_username = $jsonUsername->username;
             $response = Http::withHeaders([
                 'Content-Type' => 'application/x-www-form-urlencoded',
                 'Authorization' => $auth,
                 'User-Agent' => config('User-Agent')
-            ])->get('https://api.discogs.com/users/' . $username);
+            ])->get('https://api.discogs.com/users/' . $user->discogs_username);
             $userDetails = json_decode($response->body());
             $fullName = explode(' ', $userDetails->name);
             $user->firstname = $fullName[0];
