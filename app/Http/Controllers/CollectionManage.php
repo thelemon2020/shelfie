@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Genre;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class CollectionManage extends Controller
 {
@@ -20,9 +19,11 @@ class CollectionManage extends Controller
     {
         $genreNames = $request->input('genreNames');
         $genreShelfOrder = $request->input('genreShelfOrder');
+        $genreColour = $request->input('genreColour');
         for ($i = 0; $i < count($genreNames); $i++) {
             $genre = Genre::query()->where('name', $genreNames[$i])->first();
             $genre->shelf_order = $genreShelfOrder[$i];
+            $genre->colour = $genreColour[$i];
             $genre->save();
         }
         $this->updateReleaseShelfOrder();
