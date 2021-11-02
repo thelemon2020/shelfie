@@ -94,14 +94,15 @@ class DiscogsController extends Controller
             'User-Agent' => config('User-Agent')
         ])->get("https://api.discogs.com/users/$user->discogs_username/collection/folders");
         $folders = json_decode($response->body())->folders;
-        foreach ($folders as $folder) {
+        foreach ($folders as $key => $folder) {
             if ($folder->name == 'All') {
                 continue;
             }
             Genre::query()->create([
                     'name' => $folder->name,
                     'folder_number' => $folder->id,
-                    'user_id' => $user->id
+                    'user_id' => $user->id,
+                    'shelf_order' => $key + 1
                 ]
             );
         }
