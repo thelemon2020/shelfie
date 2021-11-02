@@ -14,7 +14,7 @@ class AddColourColumnToGenres extends Migration
     public function up()
     {
         Schema::table('genres', function (Blueprint $table) {
-            $table->string('colour')->after('folder_number')->default("#000000");
+            $table->string('colour')->after('folder_number')->default("#FFFFFF");
         });
     }
 
