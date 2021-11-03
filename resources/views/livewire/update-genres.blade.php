@@ -1,5 +1,8 @@
 <div style="min-width: 10%">
     <li class="list-group-item d-flex justify-content-center align-items-center">
+        <button type="button" wire:click="deleteGenre" class="close mr-3 text-danger" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
         <input type="text" class="form-control" wire:model="genre.name">
         <div class="d-flex flex-column text-center ml-1">
             <select wire:model="genre.shelf_order">

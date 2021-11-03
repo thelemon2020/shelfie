@@ -10,7 +10,11 @@ class ManageGenres extends Component
 
     public $genres;
 
-    protected $listeners = ['genreUpdated'];
+    protected $listeners = [
+        'genreUpdated' => 'genreUpdated',
+        'genreDeleted' => 'genreDeleted',
+        'refreshPage' => '$refresh'
+    ];
 
     public function mount()
     {
@@ -19,14 +23,15 @@ class ManageGenres extends Component
 
     public function render()
     {
-        return view('livewire.manage-genres', ['genres' => $this->genres]);
+        return view('livewire.manage-genres');
     }
 
     public function genreUpdated($genre)
     {
-        $this->genres[$genre['shelf_order'] - 1]->name = $genre['name'];
-        $this->genres[$genre['shelf_order'] - 1]->colour = $genre['colour'];
-        $this->genres[$genre['shelf_order'] - 1]->shelf_order = $genre['shelf_order'];
+        $genreToUpdate = $this->genres->where('id', $genre['id'])->first();
+        $genreToUpdate->name = $genre['name'];
+        $genreToUpdate->colour = $genre['colour'];
+        $genreToUpdate->shelf_order = $genre['shelf_order'];
     }
 
     public function submit()
@@ -34,6 +39,7 @@ class ManageGenres extends Component
         foreach ($this->genres as $genre) {
             $genre->save();
         }
+        $this->dispatchBrowserEvent('reloadPage');
     }
 
     protected function rules()
@@ -43,5 +49,12 @@ class ManageGenres extends Component
             'genres.*.shelf_order' => ['required', 'integer', 'max:' . Genre::query()->count() + 1],
             'genres.*.colour' => ['required', 'string', 'regex:/#([a-f0-9]{3}){1,2}\b/i']
         ];
+    }
+
+    public function genreDeleted($genreToDelete)
+    {
+        $genreToUpdate = $this->genres->where('id', $genreToDelete)->first();
+        $genreToUpdate->delete();
+        $this->emit('refreshPage');
     }
 }

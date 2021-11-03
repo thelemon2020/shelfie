@@ -1,4 +1,9 @@
 <div class="m-4">
+    <script>
+        window.addEventListener('reloadPage', event => {
+            location.reload()
+        })
+    </script>
     <div class="text-center">
         <h2>Edit Genres</h2>
     </div>

@@ -32,4 +32,9 @@ class UpdateGenres extends Component
     {
         return view('livewire.update-genres', ['genre' => $this->genre]);
     }
+
+    public function deleteGenre()
+    {
+        $this->emitUp('genreDeleted', $this->genre->id);
+    }
 }
