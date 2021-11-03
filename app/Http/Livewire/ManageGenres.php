@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Models\Genre;
+use App\Models\User;
 use Livewire\Component;
 
 class ManageGenres extends Component
@@ -49,6 +50,16 @@ class ManageGenres extends Component
             'genres.*.shelf_order' => ['required', 'integer', 'max:' . Genre::query()->count() + 1],
             'genres.*.colour' => ['required', 'string', 'regex:/#([a-f0-9]{3}){1,2}\b/i']
         ];
+    }
+
+    public function createGenre()
+    {
+        $newGenre = Genre::query()->make([
+            'name' => '',
+            'user_id' => User::query()->first()->id
+        ]);
+        $this->genres->push($newGenre);
+        $this->dispatchBrowserEvent('reloadPage');
     }
 
     public function genreDeleted($genreToDelete)

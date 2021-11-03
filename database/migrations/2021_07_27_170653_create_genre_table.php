@@ -17,7 +17,7 @@ class CreateGenreTable extends Migration
             $table->id();
             $table->timestamps();
             $table->string('name');
-            $table->string('folder_number');
+            $table->string('folder_number')->nullable();
             $table->unsignedBigInteger('user_id');
             $table->integer('shelf_order')->nullable();
         });
