@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Models\Genre;
+use App\Models\User;
 use Livewire\Component;
 
 class ManageGenres extends Component
