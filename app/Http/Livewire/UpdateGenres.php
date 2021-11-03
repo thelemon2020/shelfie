@@ -18,7 +18,7 @@ class UpdateGenres extends Component
         ];
     }
 
-    public function mount($genre)
+    public function mount($genre = null)
     {
         $this->genre = $genre;
     }
@@ -28,8 +28,18 @@ class UpdateGenres extends Component
         $this->emitUp('genreUpdated', $this->genre);
     }
 
+    public function createNewGenre()
+    {
+        $this->emitUp('genreCreated', $this->genre);
+    }
+
     public function render()
     {
         return view('livewire.update-genres', ['genre' => $this->genre]);
+    }
+
+    public function deleteGenre()
+    {
+        $this->emitUp('genreDeleted', $this->genre->id);
     }
 }

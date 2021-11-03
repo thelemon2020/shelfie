@@ -83,7 +83,7 @@
                     </td>
                     <td>{{$release->artist}}</td>
                     <td>{{$release->title}}</td>
-                    <td>{{$release->genre->name}}</td>
+                    <td>{{$release->genre->name ?? "Uncategorized"}}</td>
                     <td>{{$release->release_year}}</td>
                 </tr>
             @endforeach
