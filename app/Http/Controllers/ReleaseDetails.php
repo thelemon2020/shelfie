@@ -11,7 +11,7 @@ class ReleaseDetails extends Controller
     public function __invoke(Request $request, $id)
     {
         $release = Release::query()->where('id', $id)->first();
-        $release['genre'] = Genre::query()->where('id', $release->genre_id)->first()->name;
+        $release->genre = Genre::query()->where('id', $release->genre_id)->first()->name;
         return json_encode($release);
     }
 }
