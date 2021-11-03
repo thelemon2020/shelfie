@@ -18,7 +18,7 @@ class UpdateGenres extends Component
         ];
     }
 
-    public function mount($genre)
+    public function mount($genre = null)
     {
         $this->genre = $genre;
     }
@@ -26,6 +26,11 @@ class UpdateGenres extends Component
     public function updated()
     {
         $this->emitUp('genreUpdated', $this->genre);
+    }
+
+    public function createNewGenre()
+    {
+        $this->emitUp('genreCreated', $this->genre);
     }
 
     public function render()
