@@ -21,6 +21,8 @@
 </script>
 <body style="overflow-x: hidden">
 <h1 class="text-center">What's on your shelf?</h1>
+
+
 @if(\App\Models\User::query()->first())
     @if(count(\App\Models\Release::all()) !=0)
         <div class=d-flex">

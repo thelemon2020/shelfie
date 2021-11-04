@@ -6,6 +6,8 @@
     "license": "MIT",
     "require": {
         "php": "^8.0",
+        "ext-simplexml": "*",
+        "ext-xml": "*",
         "fico7489/laravel-eloquent-join": "^4.1",
         "fideloper/proxy": "^4.4",
         "fruitcake/laravel-cors": "^2.0",
@@ -16,9 +18,7 @@
         "league/oauth1-client": "^1.9",
         "league/oauth2-client": "^2.6",
         "livewire/livewire": "^2.6",
-        "socialiteproviders/discogs": "^4.1",
-      "ext-xml": "*",
-        "ext-simplexml": "*"
+        "socialiteproviders/discogs": "^4.1"
     },
     "require-dev": {
         "facade/ignition": "^2.5",
