@@ -65,9 +65,9 @@
         </div>
         <div class="d-block row text-center">
             <a href="{{route('collection.index')}}">
-                <button class="btn-lg btn-primary">View Your Collection</button>
+                <button class="btn-md btn-primary">View Your Collection</button>
             </a>
-            <button class="btn-lg btn-primary" onclick="chooseRandom({{\App\Models\Release::query()->count()}})">
+            <button class="btn-md btn-primary" onclick="chooseRandom({{\App\Models\Release::query()->count()}})">
                 Select Random Album
             </button>
         </div>

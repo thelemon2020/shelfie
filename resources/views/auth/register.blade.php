@@ -50,7 +50,7 @@
             <div class="text-center">
                 <h3>Please Authenticate with Discogs</h3>
                 <form action="{{route('api.discogs.authenticate')}}" method="post">
-                    <div class="form-group justify-content-lg-center">
+                    <div class="form-group justify-content-mg-center">
                         @isset($discogsMessage)
                             <span class="invalid-feedback d-block" role="alert">
                                 <strong>{{ $discogsMessage }}</strong>

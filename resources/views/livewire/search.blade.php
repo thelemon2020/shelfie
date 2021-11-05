@@ -76,7 +76,7 @@
             @foreach($releases as $release)
                 <tr>
                     <td>
-                        <img class="img-thumbnail img-fluid" style="width: 250px; height: 250px"
+                        <img class="img-thumbnail img-fluid w-50"
                              onClick="invoke({{$release->id}})"
                              src="{{$release->full_image}}"
                              alt="{{$release->artist . "-" . $release->title}}"/>

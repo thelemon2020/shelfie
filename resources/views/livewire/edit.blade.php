@@ -12,7 +12,7 @@
             $('#imageModal').modal('toggle')
         })
     </script>
-    <form class="col-lg-6 offset-lg-3" wire:submit.prevent="submit">
+    <form class="col-md-6 offset-md-3" wire:submit.prevent="submit">
         <div class="row justify-content-center">
             <div class="col-6">
                 <label>Cover Image</label>

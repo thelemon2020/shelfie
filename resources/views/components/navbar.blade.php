@@ -11,7 +11,7 @@
     <title>Shelfie</title>
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-light bg-primary">
+<nav class="navbar navbar-expand-md navbar-light bg-primary">
     <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
         <ul class="navbar-nav mr-auto">
             @if(!\App\Models\User::query()->first())
