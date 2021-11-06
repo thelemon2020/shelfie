@@ -20,7 +20,7 @@
     }
 </script>
 <body style="overflow-x: hidden;">
-<h2 class="text-center">What's on your shelf?</h2>
+<h3 class="text-center">What's on your shelf?</h3>
 @if(\App\Models\User::query()->first())
     @if(count(\App\Models\Release::all()) !=0)
         <div class=d-flex">
