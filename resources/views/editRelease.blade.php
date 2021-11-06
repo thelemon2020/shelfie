@@ -13,10 +13,10 @@
     </div>
 @endif
 <div class="row">
-    <div class="col-2">
+    <div class="col-md-2">
         <a class="btn-primary btn m-2" href="{{route('collection.index')}}">Back</a>
     </div>
-    <div class="col-8">
+    <div class="col-md-8">
         <h1 class="text-center">Edit Release</h1>
     </div>
 </div>

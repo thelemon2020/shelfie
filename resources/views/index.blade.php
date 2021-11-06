@@ -25,18 +25,18 @@
 @if(count(\App\Models\Release::all()) === 0)
     <div class="text-center">
         <div class="d-block row">
-            <div class="col-12">Nothing Here! Let's Start Building Your Collection</div>
+            <div class="col-md-12">Nothing Here! Let's Start Building Your Collection</div>
         </div>
         <div class="row">
-            <div class="col-5 justify-content-start">
+            <div class="col-md-5 justify-content-start">
                 <a class="btn btn-primary" href={{route('release.create')}}>
                     Build Collection
                 </a>
             </div>
-            <div class="col-2">
+            <div class="col-md-2">
                 <strong>OR</strong>
             </div>
-            <div class="col-5 justify-content-end">
+            <div class="col-md-5 justify-content-end">
                 <a class="btn btn-primary" href={{route('api.discogs.authenticate')}}>
                     Authenticate With Discogs
                 </a>

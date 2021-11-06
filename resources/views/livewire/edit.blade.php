@@ -14,7 +14,7 @@
     </script>
     <form class="col-md-6 offset-md-3" wire:submit.prevent="submit">
         <div class="row justify-content-center">
-            <div class="col-6">
+            <div class="col-md-6">
                 <label>Cover Image</label>
                 <br>
                 <img id="coverImage" class="img-thumbnail img-fluid"
@@ -26,7 +26,7 @@
                 </btn>
                 @error('release.full_image')<span class="error">{{ $message }}</span> @enderror
             </div>
-            <div class="col-6 align-self-center">
+            <div class="col-md-6 align-self-center">
                 <div class="form-group">
                     <label for="artist">Artist</label>
                     <br>

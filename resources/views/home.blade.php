@@ -25,7 +25,7 @@
     @if(count(\App\Models\Release::all()) !=0)
         <div class=d-flex">
             <div class="row justify-content-start">
-                <div class="col-6 align-self-start text-center">
+                <div class="col-md-6 align-self-start text-center">
                     <h2 class="m-0">Last Played</h2>
                     <br>
                     @if(!$lastPlayed)
@@ -38,7 +38,7 @@
                     @endif
 
                 </div>
-                <div class="col-5 align-self-center text-center">
+                <div class="col-md-5 align-self-center text-center">
                     <h2>Most Played Records</h2>
                     <table class="table">
                         <thead>

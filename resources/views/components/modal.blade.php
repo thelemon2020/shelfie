@@ -14,10 +14,10 @@
             <div class="modal-body">
                 <div class="container ">
                     <div class="row">
-                        <div class="col-auto align-self-center">
+                        <div class="col-md-auto align-self-center">
                             <img id="thumbnail" class="w-50 h-50" src="">
                         </div>
-                        <div class="col-auto align-self-center">
+                        <div class="col-md-auto align-self-center">
                             <label><b>Artist</b></label>
                             <p id="artist"></p>
                             <label><b>Title</b></label>
