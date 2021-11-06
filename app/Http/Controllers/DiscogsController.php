@@ -33,11 +33,15 @@ class DiscogsController extends Controller
         $auth = 'OAuth ' . $authHeader->map(function (array $header) {
                 return implode('=', $header);
             })->implode(',');
-        $response = Http::withHeaders([
-            'Content-Type' => 'application/x-www-form-urlencoded',
-            'Authorization' => $auth,
-            'User-Agent' => 'RecordCollectionDisplay/0.2 +https://github.com/thelemon2020/RecordCollectionDisplay'
-        ])->get('https://api.discogs.com/oauth/request_token');
+        try {
+            $response = Http::withHeaders([
+                'Content-Type' => 'application/x-www-form-urlencoded',
+                'Authorization' => $auth,
+                'User-Agent' => 'RecordCollectionDisplay/0.2 +https://github.com/thelemon2020/RecordCollectionDisplay'
+            ])->get('https://api.discogs.com/oauth/request_token');
+        } catch (\Exception $ex) {
+            dd($ex);
+        }
         if ($response->status() != 200) {
             return view('auth.register', ['discogsMessage' => 'Could Not Authenticate']);
         }
