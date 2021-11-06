@@ -5,14 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
-    <script>
-        $(document).ready(function () {
-            $(window).resize(function () {
-                $(".fullheight").height($(document).height());
-            });
-        });
-    </script>
-
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <title>Shelfie</title>
