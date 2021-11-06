@@ -5,7 +5,7 @@
         location.reload()
     })
 </script>
-<body class="body-main">
+<body>
 @if(request()->query('message') === 'success')
     <div class="alert alert-success alert-dismissible fade show text-center">Record Updated Successfully
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">

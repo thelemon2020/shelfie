@@ -19,14 +19,14 @@
             })
     }
 </script>
-<body class="body-main" style="overflow-x: hidden;">
-<h1 class="text-center">What's on your shelf?</h1>
+<body style="overflow-x: hidden;">
+<h2 class="text-center">What's on your shelf?</h2>
 @if(\App\Models\User::query()->first())
     @if(count(\App\Models\Release::all()) !=0)
         <div class=d-flex">
             <div class="row justify-content-start">
                 <div class="col-md-6 align-self-start text-center">
-                    <h2 class="m-0">Last Played</h2>
+                    <h3 class="m-0">Last Played</h3>
                     <br>
                     @if(!$lastPlayed)
                         <h4>Nothing! Go Spin A Record!</h4>
@@ -39,7 +39,7 @@
 
                 </div>
                 <div class="col-md-5 align-self-center text-center">
-                    <h2>Most Played Records</h2>
+                    <h3>Most Played Records</h3>
                     <table class="table">
                         <thead>
                         <th class="w-25"></th>

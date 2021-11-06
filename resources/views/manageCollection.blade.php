@@ -1,7 +1,7 @@
 <x-navbar></x-navbar>
 @livewireStyles
 <body>
-<div class="body-main">
+<div>
     <a class="btn btn-primary m-2" href="{{route('collection.index')}}">Return to Collection</a>
 </div>
 </body>
