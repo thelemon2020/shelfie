@@ -17,8 +17,7 @@
             <div class="col-md-6">
                 <label>Cover Image</label>
                 <br>
-                <img id="coverImage" class="img-thumbnail img-fluid"
-                     style="min-width: 400px; min-height: 400px; max-width: 400px; max-height: 400px"
+                <img id="coverImage" class="img-thumbnail img-fluid h-50 w-50"
                      src="{{$full_image ?? ''}}">
                 <br>
                 <btn class="btn btn-primary mt-2" wire:click="loadImages">
