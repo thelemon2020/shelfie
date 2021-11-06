@@ -4,7 +4,7 @@
         let id = Math.floor(Math.random() * (maxInt - 1) + 1)
         axios.get(`/api/release/${id}`)
             .then((release) => {
-                $('#exampleModalLong').modal('show')
+                $('#detailsModal').modal('show')
                 $('#thumbnail').attr("src", release.data.full_image)
                 $('#artist').text(release.data.artist)
                 $('#title').text(release.data.title)

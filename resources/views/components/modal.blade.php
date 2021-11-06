@@ -1,9 +1,8 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-<!-- Modal -->
-<div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+<div class="modal fade" id="detailsModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
      aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" style="max-width: max-content; min-width: 27%" role="document">
+    <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="modal-title">Record Details</h5>
@@ -12,12 +11,12 @@
                 </button>
             </div>
             <div class="modal-body">
-                <div class="container ">
+                <div class="container-md">
                     <div class="row">
-                        <div class="col-md-auto align-self-center">
-                            <img id="thumbnail" class="w-50 h-50" src="">
+                        <div class="col-md-8 align-self-center">
+                            <img id="thumbnail" class="w-100 h-100" src="">
                         </div>
-                        <div class="col-md-auto align-self-center">
+                        <div class="col-md-4">
                             <label><b>Artist</b></label>
                             <p id="artist"></p>
                             <label><b>Title</b></label>
