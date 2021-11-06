@@ -14,7 +14,7 @@
     </script>
     <form class="col-md-6 offset-md-3" wire:submit.prevent="submit">
         <div class="row justify-content-center">
-            <div class="col-md-6">
+            <div class="col-md-6 align-self-center">
                 <label>Cover Image</label>
                 <br>
                 <img id="coverImage" class="img-thumbnail img-fluid"
