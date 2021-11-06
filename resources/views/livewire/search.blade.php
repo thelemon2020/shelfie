@@ -1,7 +1,13 @@
 <div xmlns:wire="http://www.w3.org/1999/xhtml">
+    <script>
+        window.addEventListener('keypress', event => {
+            let element = event.target;
+            element.dispatchEvent(new Event('input'));
+        })
+    </script>
     <div style="display: flex; justify-content: space-between">
         <div class="d-flex m-1">
-            <input wire:model="search" type="text"
+            <input wire:model="search" id="searchField" type="text"
                    placeholder="Search records..." {{$sort == 'shelf_order' ? 'disabled' : ''}}/>
             <div class="dropdown show">
                 <select class="form-control ml-1" wire:model="sort">
@@ -51,7 +57,7 @@
             </div>
         </div>
     </div>
-    <div wire:loading.flex>
+    <div wire:loading.flex wire:target="refreshCollection">
         <div class="mx-auto text-center">
             <div class="spinner-border" role="status">
                 <span class="sr-only">Loading...</span>
@@ -61,7 +67,7 @@
             </div>
         </div>
     </div>
-    <div wire:loading.remove>
+    <div wire:loading.remove wire:target="refreshCollection">
         <table class="table">
             <thead>
             <tr>

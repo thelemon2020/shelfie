@@ -19,7 +19,6 @@
                 console.log(error);
             })
     }
-
 </script>
 <body>
 <h1 class="text-center">What's on your shelf?</h1>

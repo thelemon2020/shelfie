@@ -4,6 +4,10 @@
     window.addEventListener('refreshPage', event => {
         location.reload()
     })
+    window.addEventListener('keypress', event => {
+        let element = event.target;
+        element.dispatchEvent(new Event('input'));
+    })
 </script>
 <body>
 @if(request()->query('message') === 'success')
