@@ -5,6 +5,7 @@
         location.reload()
     })
 </script>
+<body>
 <div class="row">
     <div class="col-md-2">
         <a class="btn-primary btn m-2" href="{{route('collection.index')}}">Back</a>
@@ -14,5 +15,6 @@
     </div>
 </div>
 <livewire:edit/>
+</body>
 @livewireScripts()
 

@@ -21,6 +21,7 @@
     }
 
 </script>
+<body>
 <h1 class="text-center">What's on your shelf?</h1>
 @if(count(\App\Models\Release::all()) === 0)
     <div class="text-center">
@@ -47,4 +48,5 @@
     @livewire('search')
     <x-modal></x-modal>
 @endif
+</body>
 @livewireScripts()

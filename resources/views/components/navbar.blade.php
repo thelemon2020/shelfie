@@ -5,6 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
+    <script>
+        $(document).ready(function () {
+            $(window).resize(function () {
+                $(".fullheight").height($(document).height());
+            });
+        });
+    </script>
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -22,7 +29,7 @@
             @endif
         </ul>
     </div>
-    <div div class="navbar-collapse collapse w-100 order-3 dual-collapse2" id="navbarSupportedContent">
+    <div class="navbar-collapse collapse w-100 order-3 dual-collapse2" id="navbarSupportedContent">
         <ul class="navbar-nav ml-auto">
             @if(!\App\Models\User::query()->first())
                 <li class="nav-item"><a class="nav-link" href="{{route('register')}}">Register</a></li>
