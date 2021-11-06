@@ -75,7 +75,7 @@
     <x-modal></x-modal>
 @else
     <div class="text-center">
-        <button class="btn btn-primary"><a href="{{route('register')}}">Register Your Account</a></button>
+        <button class="btn btn-primary"><a href="{{route('register')}}"></a>Register Your Account</button>
     </div>
 @endif
 
