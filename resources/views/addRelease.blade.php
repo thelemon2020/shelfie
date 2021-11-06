@@ -5,7 +5,7 @@
         location.reload()
     })
 </script>
-<body>
+<body class="body-main">
 <div class="row">
     <div class="col-md-2">
         <a class="btn-primary btn m-2" href="{{route('collection.index')}}">Back</a>

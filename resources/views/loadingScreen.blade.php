@@ -1,6 +1,6 @@
 <x-navbar></x-navbar>
 @livewireStyles
-<body>
+<body class="body-main">
 <div class="text-center">
     <livewire:loading/>
 </div>
