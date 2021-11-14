@@ -52,7 +52,7 @@
         let id = $('#releaseId').val()
         axios.get(`/api/release/${id}/play`)
             .then((response) => {
-                if (response.data.message === 'success') {
+                if (response.data.success === true) {
                     window.location.replace("/")
                 }
             })

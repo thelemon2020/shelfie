@@ -4,9 +4,9 @@ use App\Http\Controllers\CollectionController;
 use App\Http\Controllers\DiscogsController;
 use App\Http\Controllers\Release\Delete;
 use App\Http\Controllers\Release\Play;
+use App\Http\Controllers\Release\Show;
 use App\Http\Controllers\Release\Update\Images;
 use App\Http\Controllers\Release\Update\Update;
-use App\Http\Controllers\ReleaseDetails;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -32,7 +32,7 @@ Route::post('/discogs/authenticate', [DiscogsController::class, 'authenticate'])
 
 Route::get('/release/images', Images::class)->name('release.images');
 
-Route::get('/release/{id}', ReleaseDetails::class)->name('release.show');
+Route::get('/release/{id}', Show::class)->name('release.show');
 
 Route::get('/release/{id}/delete', Delete::class)->name('release.delete');
 
