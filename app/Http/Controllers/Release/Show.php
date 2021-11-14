@@ -17,6 +17,7 @@ class Show extends Controller
 
         $selectRecord = [
             "seg" => [
+                'id' => '0',
                 "i" =>
                     [round(($release->shelf_order - 1) / 2), [255, 0, 0]]
             ]];

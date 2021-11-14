@@ -24,11 +24,6 @@ class Play extends Controller
                 ]]];
 
         $response = Http::asJson()->post('192.168.0.196/json', $selectRecord);
-        $selectRecord = [
-            "seg" => [
-                "i" => [
-                    'on' => true
-                ]]];
         return $response;
     }
 }
