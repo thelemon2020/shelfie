@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Release;
 use App\Http\Controllers\Controller;
 use App\Models\Release;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
 
 class Play extends Controller
@@ -17,12 +18,8 @@ class Play extends Controller
             'last_played_at' => Carbon::now()
         ]);
 
-        $selectRecord = [
-            "seg" => [
-                "i" => [
-                    'on' => false
-                ]]];
-
+        $selectRecord = Cache::get('selected-record');
+        unset($selectRecord['seg']['i']);
         $response = Http::asJson()->post('192.168.0.196/json', $selectRecord);
         return $response;
     }

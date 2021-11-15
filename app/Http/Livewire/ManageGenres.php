@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Http\Controllers\Lights\Genre\Index;
 use App\Models\Genre;
 use App\Models\User;
 use Livewire\Component;
@@ -40,6 +41,7 @@ class ManageGenres extends Component
         foreach ($this->genres as $genre) {
             $genre->save();
         }
+        cache()->delete(Index::LIGHTS_GENRE);
         $this->dispatchBrowserEvent('reloadPage');
     }
 

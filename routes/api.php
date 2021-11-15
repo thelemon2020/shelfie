@@ -3,6 +3,7 @@
 use App\Http\Controllers\CollectionController;
 use App\Http\Controllers\DiscogsController;
 use App\Http\Controllers\Lights\Genre\Index;
+use App\Http\Controllers\Lights\Reset;
 use App\Http\Controllers\Release\Delete;
 use App\Http\Controllers\Release\Play;
 use App\Http\Controllers\Release\Show;
@@ -42,6 +43,8 @@ Route::post("/release/{id}/edit", Update::class)->name('release.edit');
 Route::get('/release/{id}/play', Play::class)->name('release.play');
 
 Route::get('/lights/genres', Index::class)->name('lights.genres');
+
+Route::get('/lights/reset', Reset::class)->name('lights.reset');
 
 
 
