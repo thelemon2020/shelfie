@@ -6,7 +6,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="modal-title">Record Details</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close" onclick="turnOffLight()" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -33,8 +33,10 @@
                 </div>
                 <div class="modal-footer">
                     <div class="mr-auto">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <a class="btn btn-secondary" id="edit" href="">Edit</a>
+                        <button type="button" class="btn btn-secondary" onclick="turnOffLight()" data-dismiss="modal">
+                            Close
+                        </button>
+                        <a class="btn btn-secondary" id="edit" onclick="turnOffLight()" href="">Edit</a>
                         <button type="button" class="btn btn-danger" onclick="deleteRecord()">Delete</button>
                     </div>
                     <div class="align-self-end">
@@ -48,8 +50,13 @@
     </div>
 </div>
 <script>
+    function turnOffLight() {
+        axios.get(`/api/lights/turnoffone`)
+    }
+
     function playRecord() {
         let id = $('#releaseId').val()
+        turnOffLight()
         axios.get(`/api/release/${id}/play`)
             .then((response) => {
                 if (response.data.success === true) {
@@ -59,6 +66,7 @@
     }
 
     function deleteRecord() {
+        turnOffLight()
         let id = $('#releaseId').val()
         axios.get(`/api/release/${id}/delete`)
             .then((response) => {
