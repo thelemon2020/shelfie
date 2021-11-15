@@ -44,7 +44,7 @@ class Show extends Controller
                 ]];
         }
         Cache::put('selected-record', $selectRecord);
-        Http::post('192.168.0.196/json', $selectRecord);
+        Http::post(User::all()->first()->userSettings->wled_ip . '/json', $selectRecord);
         return json_encode($release);
     }
 }

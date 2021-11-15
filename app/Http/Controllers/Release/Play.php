@@ -17,6 +17,6 @@ class Play extends Controller
             'last_played_at' => Carbon::now()
         ]);
 
-        return new JsonResponse(null, 200);
+        return new JsonResponse(['success' => true], 200);
     }
 }

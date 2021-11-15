@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Lights\Genre;
 
 use App\Http\Controllers\Controller;
 use App\Models\Genre;
+use App\Models\User;
 use Illuminate\Support\Facades\Http;
 
 class Index extends Controller
@@ -26,7 +27,7 @@ class Index extends Controller
             $seg[] = $segment;
         }
         $payload = ['seg' => $seg];
-        $response = Http::post('192.168.0.196/json', $payload);
+        $response = Http::post(User::all()->first()->userSettings->wled_ip . '/json', $payload);
         return $response;
     }
 }
