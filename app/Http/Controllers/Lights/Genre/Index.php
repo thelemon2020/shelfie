@@ -15,7 +15,7 @@ class Index extends Controller
         $position = 0;
         $seg = [];
         foreach ($genres as $genre) {
-            $size = round($genre->releases()->count() / 2);
+            $size = floor($genre->releases()->count() / 2);
             list($r, $g, $b) = sscanf($genre->colour, "#%02x%02x%02x");
             $segment = [
                 'start' => $position,

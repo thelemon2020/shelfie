@@ -22,7 +22,7 @@ class Show extends Controller
                 "seg" => [
                     'id' => '0',
                     "i" =>
-                        [(int)round(($release->shelf_order - 1) / 2), [255, 255, 255]]
+                        [(int)floor(($release->shelf_order - 1) / 2), [255, 255, 255]]
                 ]];
         } else {
             $releases = $genre->releases;
@@ -38,7 +38,7 @@ class Show extends Controller
                     'id' => $genre->shelf_order - 1,
                     "i" =>
                         [
-                            (int)round($shelf_order / 2),
+                            (int)floor($shelf_order / 2),
                             [255, 255, 255]
                         ]
                 ]];
