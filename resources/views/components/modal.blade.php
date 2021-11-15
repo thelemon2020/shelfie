@@ -1,4 +1,8 @@
 <!DOCTYPE html>
+<script
+    src="https://code.jquery.com/jquery-3.6.0.js"
+    integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+    crossorigin="anonymous"></script>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <div class="modal fade" id="detailsModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
      aria-hidden="true">
@@ -6,7 +10,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="modal-title">Record Details</h5>
-                <button type="button" class="close" onclick="turnOffLight()" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -33,7 +37,7 @@
                 </div>
                 <div class="modal-footer">
                     <div class="mr-auto">
-                        <button type="button" class="btn btn-secondary" onclick="turnOffLight()" data-dismiss="modal">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
                             Close
                         </button>
                         <a class="btn btn-secondary" id="edit" onclick="turnOffLight()" href="">Edit</a>
@@ -75,5 +79,11 @@
                 }
             })
     }
+
+    $(function () {
+        $('#detailsModal').on('hide.bs.modal', function (e) {
+            turnOffLight()
+        })
+    })
 </script>
 </html>
