@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use App\Models\Genre;
 use App\Models\User;
+use Illuminate\Support\Facades\Http;
 use Livewire\Component;
 
 class ManageGenres extends Component
@@ -40,6 +41,7 @@ class ManageGenres extends Component
         foreach ($this->genres as $genre) {
             $genre->save();
         }
+        Http::get(route('api.lights.genres'));
         $this->dispatchBrowserEvent('reloadPage');
     }
 

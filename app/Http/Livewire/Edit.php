@@ -42,7 +42,7 @@ class Edit extends Component
     {
         if ($release) {
             $this->full_image = $release->full_image;
-            $this->genre = Genre::query()->where('id', $release->genre->id)->first()->id;
+            $this->genre = Genre::query()->where('id', $release->genre?->id)->first()->id ?? null;
         } else {
             $release = Release::query()->make();
         }
