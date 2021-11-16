@@ -54,4 +54,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Genre::class);
     }
+
+    public function userSettings()
+    {
+        return $this->hasOne(UserSettings::class);
+    }
 }

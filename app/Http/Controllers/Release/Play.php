@@ -16,6 +16,7 @@ class Play extends Controller
             'times_played' => ++$release->times_played,
             'last_played_at' => Carbon::now()
         ]);
-        return new JsonResponse(['message' => 'success']);
+
+        return new JsonResponse(['success' => true], 200);
     }
 }

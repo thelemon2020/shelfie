@@ -2,11 +2,14 @@
 
 use App\Http\Controllers\CollectionController;
 use App\Http\Controllers\DiscogsController;
+use App\Http\Controllers\Lights\Genre\Index;
+use App\Http\Controllers\Lights\Reset;
+use App\Http\Controllers\Lights\TurnOffIndividual;
 use App\Http\Controllers\Release\Delete;
 use App\Http\Controllers\Release\Play;
+use App\Http\Controllers\Release\Show;
 use App\Http\Controllers\Release\Update\Images;
 use App\Http\Controllers\Release\Update\Update;
-use App\Http\Controllers\ReleaseDetails;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -32,13 +35,20 @@ Route::post('/discogs/authenticate', [DiscogsController::class, 'authenticate'])
 
 Route::get('/release/images', Images::class)->name('release.images');
 
-Route::get('/release/{id}', ReleaseDetails::class)->name('release.show');
+Route::get('/release/{id}', Show::class)->name('release.show');
 
 Route::get('/release/{id}/delete', Delete::class)->name('release.delete');
 
 Route::post("/release/{id}/edit", Update::class)->name('release.edit');
 
 Route::get('/release/{id}/play', Play::class)->name('release.play');
+
+Route::get('/lights/genres', Index::class)->name('lights.genres');
+
+Route::get('/lights/reset', Reset::class)->name('lights.reset');
+
+Route::get('/lights/turnoffone', TurnOffIndividual::class)->name('lights.turnoffone');
+
 
 
 

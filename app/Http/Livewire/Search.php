@@ -35,10 +35,11 @@ class Search extends Component
     public function render()
     {
         if ($this->sort == 'genre') {
-            $releases = Release::query()
+            $releases = Genre::query()
                 ->join('genres', 'releases.genre_id', '=', 'genres.id')
                 ->where('genres.name', "LIKE", "%$this->search%")
                 ->orderBy('genres.name', 'ASC')
+                ->select('releases.*')
                 ->paginate($this->pagination);
         } else {
             $releases = Release::query()->where($this->sort, "LIKE", "%$this->search%")->orderBy($this->sort, 'ASC')->paginate($this->pagination);

@@ -1,5 +1,13 @@
 <x-navbar></x-navbar>
 <script>
+    function resetLights() {
+        axios.get(`/api/lights/reset`)
+    }
+
+    function lightGenres() {
+        axios.get(`/api/lights/genres`)
+    }
+
     function chooseRandom(maxInt) {
         let id = Math.floor(Math.random() * (maxInt - 1) + 1)
         axios.get(`/api/release/${id}`)
@@ -67,6 +75,8 @@
             <a href="{{route('collection.index')}}">
                 <button class="btn-md btn-primary">View Your Collection</button>
             </a>
+            <button class="btn-md btn-primary" onclick="lightGenres()">Genre View</button>
+            <button class="btn-md btn-primary" onclick="resetLights()">Reset Lights</button>
             <button class="btn-md btn-primary" onclick="chooseRandom({{\App\Models\Release::query()->count()}})">
                 Select Random Album
             </button>
