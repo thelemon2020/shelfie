@@ -22,4 +22,9 @@ class Release extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function segment()
+    {
+        return $this->belongsTo(LightSegment::class);
+    }
 }

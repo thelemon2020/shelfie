@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class LightSegement extends Model
+class LightSegment extends Model
 {
     use HasFactory;
 
@@ -15,4 +15,9 @@ class LightSegement extends Model
         'size',
         'shelf_order',
     ];
+
+    public function releases()
+    {
+        return $this->hasMany(Release::class);
+    }
 }
