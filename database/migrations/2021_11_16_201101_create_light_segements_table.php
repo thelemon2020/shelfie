@@ -13,7 +13,7 @@ class CreateLightSegementsTable extends Migration
      */
     public function up()
     {
-        Schema::create('light_segements', function (Blueprint $table) {
+        Schema::create('light_segments', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->integer('shelf_order');
@@ -30,6 +30,6 @@ class CreateLightSegementsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('light_segements');
+        Schema::dropIfExists('light_segments');
     }
 }
