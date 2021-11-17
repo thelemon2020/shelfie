@@ -38,7 +38,7 @@ class UpdateLightSegments extends Component
         return view('livewire.update-light-segments', ['segment' => $this->segment]);
     }
 
-    public function deleteGenre()
+    public function deleteSegment()
     {
         $this->emitUp('segmentDeleted', $this->segment->id);
     }

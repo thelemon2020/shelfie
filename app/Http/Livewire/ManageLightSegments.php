@@ -24,7 +24,7 @@ class ManageLightSegments extends Component
 
     public function render()
     {
-        return view('livewire.manage-light-segments');
+        return view('livewire.manage-light-segments', ['segments' => $this->segments]);
     }
 
     public function segmentUpdated($segment)
@@ -49,7 +49,8 @@ class ManageLightSegments extends Component
         return [
             'segments.*.name' => 'required|string',
             'segments.*.shelf_order' => ['required', 'integer', 'max:' . LightSegment::query()->count() + 1],
-            'segments.*.colour' => ['required', 'string', 'regex:/#([a-f0-9]{3}){1,2}\b/i']
+            'segments.*.colour' => ['required', 'string', 'regex:/#([a-f0-9]{3}){1,2}\b/i'],
+            'segments.*.size' => ['required']
         ];
     }
 
@@ -60,12 +61,13 @@ class ManageLightSegments extends Component
         $this->emit('refreshPage');
     }
 
-    public function segmentGenre()
+    public function createSegment()
     {
-        $newSegment = LightSegment::query()->make([
+        $newSegment = LightSegment::query()->create([
             'name' => '',
+            'shelf_order' => LightSegment::all()->count() - 1,
+            'size' => 0,
         ]);
         $this->segments->push($newSegment);
-        $this->dispatchBrowserEvent('reloadPage');
     }
 }

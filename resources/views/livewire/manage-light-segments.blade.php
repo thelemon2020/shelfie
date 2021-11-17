@@ -1,6 +1,6 @@
 <div class="m-4">
     <script>
-        window.addEventListener('reloadPage', event => {
+        window.addEventListener('reloadLightsComponent', event => {
             location.reload()
         })
     </script>
@@ -8,10 +8,10 @@
         <form wire:submit.prevent="submit">
             <ul class="d-flex flex-wrap list-group-horizontal">
                 @foreach($segments as $segment)
-                    <livewire:update-light-segments :genre="$segment" :wire:key="$segment->id"/>
+                    <livewire:update-light-segments :segment="$segment" :wire:key="$segment->id"/>
                 @endforeach
                 <li class="d-flex justify-content-center align-items-center" style="width: 18%">
-                    <button class="btn btn-primary" wire:click="createSegment">
+                    <button type="button" class="btn btn-primary" wire:click="createSegment">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                              class="bi bi-plus-circle" viewBox="0 0 16 16">
                             <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
@@ -22,7 +22,7 @@
                     </button>
                 </li>
             </ul>
-            <input type="submit" class="btn btn-primary mt-1"/>
+            <button type="submit" class="btn btn-primary mt-1">Submit</button>
         </form>
     </div>
 </div>
