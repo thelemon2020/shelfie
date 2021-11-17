@@ -7,8 +7,8 @@
     <div class="d-inline text-center">
         <form wire:submit.prevent="submit">
             <ul class="d-flex flex-wrap list-group-horizontal">
-                @foreach($genres as $genre)
-                    <livewire:update-genres :genre="$segment" :wire:key="$segment->id"/>
+                @foreach($segments as $segment)
+                    <livewire:update-light-segments :genre="$segment" :wire:key="$segment->id"/>
                 @endforeach
                 <li class="d-flex justify-content-center align-items-center" style="width: 18%">
                     <button class="btn btn-primary" wire:click="createSegment">
@@ -18,7 +18,7 @@
                             <path
                                 d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
                         </svg>
-                        Add Genre
+                        Add LED Segment
                     </button>
                 </li>
             </ul>
