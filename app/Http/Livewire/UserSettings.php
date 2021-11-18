@@ -15,7 +15,7 @@ class UserSettings extends Component
 
     protected $rules = [
         'userSettings.wled_ip' => 'sometimes|ip',
-        'userSettings.sort_method' => 'required|in:artist,title,genre,release_year',
+        'userSettings.sort_method' => 'required|in:artist,title,genre_id,release_year',
         'userSettings.sort_order' => 'required|in:asc,desc,custom'
     ];
 
@@ -42,11 +42,12 @@ class UserSettings extends Component
                 $this->generateNewLightSegments($sort_method);
             }
         }
+        $this->emit('refreshSegments');
     }
 
     public function generateAlphabet()
     {
-        if ($this->userSettings->sort_method === 'asc' || $this->userSettings->sort_method === 'custom') {
+        if ($this->userSettings->sort_order != 'desc') {
             return range('A', 'Z');
         }
         return range('Z', 'A');
@@ -66,8 +67,8 @@ class UserSettings extends Component
             }
             $segments = LightSegment::all();
             $segments->each(function ($segment) use ($sort_method) {
-                $releases = Release::query()->where($sort_method, 'LIKE', $segment->name . '%');
-                $releases->update(['segment_id' => $segment->id]);
+                $releases = Release::query()->where($sort_method, 'LIKE', $segment->name . '%')->orderBy($sort_method)->get();
+                $this->updateReleases($releases, $segment);
             });
         } else if ($sort_method === 'genre_id') {
             $genres = Genre::all();
@@ -80,11 +81,11 @@ class UserSettings extends Component
             }
             $segments = LightSegment::all();
             $segments->each(function ($segment) use ($sort_method) {
-                $releases = Release::query()->where($sort_method, $segment->name);
-                $releases->update(['segment_id' => $segment->id]);
+                $releases = Release::query()->where($sort_method, Genre::query()->where('name', $segment->name)->first()->id)->get();
+                $this->updateReleases($releases, $segment);
             });
         } else if ($sort_method === 'release_year') {
-            $releaseYears = Release::query()->groupBy('release_year')->pluck('release_year', 'release_year');
+            $releaseYears = Release::query()->groupBy('release_year')->pluck('release_year');
             foreach ($releaseYears as $key => $releaseYear) {
                 LightSegment::query()->create([
                     'name' => $releaseYear,
@@ -94,11 +95,19 @@ class UserSettings extends Component
             }
             $segments = LightSegment::all();
             $segments->each(function ($segment) use ($sort_method) {
-                $releases = Release::query()->where($sort_method, $segment->name);
-                $releases->update(['segment_id' => $segment->id]);
+                $releases = Release::query()->where($sort_method, $segment->name)->get();
+                $this->updateReleases($releases, $segment);
             });
         }
+    }
 
-
+    private function updateReleases($releases, $segment): void
+    {
+        foreach ($releases as $key => $release) {
+            $release->update([
+                'segment_id' => $segment->id,
+                'shelf_order' => $key
+            ]);
+        }
     }
 }

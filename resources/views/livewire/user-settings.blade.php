@@ -19,7 +19,7 @@
                             <option selected="selected">Choose a Sorting Method...</option>
                             <option value="artist">Artist</option>
                             <option value="title">Title</option>
-                            <option value="genre">Genre</option>
+                            <option value="genre_id">Genre</option>
                             <option value="release_year">Release Year</option>
                             <option value="custom">Custom</option>
                         </select>

@@ -14,7 +14,8 @@ class ManageLightSegments extends Component
     protected $listeners = [
         'segmentUpdated' => 'segmentUpdated',
         'segmentDeleted' => 'segmentDeleted',
-        'refreshPage' => '$refresh'
+        'refreshPage' => '$refresh',
+        'refreshSegments' => 'reloadSegments'
     ];
 
     public function mount()
@@ -69,5 +70,11 @@ class ManageLightSegments extends Component
             'size' => 0,
         ]);
         $this->segments->push($newSegment);
+    }
+
+    public function reloadSegments()
+    {
+        $this->segments = LightSegment::all();
+        $this->render();
     }
 }

@@ -51,12 +51,9 @@
                 </button>
             </h5>
         </div>
-        <div id="collapseTwo" class="collapse" aria-labelledby="headingThree" data-parent="#accordion"
-             @if(\App\Models\User::all()->first()->userSettings->wled_ip === null)disabled @endif>
+        <div id="collapseTwo" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
             <div class="card-body">
-                @if(\App\Models\User::all()->first()->userSettings->sort_method == 'genre')
-                    <livewire:manage-genres/>
-                @endif
+                <livewire:manage-genres/>
             </div>
         </div>
     </div>

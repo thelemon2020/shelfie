@@ -13,6 +13,7 @@ class UpdateLightSegments extends Component
     {
         return [
             'segment.name' => 'required|string',
+            'segment.size' => 'required|integer',
             'segment.shelf_order' => ['required', 'integer', 'max:' . LightSegment::query()->count() + 1],
             'segment.colour' => ['required', 'string', 'regex:/#([a-f0-9]{3}){1,2}\b/i']
         ];
