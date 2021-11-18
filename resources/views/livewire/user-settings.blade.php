@@ -21,6 +21,7 @@
                             <option value="title">Title</option>
                             <option value="genre">Genre</option>
                             <option value="release_year">Release Year</option>
+                            <option value="custom">Custom</option>
                         </select>
                     </div>
                     @error('userSettings.sort_method') <span class="error">{{ $message }}</span> @enderror
