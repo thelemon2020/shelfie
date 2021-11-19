@@ -41,7 +41,7 @@ class ManageLightSegments extends Component
         foreach ($this->segments as $segment) {
             $segment->save();
         }
-        Http::get(route('api.lights.genres'));
+        Http::get(route('api.lights.segments.turn-on'));
         $this->dispatchBrowserEvent('reloadPage');
     }
 

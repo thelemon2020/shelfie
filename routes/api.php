@@ -2,9 +2,11 @@
 
 use App\Http\Controllers\CollectionController;
 use App\Http\Controllers\DiscogsController;
-use App\Http\Controllers\Lights\Genre\Index;
-use App\Http\Controllers\Lights\Reset;
-use App\Http\Controllers\Lights\TurnOffIndividual;
+use App\Http\Controllers\Lights\Toggle;
+use App\Http\Controllers\Lights\TurnOff\Light;
+use App\Http\Controllers\Lights\TurnOn\All;
+use App\Http\Controllers\Lights\TurnOn\Segments;
+use App\Http\Controllers\Lights\TurnOn\Strip;
 use App\Http\Controllers\Release\Delete;
 use App\Http\Controllers\Release\Play;
 use App\Http\Controllers\Release\Show;
@@ -43,11 +45,15 @@ Route::post("/release/{id}/edit", Update::class)->name('release.edit');
 
 Route::get('/release/{id}/play', Play::class)->name('release.play');
 
-Route::get('/lights/genres', Index::class)->name('lights.genres');
+Route::get('/lights/light/off', Light::class)->name('lights.light.turn-off');
 
-Route::get('/lights/reset', Reset::class)->name('lights.reset');
+Route::get('/lights/segments', Segments::class)->name('lights.segments.turn-on');
 
-Route::get('/lights/turnoffone', TurnOffIndividual::class)->name('lights.turnoffone');
+Route::get('/lights/strip', Strip::class)->name('lights.strip.turn-on');
+
+Route::get('/lights/toggle', Toggle::class)->name('lights.toggle');
+
+
 
 
 

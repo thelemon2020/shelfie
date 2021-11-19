@@ -42,6 +42,7 @@ class UserSettings extends Component
                 $this->generateNewLightSegments($sort_method);
             }
         }
+        $this->originalSortMethod = $this->userSettings->sort_method;
         $this->emit('refreshSegments');
     }
 
@@ -50,6 +51,7 @@ class UserSettings extends Component
         if ($this->userSettings->sort_order != 'desc') {
             return range('A', 'Z');
         }
+
         return range('Z', 'A');
 
     }
@@ -61,7 +63,7 @@ class UserSettings extends Component
             foreach ($alphabet as $key => $letter) {
                 LightSegment::query()->create([
                     'name' => $letter,
-                    'shelf_order' => $key,
+                    'shelf_order' => $key + 1,
                     'size' => Release::query()->where($sort_method, 'LIKE', $letter . '%')->count(),
                 ]);
             }
@@ -75,7 +77,7 @@ class UserSettings extends Component
             foreach ($genres as $key => $genre) {
                 LightSegment::query()->create([
                     'name' => $genre->name,
-                    'shelf_order' => $key,
+                    'shelf_order' => $key + 1,
                     'size' => Release::query()->where($sort_method, $genre->id)->count(),
                 ]);
             }
@@ -89,7 +91,7 @@ class UserSettings extends Component
             foreach ($releaseYears as $key => $releaseYear) {
                 LightSegment::query()->create([
                     'name' => $releaseYear,
-                    'shelf_order' => $key,
+                    'shelf_order' => $key + 1,
                     'size' => Release::query()->where($sort_method, $releaseYear)->count(),
                 ]);
             }
@@ -106,7 +108,7 @@ class UserSettings extends Component
         foreach ($releases as $key => $release) {
             $release->update([
                 'segment_id' => $segment->id,
-                'shelf_order' => $key
+                'shelf_order' => $key + 1
             ]);
         }
     }
