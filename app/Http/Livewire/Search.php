@@ -79,7 +79,7 @@ class Search extends Component
         ])->get("https://api.discogs.com/users/$user->discogs_username/collection/folders");
         $folders = json_decode($response->body())->folders;
         foreach ($folders as $folder) {
-            if ($folder->name == 'All') {
+            if ($folder->name == 'Strip') {
                 continue;
             } else if (!Genre::query()->where('folder_number', $folder->id)->first()) {
                 Genre::query()->create([

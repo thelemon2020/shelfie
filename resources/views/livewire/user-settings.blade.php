@@ -12,15 +12,16 @@
             </div>
             <div class="col">
                 <div class="form-group">
-                    <label for="genre">Genre</label>
+                    <label for="sort-method">Sort Method</label>
                     <br>
                     <div class="dropdown show">
-                        <select class="form-control ml-1" wire:model="userSettings.sort_method">
+                        <select class="form-control ml-1" id="sort-method" wire:model="userSettings.sort_method">
                             <option selected="selected">Choose a Sorting Method...</option>
                             <option value="artist">Artist</option>
                             <option value="title">Title</option>
-                            <option value="genre">Genre</option>
+                            <option value="genre_id">Genre</option>
                             <option value="release_year">Release Year</option>
+                            <option value="custom">Custom</option>
                         </select>
                     </div>
                     @error('userSettings.sort_method') <span class="error">{{ $message }}</span> @enderror

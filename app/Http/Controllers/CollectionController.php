@@ -67,7 +67,7 @@ class CollectionController extends Controller
         ])->get("https://api.discogs.com/users/$user->discogs_username/collection/folders");
         $folders = json_decode($response->body())->folders;
         foreach ($folders as $folder) {
-            if ($folder->name == 'All') {
+            if ($folder->name == 'Strip') {
                 continue;
             }
             Genre::query()->create([

@@ -5,6 +5,8 @@ namespace App\Models;
 use Fico7489\Laravel\EloquentJoin\Traits\EloquentJoin;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Http;
 
 class Release extends Model
 {
@@ -21,5 +23,25 @@ class Release extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function segment()
+    {
+        return $this->belongsTo(LightSegment::class, 'segment_id', 'id');
+    }
+
+    public function turnOnLight()
+    {
+        $selectRecord = [
+            "seg" => [
+                'id' => $this->segment->shelf_order - 1,
+                "i" =>
+                    [
+                        (int)floor($this->shelf_order / 2),
+                        [255, 255, 255]
+                    ]
+            ]];
+        Cache::put('selected-record', $selectRecord);
+        Http::post(User::all()->first()->userSettings->wled_ip . '/json', $selectRecord);
     }
 }

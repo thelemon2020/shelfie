@@ -1,11 +1,19 @@
 <x-navbar></x-navbar>
 <script>
-    function resetLights() {
-        axios.get(`/api/lights/reset`)
+    function toggleLights() {
+        axios.get(`/api/lights/toggle`)
     }
 
-    function lightGenres() {
-        axios.get(`/api/lights/genres`)
+    function lightSegments() {
+        axios.get(`/api/lights/segments`)
+    }
+
+    function lightStrip() {
+        axios.get(`/api/lights/strip`, {
+            params: {
+                colour: '#FFFFFF'
+            }
+        })
     }
 
     function chooseRandom(maxInt) {
@@ -75,8 +83,9 @@
             <a href="{{route('collection.index')}}">
                 <button class="btn-md btn-primary">View Your Collection</button>
             </a>
-            <button class="btn-md btn-primary" onclick="lightGenres()">Genre View</button>
-            <button class="btn-md btn-primary" onclick="resetLights()">Reset Lights</button>
+            <button class="btn-md btn-primary" onclick="lightSegments()">Collection View</button>
+            <button class="btn-md btn-primary" onclick="lightStrip()">Solid View</button>
+            <button class="btn-md btn-primary" onclick="toggleLights()">Toggle Lights</button>
             <button class="btn-md btn-primary" onclick="chooseRandom({{\App\Models\Release::query()->count()}})">
                 Select Random Album
             </button>

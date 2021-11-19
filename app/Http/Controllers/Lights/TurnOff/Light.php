@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Lights;
+namespace App\Http\Controllers\Lights\TurnOff;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
 
-class TurnOffIndividual extends Controller
+class Light extends Controller
 {
     public function __invoke()
     {

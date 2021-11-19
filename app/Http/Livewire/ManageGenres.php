@@ -58,16 +58,15 @@ class ManageGenres extends Component
     {
         $genreToUpdate = $this->genres->where('id', $genreToDelete)->first();
         $genreToUpdate->delete();
-        $this->emit('refreshPage');
+        $this->emitSelf('refreshPage');
     }
 
     public function createGenre()
     {
-        $newGenre = Genre::query()->make([
+        $newGenre = Genre::query()->create([
             'name' => '',
             'user_id' => User::query()->first()->id
         ]);
         $this->genres->push($newGenre);
-        $this->dispatchBrowserEvent('reloadPage');
     }
 }

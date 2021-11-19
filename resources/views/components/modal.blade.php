@@ -55,7 +55,7 @@
 </div>
 <script>
     function turnOffLight() {
-        axios.get(`/api/lights/turnoffone`)
+        axios.get(`/api/lights/light/off`)
     }
 
     function playRecord() {

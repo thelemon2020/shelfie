@@ -27,20 +27,33 @@
         </div>
     </div>
     <div class="card">
-        <div class="card-header" id="headingTwo">
+        <div class="card-header" id="headingThree">
             <h5 class="mb-0">
-                <button class="btn btn-link" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false"
-                        aria-controls="collapseOne">
-                    LED Settings
+                <button class="btn btn-link" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false"
+                        aria-controls="collapseThree"
+                        @if(\App\Models\User::all()->first()->userSettings->wled_ip === null || \App\Models\User::all()->first()->userSettings->wled_ip === '')disabled @endif>
+                    Manage Lights
                 </button>
             </h5>
         </div>
-        <div id="collapseTwo" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion"
-             @if(\App\Models\User::all()->first()->userSettings->wled_ip === null)disabled @endif>
+        <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
             <div class="card-body">
-                @if(\App\Models\User::all()->first()->userSettings->sort_method == 'genre')
-                    <livewire:manage-genres/>
-                @endif
+                <livewire:manage-light-segments/>
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-header" id="headingTwo">
+            <h5 class="mb-0">
+                <button class="btn btn-link" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false"
+                        aria-controls="collapseTwo">
+                    Manage Genres
+                </button>
+            </h5>
+        </div>
+        <div id="collapseTwo" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+            <div class="card-body">
+                <livewire:manage-genres/>
             </div>
         </div>
     </div>
