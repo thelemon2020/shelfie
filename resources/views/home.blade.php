@@ -1,21 +1,5 @@
 <x-navbar></x-navbar>
 <script>
-    function toggleLights() {
-        axios.get(`/api/lights/toggle`)
-    }
-
-    function lightSegments() {
-        axios.get(`/api/lights/segments`)
-    }
-
-    function lightStrip() {
-        axios.get(`/api/lights/strip`, {
-            params: {
-                colour: '#FFFFFF'
-            }
-        })
-    }
-
     function chooseRandom(maxInt) {
         let id = Math.floor(Math.random() * (maxInt - 1) + 1)
         axios.get(`/api/light/${id}/on`)
@@ -37,13 +21,12 @@
     }
 </script>
 <body style="overflow-x: hidden;">
-<h2 class="text-center">What's on your shelf?</h2>
 @if(\App\Models\User::query()->first())
     @if(count(\App\Models\Release::all()) !=0)
         <div class=d-flex">
             <div class="row justify-content-start">
-                <div class="col-md-6 align-self-start text-center">
-                    <h3 class="m-0">Last Played</h3>
+                <div class="col-6 align-self-start text-center">
+                    <h3 class="mt-2 mb-0">Last Played</h3>
                     <br>
                     @if(!$lastPlayed)
                         <h4>Nothing! Go Spin A Record!</h4>
@@ -53,9 +36,8 @@
                         <h4>Last Played
                             At: {{\Carbon\Carbon::parse($lastPlayed->last_played_at)->setTimezone('America/Toronto')->format('g:i a d/m/y') ?? ''}}</h4>
                     @endif
-
                 </div>
-                <div class="col-md-5 align-self-center text-center">
+                <div class="col-5 align-self-center text-center">
                     <h3>Most Played Records</h3>
                     <table class="table">
                         <thead>
@@ -84,9 +66,6 @@
             <a href="{{route('collection.index')}}">
                 <button class="btn-md btn-primary">View Your Collection</button>
             </a>
-            <button class="btn-md btn-primary" onclick="lightSegments()">Collection View</button>
-            <button class="btn-md btn-primary" onclick="lightStrip()">Solid View</button>
-            <button class="btn-md btn-primary" onclick="toggleLights()">Toggle Lights</button>
             <button class="btn-md btn-primary" onclick="chooseRandom({{\App\Models\Release::query()->count()}})">
                 Select Random Album
             </button>
