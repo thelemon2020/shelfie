@@ -7,9 +7,6 @@
     })
 </script>
 <body>
-<div>
-    <a class="btn btn-primary m-2" href="{{route('collection.index')}}">Return to Collection</a>
-</div>
 <div id="accordion">
     <div class="card">
         <div class="card-header" id="headingOne">
