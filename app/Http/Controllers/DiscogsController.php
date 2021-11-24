@@ -3,9 +3,9 @@
 
 namespace App\Http\Controllers;
 
-
 use App\Models\Genre;
 use App\Models\User;
+use App\Models\UserSettings;
 use Carbon\Carbon;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Http\Request;
@@ -87,6 +87,9 @@ class DiscogsController extends Controller
             return view('auth.register', ['discogsMessage' => 'Could Not Authenticate']);
         }
         $user->save();
+        UserSettings::query()->create([
+            'user_id' => $user->id,
+        ]);
         return redirect(route('loadingScreen'));
     }
 
