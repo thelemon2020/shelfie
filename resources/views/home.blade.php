@@ -18,6 +18,7 @@
 
     function chooseRandom(maxInt) {
         let id = Math.floor(Math.random() * (maxInt - 1) + 1)
+        axios.get(`/api/light/${id}/on`)
         axios.get(`/api/release/${id}`)
             .then((release) => {
                 $('#detailsModal').modal('show')

@@ -45,6 +45,8 @@ Route::post("/release/{id}/edit", Update::class)->name('release.edit');
 
 Route::get('/release/{id}/play', Play::class)->name('release.play');
 
+Route::get('/lights/light/{id}/on', \App\Http\Controllers\Lights\TurnOn\Light::class)->name('lights.light.turn-on');
+
 Route::get('/lights/light/off', Light::class)->name('lights.light.turn-off');
 
 Route::get('/lights/segments', Segments::class)->name('lights.segments.turn-on');

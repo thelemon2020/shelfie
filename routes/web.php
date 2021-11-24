@@ -39,8 +39,6 @@ Route::post('/login', [LoginController::class, 'login'])->name('login');
 
 Route::get('/discogs/callback', [DiscogsController::class, 'callback'])->name('discogs.callback');
 
-Route::get('/collection/build', [CollectionController::class, 'buildCollection'])->name('collection.build');
-
 Route::get('/collection/index', [CollectionController::class, 'showCollection'])->name('collection.index');
 
 Route::get('collection/manage', [CollectionManage::class, 'loadPage'])->name('collection.manage.index');

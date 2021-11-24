@@ -14,7 +14,6 @@ class Show extends Controller
         $release = Release::query()->where('id', $id)->first();
         $genre = Genre::query()->where('id', $release->genre_id)->first() ?? null;
         $release->genre = $genre->name ?? 'Uncategorized';
-        $release->turnOnLight();
         return json_encode($release);
     }
 }

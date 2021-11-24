@@ -2,6 +2,7 @@
 @livewireStyles()
 <script>
     invoke = (id) => {
+        axios.get(`/api/lights/light/${id}/on`)
         axios.get(`/api/release/${id}`)
             .then((release) => {
                 console.log('release', release.data)
