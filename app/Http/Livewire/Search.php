@@ -35,7 +35,7 @@ class Search extends Component
     public function render()
     {
         if ($this->sort == 'genre') {
-            $releases = Genre::query()
+            $releases = Release::query()
                 ->join('genres', 'releases.genre_id', '=', 'genres.id')
                 ->where('genres.name', "LIKE", "%$this->search%")
                 ->orderBy('genres.name', 'ASC')
