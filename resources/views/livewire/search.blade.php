@@ -57,20 +57,25 @@
             </div>
         </div>
     </div>
-    <div wire:loading.remove wire:target="refreshCollection">
+    <div wire:loading.remove wire:target="refreshCollection" style="overflow-y: auto; height: 80vh">
         <table class="table">
-            <thead>
+            <thead style="position: sticky; top: 0">
             <tr>
-                <th class="w-25" scope="col">Image</th>
-                <th scope="col">Artist</th>
-                <th scope="col">Title</th>
-                <th scope="col">Genre</th>
-                <th scope="col">Year</th>
+                <th style="background-color: black; color: white" class="w-25" scope="col"></th>
+                <th style="background-color: black; color: white" scope="col"></th>
+                <th style="background-color: black; color: white" scope="col">Artist</th>
+                <th style="background-color: black; color: white" scope="col">Title</th>
+                <th style="background-color: black; color: white" scope="col">Genre</th>
+                <th style="background-color: black; color: white" scope="col">Year</th>
             </tr>
             </thead>
             <tbody>
             @foreach($releases as $release)
                 <tr>
+                    <td>
+                        <div class="d-flex align-content-around"><i class="fas fa-play-circle fa-2x"></i> <i
+                                class="fas fa-info-circle  fa-2x"></i></div>
+                    </td>
                     <td>
                         <img class="img-thumbnail img-fluid w-50"
                              onClick="invoke({{$release->id}})"
