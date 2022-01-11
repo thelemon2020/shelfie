@@ -61,8 +61,8 @@
         <table class="table">
             <thead style="position: sticky; top: 0">
             <tr>
-                <th style="background-color: black; color: white" class="w-25" scope="col"></th>
                 <th style="background-color: black; color: white" scope="col"></th>
+                <th style="background-color: black; color: white" class="w-25" scope="col"></th>
                 <th style="background-color: black; color: white" scope="col">Artist</th>
                 <th style="background-color: black; color: white" scope="col">Title</th>
                 <th style="background-color: black; color: white" scope="col">Genre</th>
@@ -72,13 +72,13 @@
             <tbody>
             @foreach($releases as $release)
                 <tr>
-                    <td>
-                        <div class="d-flex align-content-around"><i class="fas fa-play-circle fa-2x"></i> <i
-                                class="fas fa-info-circle  fa-2x"></i></div>
+                    <td class="align-middle">
+                        <i class="fas fa-play-circle fa-3x p-2" style="cursor: pointer"></i>
+                        <i class="fas fa-info-circle fa-3x p-2" style="cursor: pointer"
+                           onClick="getDetails({{$release->id}})"></i>
                     </td>
                     <td>
-                        <img class="img-thumbnail img-fluid w-50"
-                             onClick="invoke({{$release->id}})"
+                        <img class="img-thumbnail img-fluid w-75"
                              src="{{$release->full_image}}"
                              alt="{{$release->artist . "-" . $release->title}}"/>
                     </td>
@@ -90,6 +90,10 @@
             @endforeach
             </tbody>
         </table>
-        {{ $releases->links() }}
+        <div class="d-flex">
+            <div class="mx-auto">
+                {{ $releases->links() }}
+            </div>
+        </div>
     </div>
 </div>
