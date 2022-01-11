@@ -18,6 +18,9 @@
                     <option value="shelf_order">Shelf Order</option>
                 </select>
             </div>
+            <button class="btn btn-primary ml-2" wire:click="selectRandom">
+                <i class="fas fa-random"></i>
+            </button>
         </div>
         <div>
             <div class="d-flex mr-1">
