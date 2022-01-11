@@ -73,8 +73,7 @@
             @foreach($releases as $release)
                 <tr>
                     <td class="align-middle">
-                        <i class="fas fa-play-circle fa-3x p-2" style="cursor: pointer"></i>
-                        <i class="fas fa-info-circle fa-3x p-2" style="cursor: pointer"
+                        <i class="fas fa-info-circle fa-5x p-2" style="cursor: pointer"
                            onClick="getDetails({{$release->id}})"></i>
                     </td>
                     <td>

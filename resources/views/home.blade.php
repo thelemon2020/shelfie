@@ -1,12 +1,16 @@
 <x-navbar></x-navbar>
 @livewireStyles()
 <script>
+    window.addEventListener('keypress', event => {
+        let element = event.target;
+        element.dispatchEvent(new Event('input'));
+    })
+
     function chooseRandom(maxInt) {
         let id = Math.floor(Math.random() * (maxInt - 1) + 1)
         axios.get(`/api/light/${id}/on`)
         axios.get(`/api/release/${id}`)
             .then((release) => {
-                $('#detailsModal').modal('show')
                 $('#thumbnail').attr("src", release.data.full_image)
                 $('#artist').text(release.data.artist)
                 $('#title').text(release.data.title)
@@ -15,6 +19,7 @@
                 $('#lastPlayed').text(release.data.last_played_at ?? "Never")
                 $('#edit').attr("href", `/release/${release.data.id}/edit`)
                 $('#releaseId').val(release.data.id)
+                $('#detailsModal').modal('show')
             })
             .catch(error => {
                 console.log(error);
