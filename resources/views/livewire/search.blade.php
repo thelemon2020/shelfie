@@ -35,13 +35,7 @@
                 </div>
                 @if(\App\Models\User::all()->first->discogs_username)
                     <button class="btn btn-primary mr-2" wire:click="refreshCollection">
-                        <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
-                             width="24" height="24"
-                             viewBox="0 0 24 24"
-                             style=" fill:#000000;">
-                            <path
-                                d="M 7.1601562 3 L 8.7617188 5 L 19 5 L 19 15 L 16 15 L 20 20 L 24 15 L 21 15 L 21 3 L 7.1601562 3 z M 4 4 L 0 9 L 3 9 L 3 21 L 16.839844 21 L 15.238281 19 L 5 19 L 5 9 L 8 9 L 4 4 z"></path>
-                        </svg>
+                        <i class="fas fa-sync"></i>
                     </button>
                 @else()
                     <a href="{{route('release.create')}}"
