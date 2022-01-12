@@ -45,6 +45,7 @@
                 console.log(error);
             })
     }
+
 </script>
 <div style="overflow-x: hidden;">
     @if(\App\Models\User::query()->first())
@@ -75,5 +76,6 @@
             </a>
         </div>
     @endif
-    @livewireScripts()
+        @livewireScripts()
 </div>
+<x-controls></x-controls>

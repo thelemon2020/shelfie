@@ -22,7 +22,6 @@
     }
 </script>
 <body>
-<h1 class="text-center">What's on your shelf?</h1>
 @if(count(\App\Models\Release::all()) === 0)
     <div class="text-center">
         <div class="d-block row">
@@ -49,4 +48,5 @@
     <x-modal></x-modal>
 @endif
 </body>
+<x-controls></x-controls>
 @livewireScripts()

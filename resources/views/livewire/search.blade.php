@@ -18,7 +18,7 @@
                     <option value="shelf_order">Shelf Order</option>
                 </select>
             </div>
-            <button class="btn btn-primary ml-2" wire:click="selectRandom">
+            <button class="btn btn-primary ml-2" onclick="chooseRandom({{\App\Models\Release::query()->count()}})">
                 <i class="fas fa-random"></i>
             </button>
         </div>

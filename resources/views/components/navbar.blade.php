@@ -28,33 +28,6 @@
     <title>Shelfie</title>
 </head>
 <body style="max-height: 100vh; overflow-y: hidden">
-<div class="collapse" id="lightOptions">
-    <div class="bg-primary p-4 text-center">
-        <h4 class="text-white">LED Options</h4>
-        <div class="container">
-            <div class="row">
-                <div class="col">
-                    <button class="btn btn-primary border border-dark" onclick="toggleLights()">On/Off</button>
-                </div>
-                <div class="col">
-                    <button class="btn btn-primary border border-dark" onclick="lightSegments()">Segments</button>
-                </div>
-                <div class="col">
-                    <button class="btn btn-primary border border-dark" onclick="lightStrip()">Solid</button>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col">
-                </div>
-                <div class="col">
-                </div>
-                <div class="col mt-1">
-                    <input type="color" id="stripColour">
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 <nav class="navbar navbar-expand-md navbar-light bg-primary">
     <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
         <ul class="navbar-nav mr-auto mt-1">
