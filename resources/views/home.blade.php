@@ -8,7 +8,7 @@
 
     function chooseRandom(maxInt) {
         let id = Math.floor(Math.random() * (maxInt - 1) + 1)
-        axios.get(`/api/light/${id}/on`)
+        axios.get(`/api/lights/light/${id}/on`)
         axios.get(`/api/release/${id}`)
             .then((release) => {
                 $('#thumbnail').attr("src", release.data.full_image)
@@ -78,4 +78,4 @@
     @endif
         @livewireScripts()
 </div>
-<x-controls></x-controls>
+<x-controls :nowPlaying="$nowPlaying"></x-controls>
