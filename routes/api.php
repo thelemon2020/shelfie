@@ -43,17 +43,17 @@ Route::get('/release/{id}/delete', Delete::class)->name('release.delete');
 
 Route::post("/release/{id}/edit", Update::class)->name('release.edit');
 
+Route::group(['prefix' => 'lights', 'middleware' => 'lights'], function () {
+    Route::get('/light/{id}/on', \App\Http\Controllers\Lights\TurnOn\Light::class)->name('lights.light.turn-on');
+    Route::get('/light/off', Light::class)->name('lights.light.turn-off');
+    Route::get('/segments', Segments::class)->name('lights.segments.turn-on');
+    Route::get('/strip', Strip::class)->name('lights.strip.turn-on');
+    Route::get('/toggle', Toggle::class)->name('lights.toggle');
+});
+
 Route::get('/release/{id}/play', Play::class)->name('release.play');
 
-Route::get('/lights/light/{id}/on', \App\Http\Controllers\Lights\TurnOn\Light::class)->name('lights.light.turn-on');
 
-Route::get('/lights/light/off', Light::class)->name('lights.light.turn-off');
-
-Route::get('/lights/segments', Segments::class)->name('lights.segments.turn-on');
-
-Route::get('/lights/strip', Strip::class)->name('lights.strip.turn-on');
-
-Route::get('/lights/toggle', Toggle::class)->name('lights.toggle');
 
 
 
