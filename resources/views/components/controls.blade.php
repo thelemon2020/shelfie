@@ -53,6 +53,8 @@
                 </div>
                 <div class="col">
                 </div>
+                <div class="col">
+                </div>
                 <div class="col mt-1">
                     <input type="color" id="stripColour">
                 </div>
