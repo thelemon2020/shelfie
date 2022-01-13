@@ -43,8 +43,6 @@ Route::get('/collection/index', [CollectionController::class, 'showCollection'])
 
 Route::get('collection/manage', [CollectionManage::class, 'loadPage'])->name('collection.manage.index');
 
-Route::post('collection/manage/shelf', [CollectionManage::class, 'updateShelfOrder'])->name('collection.manage.shelf');
-
 Route::get('/loadingScreen', LoadingPage::class)->name('loadingScreen');
 
 Route::get('/release/create', Add::class)->name('release.create');

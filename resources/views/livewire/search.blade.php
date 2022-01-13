@@ -18,6 +18,9 @@
                     <option value="shelf_order">Shelf Order</option>
                 </select>
             </div>
+            <button class="btn btn-primary ml-2" onclick="chooseRandom({{\App\Models\Release::query()->count()}})">
+                <i class="fas fa-random"></i>
+            </button>
         </div>
         <div>
             <div class="d-flex mr-1">
@@ -32,13 +35,7 @@
                 </div>
                 @if(\App\Models\User::all()->first->discogs_username)
                     <button class="btn btn-primary mr-2" wire:click="refreshCollection">
-                        <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
-                             width="24" height="24"
-                             viewBox="0 0 24 24"
-                             style=" fill:#000000;">
-                            <path
-                                d="M 7.1601562 3 L 8.7617188 5 L 19 5 L 19 15 L 16 15 L 20 20 L 24 15 L 21 15 L 21 3 L 7.1601562 3 z M 4 4 L 0 9 L 3 9 L 3 21 L 16.839844 21 L 15.238281 19 L 5 19 L 5 9 L 8 9 L 4 4 z"></path>
-                        </svg>
+                        <i class="fas fa-sync"></i>
                     </button>
                 @else()
                     <a href="{{route('release.create')}}"
@@ -57,23 +54,27 @@
             </div>
         </div>
     </div>
-    <div wire:loading.remove wire:target="refreshCollection">
+    <div wire:loading.remove wire:target="refreshCollection" style="overflow-y: auto; height: 80vh">
         <table class="table">
-            <thead>
+            <thead style="position: sticky; top: 0">
             <tr>
-                <th class="w-25" scope="col">Image</th>
-                <th scope="col">Artist</th>
-                <th scope="col">Title</th>
-                <th scope="col">Genre</th>
-                <th scope="col">Year</th>
+                <th style="background-color: black; color: white" scope="col"></th>
+                <th style="background-color: black; color: white" class="w-25" scope="col"></th>
+                <th style="background-color: black; color: white" scope="col">Artist</th>
+                <th style="background-color: black; color: white" scope="col">Title</th>
+                <th style="background-color: black; color: white" scope="col">Genre</th>
+                <th style="background-color: black; color: white" scope="col">Year</th>
             </tr>
             </thead>
             <tbody>
             @foreach($releases as $release)
                 <tr>
+                    <td class="align-middle">
+                        <i class="fas fa-info-circle fa-5x p-2" style="cursor: pointer"
+                           onClick="getDetails({{$release->id}})"></i>
+                    </td>
                     <td>
-                        <img class="img-thumbnail img-fluid w-50"
-                             onClick="invoke({{$release->id}})"
+                        <img class="img-thumbnail img-fluid w-75"
                              src="{{$release->full_image}}"
                              alt="{{$release->artist . "-" . $release->title}}"/>
                     </td>
@@ -85,6 +86,10 @@
             @endforeach
             </tbody>
         </table>
-        {{ $releases->links() }}
+        <div class="d-flex">
+            <div class="mx-auto">
+                {{ $releases->links() }}
+            </div>
+        </div>
     </div>
 </div>
