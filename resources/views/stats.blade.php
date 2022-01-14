@@ -21,63 +21,48 @@
     }
 </script>
 <body style="overflow-x: hidden;">
-@if(\App\Models\User::query()->first())
-    @if(count(\App\Models\Release::all()) !=0)
-        <div class=d-flex">
-            <div class="row justify-content-start">
-                <div class="col-6 align-self-start text-center">
-                    <h3 class="mt-2 mb-0">Last Played</h3>
-                    <br>
-                    @if(!$lastPlayed)
-                        <h4>Nothing! Go Spin A Record!</h4>
-                    @else
-                        <img id="lastPlayed" class="w-75" src="{{$lastPlayed->full_image  ?? ''}}">
-                        <h4>{{$lastPlayed->artist ?? ''}} - {{$lastPlayed->title ?? ''}}</h4>
-                        <h4>Last Played
-                            At: {{\Carbon\Carbon::parse($lastPlayed->last_played_at)->setTimezone('America/Toronto')->format('g:i a d/m/y') ?? ''}}</h4>
-                    @endif
-                </div>
-                <div class="col-5 align-self-center text-center">
-                    <h3>Most Played Records</h3>
-                    <table class="table">
-                        <thead>
-                        <th class="w-25"></th>
-                        <th>Artist</th>
-                        <th>Title</th>
-                        <th>Times Played</th>
-                        </thead>
-                        <tbody>
-                        @foreach($mostPlayed as $release)
-                            <tr>
-                                <td><img style="height: 100px; width: 100px" src="{{$release->full_image ?? ''}}">
-                                </td>
-                                <td>{{$release->artist ?? ''}}</td>
-                                <td>{{$release->title ?? ''}}</td>
-                                <td>{{$release->times_played ?? ''}}</td>
-                            </tr>
-                        @endforeach
-                        </tbody>
-                    </table>
-
-                </div>
+<div id="statsCarousel" class="carousel slide carousel-fade" data-ride="carousel">
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <div class="text-center">
+                <h3>Most Played Records</h3>
+                <table class="table">
+                    <thead>
+                    <th class="w-25"></th>
+                    <th>Artist</th>
+                    <th>Title</th>
+                    <th>Times Played</th>
+                    </thead>
+                    <tbody>
+                    @foreach($mostPlayed as $release)
+                        <tr>
+                            <td><img style="height: 100px; width: 100px" src="{{$release->full_image ?? ''}}">
+                            </td>
+                            <td>{{$release->artist ?? ''}}</td>
+                            <td>{{$release->title ?? ''}}</td>
+                            <td>{{$release->times_played ?? ''}}</td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
             </div>
         </div>
-        <div class="d-block row text-center">
-            <a href="{{route('collection.index')}}">
-                <button class="btn-md btn-primary">View Your Collection</button>
-            </a>
-            <button class="btn-md btn-primary" onclick="chooseRandom({{\App\Models\Release::query()->count()}})">
-                Select Random Album
-            </button>
+        <div class="carousel-item">
+            <div class="text-center">
+                <h3 class="mt-2 mb-0">Last Played</h3>
+                @if(!$lastPlayed)
+                    <h4>Nothing! Go Spin A Record!</h4>
+                @else
+                    <img id="lastPlayed" class="rounded mx-auto" src="{{$lastPlayed->full_image  ?? ''}}">
+                    <h4>{{$lastPlayed->artist ?? ''}} - {{$lastPlayed->title ?? ''}}</h4>
+                    <h4>Last Played
+                        At: {{\Carbon\Carbon::parse($lastPlayed->last_played_at)->setTimezone('America/Toronto')->format('g:i a d/m/y') ?? ''}}</h4>
+                @endif
+            </div>
         </div>
-    @endif
-    <x-modal></x-modal>
-@else
-    <div class="text-center">
-        <a href="{{route('register')}}">
-            <button class="btn btn-primary">Register Your Account</button>
-        </a>
+        <div class="carousel-item">
+            <img class="d-block w-100" src="..." alt="Third slide">
+        </div>
     </div>
-@endif
-
+</div>
 </body>

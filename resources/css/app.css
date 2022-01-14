@@ -1,12 +1,5 @@
 @import url('https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css');
 
-.tableFixHead {
-    overflow: auto;
-    height: 100px;
-}
-
-.tableFixHead thead th {
-    position: sticky;
-    top: 0;
-    z-index: 1;
+.carousel-item {
+    transition-duration: 5s;
 }

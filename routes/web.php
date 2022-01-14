@@ -8,6 +8,7 @@ use App\Http\Controllers\CollectionManage;
 use App\Http\Controllers\DiscogsController;
 use App\Http\Controllers\LoadingPage;
 use App\Http\Controllers\Release\Update\Show;
+use App\Http\Controllers\Stats;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -49,3 +50,4 @@ Route::get('/release/create', Add::class)->name('release.create');
 
 Route::get("/release/{id}/edit", Show::class)->name('release.edit.show');
 
+Route::get("/stats/", Stats::class)->name('stats');

@@ -17,9 +17,8 @@ class HomeController extends Controller
     {
         $user = User::query()->first();
         $nowPlaying = Release::query()->latest('last_played_at')->whereNotNull('last_played_at')->first();
-        $mostPlayed = Release::query()->orderBy('times_played', 'desc')->orderBy('last_played_at', 'desc')->whereNotNull('times_played')->take(5)->get();
 
-        return view('home', ['user' => $user, 'nowPlaying' => $nowPlaying, 'mostPlayed' => $mostPlayed]);
+        return view('home', ['user' => $user, 'nowPlaying' => $nowPlaying]);
     }
 
     public function index()
