@@ -21,9 +21,13 @@
     }
 </script>
 <body style="overflow-x: hidden;">
+<!-- Charting library -->
+<script src="https://unpkg.com/echarts/dist/echarts.min.js"></script>
+<!-- Chartisan -->
+<script src="https://unpkg.com/@chartisan/echarts/dist/chartisan_echarts.js"></script>
 <div id="statsCarousel" class="carousel slide carousel-fade" data-ride="carousel">
     <div class="carousel-inner">
-        <div class="carousel-item active">
+        <div class="carousel-item">
             <div class="text-center">
                 <h3>Most Played Records</h3>
                 <table class="table">
@@ -60,9 +64,16 @@
                 @endif
             </div>
         </div>
-        <div class="carousel-item">
-            <img class="d-block w-100" src="..." alt="Third slide">
+        <div class="carousel-item active">
+            <div id="chart" style="height: 300px;"></div>
         </div>
     </div>
 </div>
+<!-- Your application script -->
+<script>
+    const chart = new Chartisan({
+        el: '#chart',
+        url: "@chart('sample_chart')",
+    });
+</script>
 </body>
