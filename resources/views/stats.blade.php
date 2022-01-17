@@ -73,7 +73,7 @@
 <script>
     const chart = new Chartisan({
         el: '#chart',
-        url: "@chart('sample_chart')",
+        url: "@chart('play_days_chart')",
     });
 </script>
 </body>

@@ -3,7 +3,7 @@
 namespace App\Providers;
 
 
-use App\Charts\SampleChart;
+use App\Charts\PlayDaysChart;
 use ConsoleTVs\Charts\Registrar as Charts;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Schema;
@@ -31,7 +31,7 @@ class AppServiceProvider extends ServiceProvider
         Paginator::useBootstrap();
         Schema::defaultStringLength(191);
         $charts->register([
-            SampleChart::class
+            PlayDaysChart::class
         ]);
     }
 }
