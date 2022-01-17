@@ -19,7 +19,8 @@
         "league/oauth1-client": "^1.9",
         "league/oauth2-client": "^2.6",
         "livewire/livewire": "^2.6",
-        "socialiteproviders/discogs": "^4.1"
+        "socialiteproviders/discogs": "^4.1",
+        "ext-xdebug": "*"
     },
     "require-dev": {
         "facade/ignition": "^2.5",

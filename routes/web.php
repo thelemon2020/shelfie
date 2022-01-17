@@ -51,3 +51,4 @@ Route::get('/release/create', Add::class)->name('release.create');
 Route::get("/release/{id}/edit", Show::class)->name('release.edit.show');
 
 Route::get("/stats/", Stats::class)->name('stats');
+
