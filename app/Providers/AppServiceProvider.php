@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 
+use App\Charts\ArtistChart;
 use App\Charts\GenreChart;
 use App\Charts\PlayDaysChart;
 use ConsoleTVs\Charts\Registrar as Charts;
@@ -34,6 +35,7 @@ class AppServiceProvider extends ServiceProvider
         $charts->register([
             PlayDaysChart::class,
             GenreChart::class,
+            ArtistChart::class,
         ]);
     }
 }

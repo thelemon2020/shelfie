@@ -6,7 +6,7 @@
 <script src="https://unpkg.com/@chartisan/echarts/dist/chartisan_echarts.js"></script>
 <div id="statsCarousel" class="carousel slide carousel-fade" data-ride="carousel">
     <div class="carousel-inner">
-        <div class="carousel-item active">
+        <div class="carousel-item">
             <div class="text-center">
                 <h3>Most Played Records</h3>
                 <table class="table">
@@ -49,6 +49,9 @@
         <div class="carousel-item">
             <div id="chart-genre" style="height: 300px;"></div>
         </div>
+        <div class="carousel-item active">
+            <div id="chart-artists" style="height: 300px;"></div>
+        </div>
     </div>
     <x-controls></x-controls>
 </div>
@@ -59,6 +62,12 @@
         url: "@chart('play_days_chart')",
         hooks: new ChartisanHooks()
             .title('Days When You Spin The Most')
+    });
+    const chartArtists = new Chartisan({
+        el: '#chart-artists',
+        url: "@chart('artist_chart')",
+        hooks: new ChartisanHooks()
+            .title('Most Played Artists')
     });
     const chartGenre = new Chartisan({
         el: '#chart-genre',
