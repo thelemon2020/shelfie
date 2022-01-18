@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 
+use App\Charts\GenreChart;
 use App\Charts\PlayDaysChart;
 use ConsoleTVs\Charts\Registrar as Charts;
 use Illuminate\Pagination\Paginator;
@@ -31,7 +32,8 @@ class AppServiceProvider extends ServiceProvider
         Paginator::useBootstrap();
         Schema::defaultStringLength(191);
         $charts->register([
-            PlayDaysChart::class
+            PlayDaysChart::class,
+            GenreChart::class,
         ]);
     }
 }

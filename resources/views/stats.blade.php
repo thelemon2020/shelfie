@@ -43,16 +43,28 @@
                 @endif
             </div>
         </div>
+        <div class="carousel-item">
+            <div id="chart-days" style="height: 300px;"></div>
+        </div>
         <div class="carousel-item active">
-            <div id="chart" style="height: 300px;"></div>
+            <div id="chart-genre" style="height: 300px;"></div>
         </div>
     </div>
 </div>
 <!-- Your application script -->
 <script>
-    const chart = new Chartisan({
-        el: '#chart',
+    const chartDays = new Chartisan({
+        el: '#chart-days',
         url: "@chart('play_days_chart')",
+    });
+    const chartGenre = new Chartisan({
+        el: '#chart-genre',
+        url: "@chart('genre_chart')",
+        hooks: new ChartisanHooks()
+            .axis(false)
+            .tooltip()
+            .legend()
+            .datasets([{type: 'pie'}])
     });
 </script>
 </body>
