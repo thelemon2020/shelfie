@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Plays;
 use App\Models\Release;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
@@ -17,9 +18,21 @@ class HomeController extends Controller
     public function home()
     {
         $user = User::query()->first();
-        $play = Plays::query()->latest()->first();
-        $nowPlaying = Release::query()->where('id', $play?->release_id)->first() ?? null;
-        return view('home', ['user' => $user, 'nowPlaying' => $nowPlaying]);
+        $lastPlayed = Plays::query()
+            ->join('releases', 'plays.release_id', '=', 'releases.id')
+            ->latest('plays.created_at')
+            ->select('releases.artist', 'releases.title', 'releases.full_image')
+            ->get()
+            ->first();
+        $nowPlaying = Release::query()->where('id', $lastPlayed[0]?->release_id)->first() ?? null;
+        $mostPlayed = Plays::query()
+            ->join('releases', 'plays.release_id', '=', 'releases.id')
+            ->select('releases.artist', 'releases.title', 'releases.full_image', DB::raw("count(*) as times_played"))
+            ->groupBy('plays.release_id')
+            ->orderBy('times_played', 'DESC')
+            ->take(10)
+            ->get();
+        return view('home', ['user' => $user, 'nowPlaying' => $nowPlaying, 'mostPlayed' => $mostPlayed, 'lastPlayed' => $lastPlayed]);
     }
 
     public function index()

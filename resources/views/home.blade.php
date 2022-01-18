@@ -1,6 +1,55 @@
 <x-navbar></x-navbar>
 @livewireStyles()
+<script
+    src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+    crossorigin="anonymous"></script>
 <script>
+    $(document).ready(function () {
+        var mousetimeout;
+        var screensaver_active = false;
+        var idletime = 5;
+
+        function show_screensaver() {
+            $('#screensaver').fadeIn();
+            screensaver_active = true;
+            screensaver_animation();
+        }
+
+        function stop_screensaver() {
+            $('#screensaver').fadeOut();
+            screensaver_active = false;
+        }
+
+        $(document).click(function () {
+            clearTimeout(mousetimeout);
+
+            if (screensaver_active) {
+                stop_screensaver();
+            }
+
+            mousetimeout = setTimeout(function () {
+                show_screensaver();
+            }, 500 * idletime); // 5 secs
+        });
+
+        $(document).mousemove(function () {
+            clearTimeout(mousetimeout);
+
+            mousetimeout = setTimeout(function () {
+                show_screensaver();
+            }, 1000 * idletime); // 5 secs
+        });
+
+        function screensaver_animation() {
+            if (screensaver_active) {
+                $('#screensaver').animate(
+                    {backgroundColor: '000000'},
+                    400,
+                    screensaver_animation);
+            }
+        }
+    });
     window.addEventListener('keypress', event => {
         let element = event.target;
         element.dispatchEvent(new Event('input'));
@@ -79,3 +128,7 @@
         @livewireScripts()
 </div>
 <x-controls :nowPlaying="$nowPlaying"></x-controls>
+<div id="screensaver">
+
+    <x-stats-comp :mostPlayed="$mostPlayed" :lastPlayed="$lastPlayed"></x-stats-comp>
+</div>
