@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Plays;
 use App\Models\Release;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 
 class Stats extends Controller
 {
@@ -16,8 +18,19 @@ class Stats extends Controller
     public function __invoke()
     {
         $user = User::query()->first();
-        $lastPlayed = Release::query()->latest('last_played_at')->whereNotNull('last_played_at')->first();
-        $mostPlayed = Release::query()->orderBy('times_played', 'desc')->orderBy('last_played_at', 'desc')->whereNotNull('times_played')->take(5)->get();
+        $play = Plays::query()->latest()->first();
+        $lastPlayed = Release::query()->where('id', $play?->release_id)->first() ?? null;
+        if ($lastPlayed) {
+            $lastPlayed->last_played_at = $play->created_at;
+        }
+        $mostPlayed = Plays::query()
+            ->join('releases', 'plays.release_id', '=', 'releases.id')
+            ->select('releases.artist', 'releases.title', 'releases.full_image', DB::raw("count(*) as times_played"))
+            ->groupBy('plays.release_id')
+            ->orderBy('times_played', 'DESC')
+            ->take(10)
+            ->get();
+
 
         return view('stats', ['user' => $user, 'lastPlayed' => $lastPlayed, 'mostPlayed' => $mostPlayed]);
     }

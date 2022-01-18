@@ -16,8 +16,8 @@ class CreateUserSettingsTable extends Migration
         Schema::create('user_settings', function (Blueprint $table) {
             $table->id();
             $table->integer('user_id');
-            $table->string('sort_method');
-            $table->string('wled_ip');
+            $table->string('sort_method')->default('artist');
+            $table->string('wled_ip')->nullable();
             $table->timestamps();
         });
     }

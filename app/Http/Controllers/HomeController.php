@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Plays;
 use App\Models\Release;
 use App\Models\User;
 
@@ -16,8 +17,8 @@ class HomeController extends Controller
     public function home()
     {
         $user = User::query()->first();
-        $nowPlaying = Release::query()->latest('last_played_at')->whereNotNull('last_played_at')->first();
-
+        $play = Plays::query()->latest()->first();
+        $nowPlaying = Release::query()->where('id', $play?->release_id)->first() ?? null;
         return view('home', ['user' => $user, 'nowPlaying' => $nowPlaying]);
     }
 

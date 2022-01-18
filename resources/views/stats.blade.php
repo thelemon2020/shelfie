@@ -1,25 +1,4 @@
 <x-navbar></x-navbar>
-<script>
-    function chooseRandom(maxInt) {
-        let id = Math.floor(Math.random() * (maxInt - 1) + 1)
-        axios.get(`/api/light/${id}/on`)
-        axios.get(`/api/release/${id}`)
-            .then((release) => {
-                $('#detailsModal').modal('show')
-                $('#thumbnail').attr("src", release.data.full_image)
-                $('#artist').text(release.data.artist)
-                $('#title').text(release.data.title)
-                $('#genre').text(release.data.genre)
-                $('#timesPlayed').text(release.data.times_played ?? "0")
-                $('#lastPlayed').text(release.data.last_played_at ?? "Never")
-                $('#edit').attr("href", `/release/${release.data.id}/edit`)
-                $('#releaseId').val(release.data.id)
-            })
-            .catch(error => {
-                console.log(error);
-            })
-    }
-</script>
 <body style="overflow-x: hidden;">
 <!-- Charting library -->
 <script src="https://unpkg.com/echarts/dist/echarts.min.js"></script>
@@ -32,7 +11,7 @@
                 <h3>Most Played Records</h3>
                 <table class="table">
                     <thead>
-                    <th class="w-25"></th>
+                    <th class="w-50"></th>
                     <th>Artist</th>
                     <th>Title</th>
                     <th>Times Played</th>

@@ -14,7 +14,7 @@ class AddSortOrderToUserSettingsTable extends Migration
     public function up()
     {
         Schema::table('user_settings', function (Blueprint $table) {
-            $table->string('sort_order')->after('sort_method');
+            $table->string('sort_order')->after('sort_method')->default('desc');
         });
     }
 
