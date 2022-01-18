@@ -6,12 +6,12 @@
 <script src="https://unpkg.com/@chartisan/echarts/dist/chartisan_echarts.js"></script>
 <div id="statsCarousel" class="carousel slide carousel-fade" data-ride="carousel">
     <div class="carousel-inner">
-        <div class="carousel-item">
+        <div class="carousel-item active">
             <div class="text-center">
                 <h3>Most Played Records</h3>
                 <table class="table">
                     <thead>
-                    <th class="w-50"></th>
+                    <th class="w-25"></th>
                     <th>Artist</th>
                     <th>Title</th>
                     <th>Times Played</th>
@@ -19,7 +19,7 @@
                     <tbody>
                     @foreach($mostPlayed as $release)
                         <tr>
-                            <td><img style="height: 100px; width: 100px" src="{{$release->full_image ?? ''}}">
+                            <td><img style="height: 25vh; width: 25vh" src="{{$release->full_image ?? ''}}">
                             </td>
                             <td>{{$release->artist ?? ''}}</td>
                             <td>{{$release->title ?? ''}}</td>
@@ -46,16 +46,19 @@
         <div class="carousel-item">
             <div id="chart-days" style="height: 300px;"></div>
         </div>
-        <div class="carousel-item active">
+        <div class="carousel-item">
             <div id="chart-genre" style="height: 300px;"></div>
         </div>
     </div>
+    <x-controls></x-controls>
 </div>
 <!-- Your application script -->
 <script>
     const chartDays = new Chartisan({
         el: '#chart-days',
         url: "@chart('play_days_chart')",
+        hooks: new ChartisanHooks()
+            .title('Days When You Spin The Most')
     });
     const chartGenre = new Chartisan({
         el: '#chart-genre',
@@ -64,6 +67,7 @@
             .axis(false)
             .tooltip()
             .legend()
+            .title('Top Genres')
             .datasets([{type: 'pie'}])
     });
 </script>
