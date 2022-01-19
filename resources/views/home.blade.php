@@ -1,6 +1,61 @@
-<x-navbar></x-navbar>
+<x-navbar id="navbar"></x-navbar>
 @livewireStyles()
+<script
+    src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+    crossorigin="anonymous"></script>
 <script>
+    $(document).ready(function () {
+        var mousetimeout;
+        var screensaver_active = false;
+        var idletime = 30;
+
+        function show_screensaver() {
+            $('#screensaver').fadeIn();
+            screensaver_active = true;
+            screensaver_animation();
+        }
+
+        function stop_screensaver() {
+            $('#screensaver').fadeOut();
+            $('#home').fadeIn()
+            $('.navbar').fadeIn()
+            screensaver_active = false;
+        }
+
+        $(document).click(function () {
+            console.log('click')
+            clearTimeout(mousetimeout);
+
+            if (screensaver_active) {
+                stop_screensaver();
+            }
+
+            mousetimeout = setTimeout(function () {
+                show_screensaver();
+            }, 500 * idletime); // 5 secs
+        });
+
+        $(document).mousemove(function () {
+            clearTimeout(mousetimeout);
+
+            mousetimeout = setTimeout(function () {
+                show_screensaver();
+            }, 1000 * idletime); // 5 secs
+        });
+
+        function screensaver_animation() {
+            if (screensaver_active) {
+                $('#home').fadeOut()
+                $('.navbar').fadeOut()
+                $('#screensaver').animate(
+                    {backgroundColor: '#FFFFFF'},
+                    400,
+                    screensaver_animation);
+            }
+        }
+    });
+
     window.addEventListener('keypress', event => {
         let element = event.target;
         element.dispatchEvent(new Event('input'));
@@ -47,7 +102,17 @@
     }
 
 </script>
-<div style="overflow-x: hidden;">
+<div id="screensaver" style="
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0px;
+    top: 0px;
+    display: none;
+    z-index: 9999;">
+    <x-stats-comp :mostPlayed="$mostPlayed" :lastPlayed="$lastPlayed"></x-stats-comp>
+</div>
+<div id="home" style="overflow-x: hidden;">
     @if(\App\Models\User::query()->first())
         @if(count(\App\Models\Release::all()) !=0)
             <div class=d-flex">
@@ -76,6 +141,8 @@
             </a>
         </div>
     @endif
-        @livewireScripts()
+    @livewireScripts()
+    <x-controls :nowPlaying="$nowPlaying"></x-controls>
 </div>
-<x-controls :nowPlaying="$nowPlaying"></x-controls>
+
+

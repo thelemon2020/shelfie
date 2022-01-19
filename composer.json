@@ -6,6 +6,9 @@
     "license": "MIT",
     "require": {
         "php": "^8.0",
+        "ext-simplexml": "*",
+        "ext-xml": "*",
+        "consoletvs/charts": "7.*",
         "fico7489/laravel-eloquent-join": "^4.1",
         "fideloper/proxy": "^4.4",
         "fruitcake/laravel-cors": "^2.0",
@@ -13,12 +16,8 @@
         "laravel/framework": "^8.40",
         "laravel/tinker": "^2.5",
         "laravel/ui": "^3.3",
-        "league/oauth1-client": "^1.9",
-        "league/oauth2-client": "^2.6",
         "livewire/livewire": "^2.6",
-        "socialiteproviders/discogs": "^4.1",
-      "ext-xml": "*",
-        "ext-simplexml": "*"
+        "ext-xdebug": "*"
     },
     "require-dev": {
         "facade/ignition": "^2.5",

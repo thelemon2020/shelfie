@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateUserSettingsTable extends Migration
+class CreatePlaysTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,10 @@ class CreateUserSettingsTable extends Migration
      */
     public function up()
     {
-        Schema::create('user_settings', function (Blueprint $table) {
+        Schema::create('plays', function (Blueprint $table) {
             $table->id();
-            $table->integer('user_id');
-            $table->string('sort_method')->default('artist');
-            $table->string('wled_ip')->nullable();
+            $table->integer('release_id');
+            $table->integer('genre_id');
             $table->timestamps();
         });
     }
@@ -29,6 +28,6 @@ class CreateUserSettingsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_settings');
+        Schema::dropIfExists('plays');
     }
 }
