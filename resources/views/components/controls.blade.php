@@ -29,7 +29,7 @@
     }
 
 </script>
-<div class="fixed-bottom collapse show" id="lightOptions">
+<div class="fixed-bottom collapse" id="lightOptions">
     <div class="bg-primary p-4 text-center">
         <h4 class="text-white">LED Options</h4>
         <div class="container">

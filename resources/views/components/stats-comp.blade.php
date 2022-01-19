@@ -3,7 +3,7 @@
 <script src="https://unpkg.com/@chartisan/echarts/dist/chartisan_echarts.js"></script>
 <div id="statsCarousel" class="carousel slide carousel-fade" data-ride="carousel">
     <div class="carousel-inner">
-        <div class="carousel-item">
+        <div class="carousel-item vh-100">
             <div class="text-center">
                 <h3>Most Played Records</h3>
                 <table class="table">

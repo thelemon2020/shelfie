@@ -31,7 +31,6 @@ class Stats extends Controller
             ->take(10)
             ->get();
 
-
         return view('stats', ['user' => $user, 'lastPlayed' => $lastPlayed, 'mostPlayed' => $mostPlayed]);
     }
 }

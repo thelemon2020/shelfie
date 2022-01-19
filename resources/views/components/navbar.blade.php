@@ -43,7 +43,8 @@
                                 style="color: #000000"></i></a>
                     </li>
                 @endif
-                <li class="ml-3"><a href="{{route('stats')}}"><i class="fas fa-chart-pie fa-2x"></i></a></li>
+                <li class="ml-3"><a href="{{route('stats')}}"><i class="fas fa-chart-pie fa-2x"
+                                                                 style="color: #000000"></i></a></li>
             @endif
         </ul>
     </div>
