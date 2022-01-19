@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Plays;
-use App\Models\Release;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 
@@ -22,9 +21,8 @@ class HomeController extends Controller
             ->join('releases', 'plays.release_id', '=', 'releases.id')
             ->latest('plays.created_at')
             ->select('releases.artist', 'releases.title', 'releases.full_image')
-            ->get()
-            ->first();
-        $nowPlaying = Release::query()->where('id', $lastPlayed[0]?->release_id)->first() ?? null;
+            ->take(5)
+            ->get();
         $mostPlayed = Plays::query()
             ->join('releases', 'plays.release_id', '=', 'releases.id')
             ->select('releases.artist', 'releases.title', 'releases.full_image', DB::raw("count(*) as times_played"))
@@ -32,7 +30,7 @@ class HomeController extends Controller
             ->orderBy('times_played', 'DESC')
             ->take(10)
             ->get();
-        return view('home', ['user' => $user, 'nowPlaying' => $nowPlaying, 'mostPlayed' => $mostPlayed, 'lastPlayed' => $lastPlayed]);
+        return view('home', ['user' => $user, 'nowPlaying' => $lastPlayed[0], 'mostPlayed' => $mostPlayed, 'lastPlayed' => $lastPlayed->toArray()]);
     }
 
     public function index()

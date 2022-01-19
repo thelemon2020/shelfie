@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Plays;
 use App\Models\Release;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Cache;
 
 class Play extends Controller
 {
@@ -17,7 +18,7 @@ class Play extends Controller
             'release_id' => $release->id,
             'genre_id' => $release->genre_id,
         ]);
-
+        Cache::put('now-playing', $release->id);
         return new JsonResponse(['success' => true], 200);
     }
 }
