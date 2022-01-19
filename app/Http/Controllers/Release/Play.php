@@ -18,7 +18,7 @@ class Play extends Controller
             'release_id' => $release->id,
             'genre_id' => $release->genre_id,
         ]);
-        Cache::put('now-playing', $release->id);
+        Cache::put('now-playing', $release->id, now()->addMinutes(60));
         return new JsonResponse(['success' => true], 200);
     }
 }
