@@ -10,11 +10,11 @@ class Reset extends Controller
 {
     public function __invoke()
     {
-        $state = json_decode(Http::get(User::all()->first()->userSettings->wled_ip . '/json'), true);
+        $state = json_decode(Http::timeout(2)->get(User::all()->first()->userSettings->wled_ip . '/json'), true);
         foreach ($state['seg'] as &$i) {
             $i['stop'] = 0;
         }
         $state['on'] = false;
-        Http::post(User::all()->first()->userSettings->wled_ip . '/json/state', $state);
+        Http::timeout(2)->post(User::all()->first()->userSettings->wled_ip . '/json/state', $state);
     }
 }

@@ -61,6 +61,7 @@
             </div>
         </div>
     </div>
-    <input type="hidden" id="nowPlaying" value="{{$nowPlaying->id ?? null}}">
+    <input type="hidden" id="nowPlaying"
+           value="{{$nowPlaying->id ?? \App\Models\Plays::query()->latest()->get()->first()->release_id}}">
     <input type="hidden" id="nowPlayingLight" value="false">
 </div>

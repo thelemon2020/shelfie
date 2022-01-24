@@ -23,7 +23,7 @@
             </button>
         </div>
         <div>
-            <div class="d-flex mr-1">
+            <div class="d-flex mt-1 mr-1">
                 <div class="dropdown show mr-1">
                     <select class="form-control" wire:model="pagination">
                         <option value=10>10</option>
@@ -54,7 +54,7 @@
             </div>
         </div>
     </div>
-    <div wire:loading.remove wire:target="refreshCollection" style="overflow-y: auto; height: 80vh">
+    <div wire:loading.remove wire:target="refreshCollection" style="overflow-y: auto; height: 73vh">
         <table class="table">
             <thead style="position: sticky; top: 0">
             <tr>

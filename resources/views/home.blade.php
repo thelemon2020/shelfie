@@ -33,7 +33,7 @@
 
             mousetimeout = setTimeout(function () {
                 show_screensaver();
-            }, 500 * idletime); // 5 secs
+            }, 500 * idletime);
         });
 
         $(document).mousemove(function () {
@@ -41,7 +41,7 @@
 
             mousetimeout = setTimeout(function () {
                 show_screensaver();
-            }, 1000 * idletime); // 5 secs
+            }, 1000 * idletime);
         });
 
         function screensaver_animation() {
@@ -49,8 +49,8 @@
                 $('#home').fadeOut()
                 $('.navbar').fadeOut()
                 $('#screensaver').animate(
-                    {backgroundColor: '#FFFFFF'},
-                    400,
+                    {backgroundColor: '#000000'},
+                    600,
                     screensaver_animation);
             }
         }

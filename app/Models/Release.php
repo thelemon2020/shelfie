@@ -34,7 +34,7 @@ class Release extends Model
     {
         $selectRecord = [
             "seg" => [
-                'id' => $this->segment->shelf_order - 1,
+                'id' => $this->segment?->shelf_order - 1 ?? 0,
                 "i" =>
                     [
                         (int)floor($this->shelf_order / 2),
@@ -42,6 +42,6 @@ class Release extends Model
                     ]
             ]];
         Cache::put('selected-record', $selectRecord);
-        Http::post(User::all()->first()->userSettings->wled_ip . '/json', $selectRecord);
+        Http::timeout(2)->post(User::all()->first()->userSettings->wled_ip . '/json', $selectRecord);
     }
 }

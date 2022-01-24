@@ -18,7 +18,7 @@ class LightControls
      */
     public function handle(Request $request, Closure $next)
     {
-        if (!User::query()->first()->userSettings->led_ip) {
+        if (!User::query()->first()->userSettings->wled_ip) {
             return new JsonResponse(null, JsonResponse::HTTP_UNAUTHORIZED);
         }
         return $next($request);

@@ -1,7 +1,7 @@
 <script src="https://unpkg.com/echarts/dist/echarts.min.js"></script>
 <!-- Chartisan -->
 <script src="https://unpkg.com/@chartisan/echarts/dist/chartisan_echarts.js"></script>
-<div id="statsCarousel" class="carousel slide carousel-fade" data-ride="carousel">
+<div id="statsCarousel" class="carousel slide" data-ride="carousel">
     <div class="carousel-inner">
         <div class="carousel-item vh-100">
             <div class="text-center">
@@ -16,7 +16,7 @@
                     <tbody>
                     @foreach($mostPlayed as $release)
                         <tr>
-                            <td><img style="height: 25vh; width: 25vh" src="{{$release->full_image ?? ''}}">
+                            <td><img class="img-fluid h-25 w-25" src="{{$release->full_image ?? ''}}">
                             </td>
                             <td>{{$release->artist ?? ''}}</td>
                             <td>{{$release->title ?? ''}}</td>
@@ -58,12 +58,14 @@
         url: "@chart('play_days_chart')",
         hooks: new ChartisanHooks()
             .title('Days When You Spin The Most')
+            .colors('#116a78')
     });
     const chartArtists = new Chartisan({
         el: '#chart-artists',
         url: "@chart('artist_chart')",
         hooks: new ChartisanHooks()
             .title('Most Played Artists')
+            .colors('#559977')
     });
     const chartGenre = new Chartisan({
         el: '#chart-genre',
