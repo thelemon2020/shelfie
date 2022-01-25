@@ -9,7 +9,7 @@
             @if($release)
                 <div class="row">
                     <div class="col-md-12">
-                        <img id="lastPlayed" class="img-fluid" src="{{$release->full_image  ?? ''}}">
+                        <img id="lastPlayed" class="img-fluid h-50 w-50" src="{{$release->full_image  ?? ''}}">
                         <br>
                         <h4>{{$release->artist ?? ''}} - {{$release->title ?? ''}}</h4>
                     </div>

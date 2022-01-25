@@ -17,7 +17,6 @@
     }
 
     function toggleNowPlayingLight() {
-        console.log($('#nowPlayingLight').val())
         if ($('#nowPlayingLight').val() === 'false') {
             let id = $('#nowPlaying').val()
             axios.get(`/api/lights/light/${id}/on`)
@@ -39,7 +38,7 @@
                 </div>
                 <div class="col">
                     <button
-                        class="btn btn-primary border border-dark @if(!$nowPlaying && !\App\Models\Plays::query()->latest()->get()->first()) disabled @endif"
+                        class="btn btn-primary border border-dark @if(!\App\Models\Release::query()->where('id', \Illuminate\Support\Facades\Cache::get('now-playing')) && !\App\Models\Plays::query()->latest()->get()->first()) disabled @endif"
                         onclick="toggleNowPlayingLight()">Last Played
                     </button>
                 </div>
@@ -64,6 +63,6 @@
         </div>
     </div>
     <input type="hidden" id="nowPlaying"
-           value="{{$nowPlaying->id ?? \App\Models\Plays::query()->latest()->get()->first()->release_id ?? null}}">
+           value="{{!\App\Models\Release::query()->where('id', \Illuminate\Support\Facades\Cache::get('now-playing'))?? \App\Models\Plays::query()->latest()->get()->first()->release_id ?? null}}">
     <input type="hidden" id="nowPlayingLight" value="false">
 </div>

@@ -12,6 +12,10 @@ class Plays extends Model
 
     protected $guarded = [];
 
+    protected $casts = [
+        'created_at' => 'datetime'
+    ];
+
     public function genre(): BelongsTo
     {
         return $this->belongsTo(Genre::class);

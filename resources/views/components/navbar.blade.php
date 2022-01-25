@@ -24,7 +24,16 @@
     <script src="{{ asset('js/app.js') }}" defer></script>
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <script
+        src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+        crossorigin="anonymous"></script>
     <title>Shelfie</title>
 </head>
 <body style="max-height: 100vh; overflow-y: hidden">
@@ -35,8 +44,6 @@
             <li class="ml-3"><a href="{{route('home')}}"><i class="fas fa-home fa-2x" style="color: #000000"></i></a>
             </li>
             @if(\App\Models\User::all()->first())
-                <li class="ml-3"><a href="{{route('collection.index')}}"><i class="fas fa-record-vinyl fa-2x"
-                                                                            style="color: #000000"></i></a></li>
                 @if((\App\Models\User::all()->first()->userSettings->wled_ip != null) && (\App\Models\User::all()->first()->userSettings->wled_ip != ""))
                     <li class="ml-3"><a data-toggle="collapse" data-target="#lightOptions"><i
                                 class="fas fa-lightbulb fa-2x"
