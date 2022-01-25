@@ -30,7 +30,7 @@ class HomeController extends Controller
         $mostPlayed = Plays::query()
             ->join('releases', 'plays.release_id', '=', 'releases.id')
             ->select('releases.artist', 'releases.title', 'releases.full_image', DB::raw("count(*) as times_played"))
-            ->groupBy('plays.release_id')
+            ->groupBy('releases.id')
             ->orderBy('times_played', 'DESC')
             ->take(10)
             ->get();
