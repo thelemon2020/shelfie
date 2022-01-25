@@ -50,7 +50,7 @@ class LightSegment extends Model
         $position = 0;
         $seg = [];
         list($r, $g, $b) = sscanf($colour, "#%02x%02x%02x");
-        if (!$segments) {
+        if (count($segments) <= 1) {
             $size = floor(Release::query()->count() / 2);
             $segment = [
                 'start' => $position,

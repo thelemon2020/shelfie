@@ -11,7 +11,7 @@
     function lightStrip() {
         axios.get(`/api/lights/strip`, {
             params: {
-                colour: $('#stripColour').value
+                colour: $('#stripColour').val()
             }
         })
     }
