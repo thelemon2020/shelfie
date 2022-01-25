@@ -38,7 +38,9 @@
                     <button class="btn btn-primary border border-dark" onclick="toggleLights()">On/Off</button>
                 </div>
                 <div class="col">
-                    <button class="btn btn-primary border border-dark" onclick="toggleNowPlayingLight()">Last Played
+                    <button
+                        class="btn btn-primary border border-dark @if(!$nowPlaying && !\App\Models\Plays::query()->latest()->get()->first()) disabled @endif"
+                        onclick="toggleNowPlayingLight()">Last Played
                     </button>
                 </div>
                 <div class="col">
@@ -62,6 +64,6 @@
         </div>
     </div>
     <input type="hidden" id="nowPlaying"
-           value="{{$nowPlaying->id ?? \App\Models\Plays::query()->latest()->get()->first()->release_id}}">
+           value="{{$nowPlaying->id ?? \App\Models\Plays::query()->latest()->get()->first()->release_id ?? null}}">
     <input type="hidden" id="nowPlayingLight" value="false">
 </div>
