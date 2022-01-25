@@ -8,7 +8,7 @@
                 <h3>Most Played Records</h3>
                 <table class="table">
                     <thead>
-                    <th class="w-25"></th>
+                    <th style="width: 15vh"></th>
                     <th>Artist</th>
                     <th>Title</th>
                     <th>Times Played</th>
@@ -16,7 +16,7 @@
                     <tbody>
                     @foreach($mostPlayed as $release)
                         <tr>
-                            <td><img class="img-fluid h-25 w-25" src="{{$release->full_image ?? ''}}">
+                            <td><img class="img-fluid" src="{{$release->full_image ?? ''}}">
                             </td>
                             <td>{{$release->artist ?? ''}}</td>
                             <td>{{$release->title ?? ''}}</td>
