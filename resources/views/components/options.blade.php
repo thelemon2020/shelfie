@@ -25,7 +25,7 @@
         </div>
         <div id="collapseSort" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
             <div class="card-body">
-                <livewire:user-settings/>
+                <livewire:sort-options/>
             </div>
         </div>
     </div>
