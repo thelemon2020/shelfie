@@ -41,13 +41,13 @@
             </div>
         </div>
         <div class="carousel-item">
-            <div id="chart-days" style="height: 300px;"></div>
+            <div id="chart-days" style="height: 50vh;"></div>
         </div>
         <div class="carousel-item">
-            <div id="chart-genre" style="height: 300px;"></div>
+            <div id="chart-genre" style="height: 50vh;"></div>
         </div>
         <div class="carousel-item active">
-            <div id="chart-artists" style="height: 300px;"></div>
+            <div id="chart-artists" style="height: 50vh;"></div>
         </div>
     </div>
 </div>
@@ -65,7 +65,21 @@
         url: "@chart('artist_chart')",
         hooks: new ChartisanHooks()
             .title('Most Played Artists')
-            .colors('#559977')
+            .colors(
+                "blue",
+            )
+            .options({
+                xAxis: {
+                    type: "category",
+                    axisLabel: {
+                        interval: 0,
+                        rotate: 30 //If the label names are too long you can manage this by rotating the label.
+                    }
+                },
+                grid: {
+                    containLabel: true
+                }
+            })
     });
     const chartGenre = new Chartisan({
         el: '#chart-genre',
