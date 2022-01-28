@@ -1,8 +1,4 @@
 <!DOCTYPE html>
-<script
-    src="https://code.jquery.com/jquery-3.6.0.js"
-    integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
-    crossorigin="anonymous"></script>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <div class="modal fade" id="detailsModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
      aria-hidden="true">
@@ -15,12 +11,12 @@
                 </button>
             </div>
             <div class="modal-body">
-                <div class="container-md">
+                <div class="container">
                     <div class="row">
-                        <div class="col-md-8 align-self-center">
+                        <div class="col align-self-center">
                             <img id="thumbnail" class="w-100 h-100" src="">
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-4">
                             <label><b>Artist</b></label>
                             <p id="artist"></p>
                             <label><b>Title</b></label>
@@ -30,7 +26,7 @@
                             <label><b>Times Played</b></label>
                             <p id="timesPlayed"></p>
                             <label><b>Last Played At</b></label>
-                            <p id="lastPlayed"></p>
+                            <p id="lastPlayedAt"></p>
                             <input id="releaseId" hidden value="">
                         </div>
                     </div>

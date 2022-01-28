@@ -40,7 +40,7 @@ class LightSegment extends Model
             $seg[] = $segment;
         }
         $payload = ['seg' => $seg];
-        $response = Http::post(User::all()->first()->userSettings->wled_ip . '/json', $payload);
+        $response = Http::timeout(2)->post(User::all()->first()->userSettings->wled_ip . '/json', $payload);
         return $response;
     }
 
@@ -50,31 +50,42 @@ class LightSegment extends Model
         $position = 0;
         $seg = [];
         list($r, $g, $b) = sscanf($colour, "#%02x%02x%02x");
-        foreach ($segments as $segment) {
-            $size = floor($segment->releases()->count() / 2);
+        if (count($segments) <= 1) {
+            $size = floor(Release::query()->count() / 2);
             $segment = [
                 'start' => $position,
                 'stop' => $position + $size,
                 'len' => $size,
                 'col' => [[$r, $g, $b], [$r, $g, $b], [$r, $g, $b]],
             ];
-            $position += $size;
             $seg[] = $segment;
+        } else {
+            foreach ($segments as $segment) {
+                $size = floor($segment->releases()->count() / 2);
+                $segment = [
+                    'start' => $position,
+                    'stop' => $position + $size,
+                    'len' => $size,
+                    'col' => [[$r, $g, $b], [$r, $g, $b], [$r, $g, $b]],
+                ];
+                $position += $size;
+                $seg[] = $segment;
+            }
         }
         $payload = ['seg' => $seg];
-        $response = Http::post(User::all()->first()->userSettings->wled_ip . '/json', $payload);
+        $response = Http::timeout(2)->post(User::all()->first()->userSettings->wled_ip . '/json', $payload);
         return $response;
     }
 
     public static function toggleLights()
     {
-        $response = json_decode(Http::get(User::all()->first()->userSettings->wled_ip . '/json/state'), true);
+        $response = json_decode(Http::timeout(2)->get(User::all()->first()->userSettings->wled_ip . '/json/state'), true);
         $onOff = $response['on'];
         $onOff = !$onOff;
 
         $payload = ['on' => $onOff];
 
-        $response = Http::post(User::all()->first()->userSettings->wled_ip . '/json', $payload);
+        $response = Http::timeout(2)->post(User::all()->first()->userSettings->wled_ip . '/json', $payload);
         return $response;
     }
 }

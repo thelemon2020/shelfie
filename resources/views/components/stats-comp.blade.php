@@ -1,14 +1,14 @@
 <script src="https://unpkg.com/echarts/dist/echarts.min.js"></script>
 <!-- Chartisan -->
 <script src="https://unpkg.com/@chartisan/echarts/dist/chartisan_echarts.js"></script>
-<div id="statsCarousel" class="carousel slide carousel-fade" data-ride="carousel">
+<div id="statsCarousel" class="carousel slide" data-ride="carousel">
     <div class="carousel-inner">
-        <div class="carousel-item">
+        <div class="carousel-item vh-100">
             <div class="text-center">
                 <h3>Most Played Records</h3>
                 <table class="table">
                     <thead>
-                    <th class="w-25"></th>
+                    <th style="width: 15vh"></th>
                     <th>Artist</th>
                     <th>Title</th>
                     <th>Times Played</th>
@@ -16,7 +16,7 @@
                     <tbody>
                     @foreach($mostPlayed as $release)
                         <tr>
-                            <td><img style="height: 25vh; width: 25vh" src="{{$release->full_image ?? ''}}">
+                            <td><img class="img-fluid" src="{{$release->full_image ?? ''}}">
                             </td>
                             <td>{{$release->artist ?? ''}}</td>
                             <td>{{$release->title ?? ''}}</td>
@@ -41,13 +41,13 @@
             </div>
         </div>
         <div class="carousel-item">
-            <div id="chart-days" style="height: 300px;"></div>
+            <div id="chart-days" style="height: 50vh;"></div>
         </div>
         <div class="carousel-item">
-            <div id="chart-genre" style="height: 300px;"></div>
+            <div id="chart-genre" style="height: 50vh;"></div>
         </div>
         <div class="carousel-item active">
-            <div id="chart-artists" style="height: 300px;"></div>
+            <div id="chart-artists" style="height: 50vh;"></div>
         </div>
     </div>
 </div>
@@ -58,12 +58,28 @@
         url: "@chart('play_days_chart')",
         hooks: new ChartisanHooks()
             .title('Days When You Spin The Most')
+            .colors('#116a78')
     });
     const chartArtists = new Chartisan({
         el: '#chart-artists',
         url: "@chart('artist_chart')",
         hooks: new ChartisanHooks()
             .title('Most Played Artists')
+            .colors(
+                "blue",
+            )
+            .options({
+                xAxis: {
+                    type: "category",
+                    axisLabel: {
+                        interval: 0,
+                        rotate: 30 //If the label names are too long you can manage this by rotating the label.
+                    }
+                },
+                grid: {
+                    containLabel: true
+                }
+            })
     });
     const chartGenre = new Chartisan({
         el: '#chart-genre',

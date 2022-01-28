@@ -19,18 +19,19 @@ class Stats extends Controller
     {
         $user = User::query()->first();
         $play = Plays::query()->latest()->first();
+
         $lastPlayed = Release::query()->where('id', $play?->release_id)->first() ?? null;
         if ($lastPlayed) {
             $lastPlayed->last_played_at = $play->created_at;
         }
+
         $mostPlayed = Plays::query()
             ->join('releases', 'plays.release_id', '=', 'releases.id')
             ->select('releases.artist', 'releases.title', 'releases.full_image', DB::raw("count(*) as times_played"))
-            ->groupBy('plays.release_id')
+            ->groupBy('releases.id', 'releases.artist', 'releases.title', 'releases.full_image',)
             ->orderBy('times_played', 'DESC')
-            ->take(10)
+            ->take(5)
             ->get();
-
 
         return view('stats', ['user' => $user, 'lastPlayed' => $lastPlayed, 'mostPlayed' => $mostPlayed]);
     }

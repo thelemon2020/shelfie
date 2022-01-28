@@ -10,6 +10,6 @@ class Strip extends Controller
 {
     public function __invoke(Request $request)
     {
-        LightSegment::turnOnAllLightsSameColour($request->input('colour'));
+        return LightSegment::turnOnAllLightsSameColour($request->input('colour'));
     }
 }

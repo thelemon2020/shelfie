@@ -13,6 +13,6 @@ class Light extends Controller
     {
         $selectRecord = Cache::get('selected-record');
         unset($selectRecord['seg']['i']);
-        Http::asJson()->post(User::all()->first()->userSettings->wled_ip . '/json', $selectRecord);
+        Http::timeout(2)->asJson()->post(User::all()->first()->userSettings->wled_ip . '/json', $selectRecord);
     }
 }

@@ -11,13 +11,12 @@
     function lightStrip() {
         axios.get(`/api/lights/strip`, {
             params: {
-                colour: $('#stripColour').value
+                colour: $('#stripColour').val()
             }
         })
     }
 
     function toggleNowPlayingLight() {
-        console.log($('#nowPlayingLight').val())
         if ($('#nowPlayingLight').val() === 'false') {
             let id = $('#nowPlaying').val()
             axios.get(`/api/lights/light/${id}/on`)
@@ -29,7 +28,7 @@
     }
 
 </script>
-<div class="fixed-bottom collapse show" id="lightOptions">
+<div class="fixed-bottom collapse" id="lightOptions">
     <div class="bg-primary p-4 text-center">
         <h4 class="text-white">LED Options</h4>
         <div class="container">
@@ -38,7 +37,9 @@
                     <button class="btn btn-primary border border-dark" onclick="toggleLights()">On/Off</button>
                 </div>
                 <div class="col">
-                    <button class="btn btn-primary border border-dark" onclick="toggleNowPlayingLight()">Last Played
+                    <button
+                        class="btn btn-primary border border-dark @if(!\App\Models\Release::query()->where('id', \Illuminate\Support\Facades\Cache::get('now-playing')) && !\App\Models\Plays::query()->latest()->get()->first()) disabled @endif"
+                        onclick="toggleNowPlayingLight()">Last Played
                     </button>
                 </div>
                 <div class="col">
@@ -61,6 +62,7 @@
             </div>
         </div>
     </div>
-    <input type="hidden" id="nowPlaying" value="{{$nowPlaying->id ?? null}}">
+    <input type="hidden" id="nowPlaying"
+           value="{{!\App\Models\Release::query()->where('id', \Illuminate\Support\Facades\Cache::get('now-playing'))?? \App\Models\Plays::query()->latest()->get()->first()->release_id ?? null}}">
     <input type="hidden" id="nowPlayingLight" value="false">
 </div>
