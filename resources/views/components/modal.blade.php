@@ -23,10 +23,8 @@
                             <p id="title"></p>
                             <label><b>Genre</b></label>
                             <p id="genre"></p>
-                            <label><b>Times Played</b></label>
-                            <p id="timesPlayed"></p>
-                            <label><b>Last Played At</b></label>
-                            <p id="lastPlayedAt"></p>
+                            <p>Played <span id="timesPlayed" ></span> times</p>
+                            <p>Last played on <span id="lastPlayedAt"></span></p>
                             <input id="releaseId" hidden value="">
                         </div>
                     </div>
