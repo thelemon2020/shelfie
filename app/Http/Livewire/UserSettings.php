@@ -9,22 +9,23 @@ class UserSettings extends Component
 {
     public \App\Models\UserSettings $userSettings;
     public $originalSortMethod;
+    public $originalSsid;
+    public $password;
 
     protected $rules = [
         'userSettings.wled_ip' => 'sometimes|ip',
-        'userSettings.sort_method' => 'required|in:artist,title,genre_id,release_year',
-        'userSettings.sort_order' => 'required|in:asc,desc,custom'
+
     ];
 
     public function mount()
     {
         $this->userSettings = User::all()->first()->userSettings;
         $this->originalSortMethod = $this->userSettings->sort_method;
+
     }
 
     public function render()
     {
         return view('livewire.user-settings', ['userSettings' => $this->userSettings]);
     }
-
 }
