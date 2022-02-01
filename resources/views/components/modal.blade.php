@@ -2,16 +2,16 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <div class="modal fade" id="detailsModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
      aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
+    <div class="modal-dialog modal-dialog-centered my-md-0 h-100" role="document">
+        <div class="modal-content h-100 d-flex">
+            <div class="modal-header flex-shrink-0">
                 <h5 class="modal-title" id="modal-title">Record Details</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
-                <div class="container">
+            <div class="modal-body d-flex flex-column flex-grow-1">
+                <div class="container flex-grow-1">
                     <div class="row">
                         <div class="col align-self-center">
                             <img id="thumbnail" class="w-100 h-100" src="">
@@ -31,7 +31,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="modal-footer">
+                <div class="modal-footer p-0">
                     <div class="mr-auto">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">
                             Close
