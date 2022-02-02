@@ -20,11 +20,12 @@ class Wifi extends Component
     public function submit()
     {
         $this->validate();
-        $wifiScript = new Process(['./wifi', $this->ssid, $this->password, config('auth.rp_password')]);
+        $wifiScript = new Process(['sh', '/var/www/html/shelfie/public/wifi.sh', $this->ssid, $this->password, config('auth.rp_password')]);
         $wifiScript->run();
         if (!$wifiScript->isSuccessful()) {
             Log::error($wifiScript->getErrorOutput());
             $this->addError('connection', 'Internal Server Error');
+            throw new ProcessFailedException($wifiScript);
         } else {
             $response = Http::timeout(10)->get('https://google.com');
             if ($response->status() !== 200) {
@@ -39,6 +40,6 @@ class Wifi extends Component
 
     public function render()
     {
-        return view('livewire.wifi');
+        return view('livewire.wifi.sh');
     }
 }
