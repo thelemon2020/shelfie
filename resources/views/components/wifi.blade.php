@@ -8,35 +8,10 @@
                 </button>
             </div>
             <div class="modal-body">
-                <div class="row mb-2">
-                    <div class="col-auto">
-                        <label for="ssid">Wifi Network Name</label>
-                        <br>
-                        <input type="text" class="form-control" name="ssid" id="wifi_ssid">
-                    </div>
-                    <div class="col-auto">
-                        <label for="SSID">Wifi Password</label>
-                        <br>
-                        <input type="password" class="form-control" name="wifi_password" id="wifi_password">
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <div class="mr-auto">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                            Close
-                        </button>
-                    </div>
-                    <div class="align-self-end">
-                        <button type="button" onclick="connect()" data-bs-dismiss="modal" class="btn btn-primary">
-                            Connect
-                        </button>
-                    </div>
-                </div>
+                <livewire:wifi/>
             </div>
         </div>
     </div>
 </div>
-<script>
 
-</script>
 

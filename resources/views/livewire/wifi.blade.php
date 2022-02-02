@@ -22,7 +22,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <div class="mr-auto">
+                <div class="align-self-start">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                         Close
                     </button>
