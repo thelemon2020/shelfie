@@ -1,13 +1,11 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+
 <div class="modal fade" id="detailsModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
      aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered my-md-0 h-100" role="document">
         <div class="modal-content h-100 d-flex">
             <div class="modal-header flex-shrink-0">
                 <h5 class="modal-title" id="modal-title">Record Details</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                 </button>
             </div>
             <div class="modal-body d-flex flex-column flex-grow-1">
@@ -38,7 +36,8 @@
                         <button type="button" class="btn btn-danger" onclick="deleteRecord()">Delete</button>
                     </div>
                     <div class="align-self-end">
-                        <button type="button" onclick="playRecord()" data-dismiss="modal" class="btn btn-primary">Play
+                        <button type="button" onclick="playRecord()" data-bs-dismiss="modal" class="btn btn-primary">
+                            Play
                             Album
                         </button>
                     </div>
@@ -80,4 +79,3 @@
         })
     })
 </script>
-</html>

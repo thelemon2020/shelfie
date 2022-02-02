@@ -19,7 +19,7 @@
 @endif
 <div class="row">
     <div class="col-md-2">
-        <a class="btn-primary btn m-2" href="{{route('collection.index')}}">Back</a>
+        <a class="btn-primary btn m-2" href="{{route('home')}}">Back</a>
     </div>
     <div class="col-md-8">
         <h1 class="text-center">Edit Release</h1>

@@ -1,7 +1,7 @@
 <script src="https://unpkg.com/echarts/dist/echarts.min.js"></script>
 <!-- Chartisan -->
 <script src="https://unpkg.com/@chartisan/echarts/dist/chartisan_echarts.js"></script>
-<div id="statsCarousel" class="carousel slide" data-ride="carousel">
+<div id="statsCarousel" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-inner">
         <div class="carousel-item vh-100">
             <div class="text-center">
