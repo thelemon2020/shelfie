@@ -1,6 +1,6 @@
 <div>
     <form wire:submit.prevent="submit">
-        @if (session()->has('message')))
+        @if (session()->has('message'))
         <div class="alert alert-success">
             {{ session('message') }}
         </div>

@@ -233,5 +233,4 @@ return [
     ],
 
     'User-Agent' => 'Shelfie/0.2 +https://github.com/thelemon2020/Shelfie',
-
 ];
