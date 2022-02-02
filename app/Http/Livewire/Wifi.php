@@ -24,7 +24,7 @@ class Wifi extends Component
 //        $wifiScript = new Process(['sudo', '/var/www/html/shelfie/resources/wifiScript.sh', $this->ssid, $this->password, config('auth.rp_password')]);
 //        $wifiScript->run();
         if (!$runstatus) {
-            Log::error($error);
+            Log::error($error[0]);
             $this->addError('connection', 'Internal Server Error');
             //throw new ProcessFailedException($wifiScript);
         } else {
