@@ -21,7 +21,7 @@ class Wifi extends Component
     public function submit()
     {
         $this->validate();
-        $wifiScript = new Process(['sh', '/var/www/html/shelfie/public/wifi.sh', $this->ssid, $this->password, config('auth.rp_password')]);
+        $wifiScript = new Process(['sh', '/var/www/html/shelfie/public/wifiScript.sh', $this->ssid, $this->password, config('auth.rp_password')]);
         $wifiScript->run();
         if (!$wifiScript->isSuccessful()) {
             Log::error($wifiScript->getErrorOutput());
@@ -41,6 +41,6 @@ class Wifi extends Component
 
     public function render()
     {
-        return view('livewire.wifi.sh');
+        return view('livewire.wifi');
     }
 }

@@ -15,7 +15,6 @@
                     </button>
                 </div>
             </div>
-
             <input class="btn btn-primary" type="submit">
         </div>
     </form>
