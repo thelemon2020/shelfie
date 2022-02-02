@@ -96,7 +96,6 @@
                 @endif
             @endif
         </ul>
-
     </div>
 </nav>
 </body>

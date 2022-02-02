@@ -1,15 +1,15 @@
 
 <div class="modal fade" id="detailsModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
      aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
+    <div class="modal-dialog modal-dialog-centered my-md-0 h-100" role="document">
+        <div class="modal-content h-100 d-flex">
+            <div class="modal-header flex-shrink-0">
                 <h5 class="modal-title" id="modal-title">Record Details</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                 </button>
             </div>
-            <div class="modal-body">
-                <div class="container">
+            <div class="modal-body d-flex flex-column flex-grow-1">
+                <div class="container flex-grow-1">
                     <div class="row">
                         <div class="col align-self-center">
                             <img id="thumbnail" class="w-100 h-100" src="">
@@ -21,17 +21,15 @@
                             <p id="title"></p>
                             <label><b>Genre</b></label>
                             <p id="genre"></p>
-                            <label><b>Times Played</b></label>
-                            <p id="timesPlayed"></p>
-                            <label><b>Last Played At</b></label>
-                            <p id="lastPlayedAt"></p>
+                            <p>Played <span id="timesPlayed" ></span> times</p>
+                            <p>Last played on <span id="lastPlayedAt"></span></p>
                             <input id="releaseId" hidden value="">
                         </div>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <div class="align-items-start">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                <div class="modal-footer p-0">
+                    <div class="mr-auto">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
                             Close
                         </button>
                         <a class="btn btn-secondary" id="edit" onclick="turnOffLight()" href="">Edit</a>
