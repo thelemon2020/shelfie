@@ -85,7 +85,7 @@
     <div class="navbar-collapse collapse w-100 order-3 justify-content-end me-2 dual-collapse2">
         <ul class="navbar-nav ml-auto">
             @if(\App\Models\User::all()->first())
-                @if((\App\Models\User::all()->first()->userSettings?->wled_ip != null) && (\App\Models\User::all()->first()->userSettings?->wled_ip != ""))
+                @if((\App\Models\User::all()->first()->userSettings->wled_ip != null) && (\App\Models\User::all()->first()->userSettings->wled_ip != ""))
                     <li class="mt-1">
                         <button class="btn" type="button" data-bs-toggle="collapse" data-bs-target="#lightOptions"
                                 aria-expanded="false" aria-controls="lightOptions">
