@@ -21,7 +21,13 @@ class Wifi extends Component
     public function submit()
     {
         $this->validate();
-        $wifiScript = new Process(['/var/www/html/shelfie/resources/wifiScript.sh', $this->ssid, $this->password, config('auth.rp_password')]);
+        $DESTDIR = "/etc/wpa_supplicant/wpa_supplicant.conf";
+
+        $OUTPUT = "country=us\nupdate_config=1\nctrl_interface=/var/run/wpa_supplicant\n
+network={\nscan_ssid=1\n\nssid=\"$1\"\npsk=\"$2\"\n}\n";
+
+
+        $wifiScript = new Process(["{ echo \"config('rp_password')\"; echo \"$OUTPUT\"; } | sudo -S tee $DESTDIR &>/dev/null"]);
         $wifiScript->run();
         if (!$wifiScript->isSuccessful()) {
             Log::error($wifiScript->getErrorOutput());
