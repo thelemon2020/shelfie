@@ -12,5 +12,5 @@ OUTPUT="country=us\n\
         psk=\"$2\"\n\
        }"
 
-echo -e "$3\n" | sudo -S sh -c "echo -e $OUTPUT > $DESTDIR"
+echo -e "$3\n" | sudo -S sh -c "echo -e \"$OUTPUT\" > \"$DESTDIR\""
 
