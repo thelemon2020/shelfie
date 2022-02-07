@@ -27,8 +27,8 @@ class Wifi extends Component
             $this->addError('connection', 'Internal Server Error');
             throw new ProcessFailedException($wifiScript);
         }
-
-        $this->render();
+        $rebootScript = new Process(['/var/www/html/shelfie/resources/reboot.sh', config('auth.rp_password')]);
+        $rebootScript->run();
     }
 
     public function render()
