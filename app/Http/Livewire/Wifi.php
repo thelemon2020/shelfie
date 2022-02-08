@@ -29,7 +29,6 @@ class Wifi extends Component
             throw new ProcessFailedException($wifiScript);
         }
         $listOfNetworks = $wifiScript->getOutput();
-        dd($listOfNetworks);
         $this->networks = explode("\n", Str::remove('ESSID:', $listOfNetworks));
     }
 
