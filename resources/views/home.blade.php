@@ -53,7 +53,7 @@
             <div class="tab-content" id="pills-tabContent">
                 <div class="tab-pane fade show active" id="pills-playing" role="tabpanel"
                      aria-labelledby="pills-playing-tab">
-                    <div style="display: inline-block">
+                    {{--<div style="display: inline-block">
                         <div class=d-flex">
                             <div class="row justify-content-start">
                                 <div class="align-self-start text-center">
@@ -68,7 +68,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div>--}}
                 </div>
                 <div class="tab-pane fade" id="pills-collection" role="tabpanel"
                      aria-labelledby="pills-collection-tab">

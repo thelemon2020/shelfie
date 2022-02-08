@@ -5,20 +5,19 @@
             element.dispatchEvent(new Event('input'));
         })
     </script>
-    <div style="display: flex; justify-content: space-between">
-        <div class="d-flex m-1">
-            <input wire:model="search" id="searchField" type="text"
+    <div class="justify-between flex">
+        <div class="flex py-2 px-4 items-center">
+            <input wire:model="search" class="mr-2 text-lg leading-none border border-gray-400 rounded p-2" id="searchField" type="text"
                    placeholder="Search records..." {{$sort == 'shelf_order' ? 'disabled' : ''}}/>
-            <div class="dropdown show">
-                <select class="form-control ml-1" wire:model="sort">
-                    <option value="artist">Artist</option>
-                    <option value="title">Title</option>
-                    <option value="genre">Genre</option>
-                    <option value="release_year">Release Year</option>
-                    <option value="shelf_order">Shelf Order</option>
-                </select>
-            </div>
-            <button class="btn btn-primary ml-2" onclick="chooseRandom({{\App\Models\Release::query()->count()}})">
+            <select wire:model="sort" class="mr-2 text-lg border leading-none border-gray-400 rounded p-2">
+                <option value="artist">Artist</option>
+                <option value="title">Title</option>
+                <option value="genre">Genre</option>
+                <option value="release_year">Release Year</option>
+                <option value="shelf_order">Shelf Order</option>
+            </select>
+            <button class="bg-blue-700 p-3 rounded text-blue-100"
+                    onclick="chooseRandom({{\App\Models\Release::query()->count()}})">
                 <i class="fas fa-random"></i>
             </button>
         </div>

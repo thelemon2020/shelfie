@@ -37,37 +37,33 @@
         }
     </script>
 </head>
-<body style="max-height: 100vh; overflow-y: hidden">
-<nav class="navbar navbar-expand-md navbar-light bg-primary">
-    <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
-        <ul class="navbar-nav mr-auto">
-            <li class="mt-1"><h3>Shelfie</h3></li>
-            <ul class="nav nav-pills d-block" id="pills-tab" role="tablist">
-                <li class="nav-item ml-1" style="display: inline-block"
+<body>
+<nav class="bg-blue-400 text-blue-900 min-w-full flex shrink-0 justify-between py-2 px-4">
+        <ul class="inline-flex items-center">
+            <h3 class="mr-2 uppercase font-bold tracking-wider">Shelfie</h3>
+            <ul class="" id="pills-tab" role="tablist">
+                <li class="inline-block mr-2"
                     role="presentation">
                     <a class="nav-link active" id="pills-playing-tab" data-bs-toggle="pill"
                        data-bs-target="#pills-playing" type="button" role="tab" aria-controls="pills-playing"
                        aria-selected="true"><i class="fas fa-record-vinyl fa-2x"></i>
                     </a>
                 </li>
-                <li class="nav-item" role="presentation"
-                    style="display: inline-block">
+                <li class="inline-block mr-2" role="presentation">
                     <button class="nav-link" id="pills-collection-tab" data-bs-toggle="pill"
                             data-bs-target="#pills-collection"
                             type="button" role="tab" aria-controls="pills-collection" aria-selected="false"><i
                             class="fas fa-list fa-2x "></i>
                     </button>
                 </li>
-                <li class="nav-item" role="presentation"
-                    style="display: inline-block">
+                <li class="inline-block mr-2" role="presentation">
                     <button class="nav-link" id="pills-stats-tab" data-bs-toggle="pill"
                             data-bs-target="#pills-stats"
                             type="button" role="tab" aria-controls="pills-stats" aria-selected="false"><i
                             class="fas fa-chart-pie fa-2x"></i>
                     </button>
                 </li>
-                <li class="nav-item" role="presentation"
-                    style="display: inline-block">
+                <li class="inline-block mr-2" role="presentation">
                     <button class="nav-link" id="pills-options-tab" data-bs-toggle="pill"
                             data-bs-target="#pills-options"
                             type="button" role="tab" aria-controls="pills-options" aria-selected="false"><i
@@ -76,21 +72,19 @@
                 </li>
             </ul>
         </ul>
-    </div>
-    <div class="navbar-collapse collapse w-100 order-3 justify-content-end me-2 dual-collapse2">
-        <ul class="navbar-nav ml-auto">
-            @if(\App\Models\User::all()->first())
-                @if((\App\Models\User::all()->first()->userSettings->wled_ip != null) && (\App\Models\User::all()->first()->userSettings->wled_ip != ""))
-                    <li class="mt-1">
-                        <button class="btn" type="button" data-bs-toggle="collapse" data-bs-target="#lightOptions"
-                                aria-expanded="false" aria-controls="lightOptions">
-                            <i
-                                class="fas fa-lightbulb fa-2x text-black-50" onclick="changeLightBulb()"
-                                id="lightBulb"></i></button>
-                    </li>
-                @endif
+    <ul class="inline-block">
+        @if(\App\Models\User::all()->first())
+            @if((\App\Models\User::all()->first()->userSettings->wled_ip != null) && (\App\Models\User::all()->first()->userSettings->wled_ip != ""))
+                <li class="mt-1">
+                    <button class="btn" type="button" data-bs-toggle="collapse" data-bs-target="#lightOptions"
+                            aria-expanded="false" aria-controls="lightOptions">
+                        <i
+                            class="fas fa-lightbulb fa-2x text-black-50" onclick="changeLightBulb()"
+                            id="lightBulb"></i></button>
+                </li>
             @endif
-        </ul>
+        @endif
+    </ul>
     </div>
 </nav>
 </body>
