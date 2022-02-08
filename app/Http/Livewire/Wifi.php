@@ -23,7 +23,13 @@ class Wifi extends Component
     {
         $wifiScript = new Process(['/var/www/html/shelfie/resources/getNetworks.sh', config('auth.rp_password')]);
         $wifiScript->run();
+        if (!$wifiScript->isSuccessful()) {
+            Log::error($wifiScript->getErrorOutput());
+            $this->addError('connection', 'Internal Server Error');
+            throw new ProcessFailedException($wifiScript);
+        }
         $listOfNetworks = $wifiScript->getOutput();
+        dd($listOfNetworks);
         $this->networks = explode("\n", Str::remove('ESSID:', $listOfNetworks));
     }
 
