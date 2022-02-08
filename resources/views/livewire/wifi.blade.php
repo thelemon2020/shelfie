@@ -1,9 +1,9 @@
 <div>
     <form wire:submit.prevent="submit">
         @if (session()->has('message'))
-        <div class="alert alert-success">
-            {{ session('message') }}
-        </div>
+            <div class="alert alert-success">
+                {{ session('message') }}
+            </div>
         @endif
         @error('connection')
         <div class="alert alert-danger">{{ $message }}</div> @enderror
@@ -12,7 +12,12 @@
                 <div class="col-auto">
                     <label for="ssid">Wifi Network Name</label>
                     <br>
-                    <input type="text" class="form-control" wire:model="ssid" name="ssid" id="wifi_ssid">
+                    <select class="form-control ml-1" wire:model="ssid">
+                        <option selected value="">Choose a Network</option>
+                        @foreach($networks as $network)
+                            <option value={{$network}}>{{$network}}</option>
+                        @endforeach
+                    </select>
                 </div>
                 <div class="col-auto">
                     <label for="SSID">Wifi Password</label>

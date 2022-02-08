@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 use Livewire\Component;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\Process;
@@ -11,11 +12,20 @@ class Wifi extends Component
 {
     public $ssid;
     public $password;
+    public $networks;
 
     public $rules = [
         'ssid' => 'required',
         'password' => 'required',
     ];
+
+    public function mount()
+    {
+        $wifiScript = new Process(['/var/www/html/shelfie/resources/getNetworks.sh', config('auth.rp_password')]);
+        $wifiScript->run();
+        $listOfNetworks = $wifiScript->getOutput();
+        $this->networks = explode("\n", Str::remove('ESSID:', $listOfNetworks));
+    }
 
     public function submit()
     {
