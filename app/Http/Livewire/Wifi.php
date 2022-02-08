@@ -19,17 +19,26 @@ class Wifi extends Component
         'password' => 'required',
     ];
 
-    public function mount()
+    protected $listeners = [
+        'getNetworks' => 'getNetworks',
+        'refreshComponent' => '$refresh'
+    ];
+
+    public function getNetworks()
     {
-        $wifiScript = new Process(['/var/www/html/shelfie/resources/getNetworks.sh', config('auth.rp_password')]);
-        $wifiScript->run();
-        if (!$wifiScript->isSuccessful()) {
-            Log::error($wifiScript->getErrorOutput());
-            $this->addError('connection', 'Internal Server Error');
-            throw new ProcessFailedException($wifiScript);
+        if ($this->networks === null) {
+            $wifiScript = new Process(['/var/www/html/shelfie/resources/getNetworks.sh', config('auth.rp_password')]);
+            $wifiScript->run();
+            if (!$wifiScript->isSuccessful()) {
+                Log::error($wifiScript->getErrorOutput());
+                $this->addError('connection', 'Internal Server Error');
+                throw new ProcessFailedException($wifiScript);
+            }
+            $listOfNetworks = $wifiScript->getOutput();
+            $this->networks = explode("\n", Str::remove(['ESSID:', '"'], $listOfNetworks));
+
         }
-        $listOfNetworks = $wifiScript->getOutput();
-        $this->networks = explode("\n", Str::remove('ESSID:', $listOfNetworks));
+        $this->emitSelf('refreshComponent');
     }
 
     public function submit()

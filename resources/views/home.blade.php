@@ -104,7 +104,7 @@
             </a>
         </div>
     @endif
-    @livewireScripts()
     <x-controls :nowPlaying="$nowPlaying"></x-controls>
+        @livewireScripts()
 </div>
 

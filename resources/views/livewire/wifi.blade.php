@@ -1,22 +1,19 @@
 <div>
     <form wire:submit.prevent="submit">
-        @if (session()->has('message'))
-            <div class="alert alert-success">
-                {{ session('message') }}
-            </div>
-        @endif
         @error('connection')
         <div class="alert alert-danger">{{ $message }}</div> @enderror
-        <div wire:loading.remove wire:target="submit">
+        <div wire:loading.remove wire:target="getNetworks">
             <div class="row mb-2">
                 <div class="col-auto">
                     <label for="ssid">Wifi Network Name</label>
                     <br>
                     <select class="form-control ml-1" wire:model="ssid">
                         <option selected value="">Choose a Network</option>
-                        @foreach($networks as $network)
-                            <option value={{$network}}>{{$network}}</option>
-                        @endforeach
+                        @if ($networks)
+                            @foreach($networks as $network)
+                                <option value={{$network}}>{{$network}}</option>
+                            @endforeach
+                        @endif
                     </select>
                 </div>
                 <div class="col-auto">
@@ -39,13 +36,13 @@
                 </div>
             </div>
         </div>
-        <div wire:loading.flex wire:target="submit">
+        <div wire:loading.flex wire:target="getNetworks">
             <div class="mx-auto text-center">
                 <div class="spinner-border" role="status">
                     <span class="sr-only">Connecting...</span>
                 </div>
                 <div>
-                    <h1>Trying To Connect</h1>
+                    <h1>Scanning for Networks</h1>
                 </div>
             </div>
         </div>
