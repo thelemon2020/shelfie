@@ -1,18 +1,24 @@
 <div>
     <form wire:submit.prevent="submit">
-        @if (session()->has('message'))
-        <div class="alert alert-success">
-            {{ session('message') }}
-        </div>
-        @endif
         @error('connection')
         <div class="alert alert-danger">{{ $message }}</div> @enderror
-        <div wire:loading.remove wire:target="submit">
+        <div wire:loading.remove wire:target="getNetworks">
             <div class="row mb-2">
+                <div class="col-auto mt-4">
+                    <button class="btn btn-primary" wire:click="getNetworks"><i class="fas fa-redo"></i></button>
+                </div>
                 <div class="col-auto">
+
                     <label for="ssid">Wifi Network Name</label>
                     <br>
-                    <input type="text" class="form-control" wire:model="ssid" name="ssid" id="wifi_ssid">
+                    <select class="form-control ml-1" wire:model="ssid">
+                        <option selected value="">Choose a Network</option>
+                        @if ($networks)
+                            @foreach($networks as $network)
+                                <option value={{$network}}>{{$network}}</option>
+                            @endforeach
+                        @endif
+                    </select>
                 </div>
                 <div class="col-auto">
                     <label for="SSID">Wifi Password</label>
@@ -34,13 +40,13 @@
                 </div>
             </div>
         </div>
-        <div wire:loading.flex wire:target="submit">
+        <div wire:loading wire:target="getNetworks">
             <div class="mx-auto text-center">
                 <div class="spinner-border" role="status">
                     <span class="sr-only">Connecting...</span>
                 </div>
                 <div>
-                    <h1>Trying To Connect</h1>
+                    <p>Scanning for Networks</p>
                 </div>
             </div>
         </div>
