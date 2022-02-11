@@ -4,7 +4,11 @@
         <div class="alert alert-danger">{{ $message }}</div> @enderror
         <div wire:loading.remove wire:target="getNetworks">
             <div class="row mb-2">
+                <div class="col-auto mt-4">
+                    <button class="btn btn-primary" wire:click="getNetworks"><i class="fas fa-redo"></i></button>
+                </div>
                 <div class="col-auto">
+
                     <label for="ssid">Wifi Network Name</label>
                     <br>
                     <select class="form-control ml-1" wire:model="ssid">
@@ -36,13 +40,13 @@
                 </div>
             </div>
         </div>
-        <div wire:loading.flex wire:target="getNetworks">
+        <div wire:loading wire:target="getNetworks">
             <div class="mx-auto text-center">
                 <div class="spinner-border" role="status">
                     <span class="sr-only">Connecting...</span>
                 </div>
                 <div>
-                    <h1>Scanning for Networks</h1>
+                    <p>Scanning for Networks</p>
                 </div>
             </div>
         </div>

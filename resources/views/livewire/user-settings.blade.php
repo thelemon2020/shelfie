@@ -14,7 +14,7 @@
         </div>
     </form>
     <div class="col-auto ms-2 mb-3">
-        <button wire:click="$emit('getNetworks')" type="button" class="btn btn-primary" data-bs-toggle="modal"
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                 data-bs-target="#wifiModal">
             Connect To Wifi
         </button>
