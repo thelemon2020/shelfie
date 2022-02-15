@@ -47,7 +47,7 @@
     }
 
 </script>
-<div id="home" class="d-block" style="overflow-x: hidden;">
+<div id="home" style="overflow-x: hidden;">
     @if(\App\Models\User::query()->first())
         <div style="text-align: center;">
             <div class="tab-content" id="pills-tabContent">

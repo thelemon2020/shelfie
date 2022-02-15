@@ -28,38 +28,18 @@
     }
 
 </script>
-<div class="fixed-bottom collapse" id="lightOptions">
-    <div class="bg-primary p-4 text-center">
-        <h4 class="text-white">LED Options</h4>
-        <div class="container">
-            <div class="row">
-                <div class="col">
-                    <button class="btn btn-primary border border-dark" onclick="toggleLights()">On/Off</button>
-                </div>
-                <div class="col">
-                    <button
-                        class="btn btn-primary border border-dark @if(!\App\Models\Release::query()->where('id', \Illuminate\Support\Facades\Cache::get('now-playing')) && !\App\Models\Plays::query()->latest()->get()->first()) disabled @endif"
-                        onclick="toggleNowPlayingLight()">Last Played
-                    </button>
-                </div>
-                <div class="col">
-                    <button class="btn btn-primary border border-dark" onclick="lightSegments()">Segments</button>
-                </div>
-                <div class="col">
-                    <button class="btn btn-primary border border-dark" onclick="lightStrip()">Solid</button>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col">
-                </div>
-                <div class="col">
-                </div>
-                <div class="col">
-                </div>
-                <div class="col mt-1">
-                    <input type="color" id="stripColour">
-                </div>
-            </div>
+<div class="bg-blue-500 absolute bottom-0 w-full" id="lightOptions">
+    <h4 class="text-white text-center">LED Options</h4>
+    <div class=" p-4 flex justify-around flex-shrink-0">
+        <button class="text-white bg-blue-900 text-lg px-4 py-2 rounded" onclick="toggleLights()">On/Off</button>
+        <button
+            class="text-white bg-blue-900 text-lg px-4 py-2 rounded @if(!\App\Models\Release::query()->where('id', \Illuminate\Support\Facades\Cache::get('now-playing')) && !\App\Models\Plays::query()->latest()->get()->first()) disabled @endif"
+            onclick="toggleNowPlayingLight()">Last Played
+        </button>
+        <button class="text-white bg-blue-900 text-lg px-4 py-2 rounded" onclick="lightSegments()">Segments</button>
+        <div class="flex justify-center flex-col">
+            <button class="text-white bg-blue-900 text-lg px-4 py-2 rounded" onclick="lightStrip()">Solid</button>
+            <input type="color" id="stripColour">
         </div>
     </div>
     <input type="hidden" id="nowPlaying"
