@@ -11,12 +11,12 @@
     <title>Shelfie</title>
     <script>function changeLightBulb() {
             console.log('here')
-            if ($('#lightBulb').hasClass('text-black')) {
-                $('#lightBulb').removeClass('text-black')
-                $('#lightBulb').addClass('text-black-50')
+            if ($('#lightBulb').hasClass('text-blue-900')) {
+                $('#lightBulb').removeClass('text-blue-900')
+                $('#lightBulb').addClass('text-blue-700')
             } else {
-                $('#lightBulb').removeClass('text-black-50')
-                $('#lightBulb').addClass('text-black')
+                $('#lightBulb').removeClass('text-blue-700')
+                $('#lightBulb').addClass('text-blue-900')
             }
         }
 
@@ -35,36 +35,43 @@
                 }
             })
         }
+
+        function onClick(pageId) {
+            $("[role='tabpanel']").addClass('hidden')
+            $("[role='tab']").removeClass('text-blue-900')
+            $(pageId).toggleClass('hidden')
+            $(pageId + '-tab').addClass('text-blue-900')
+        }
     </script>
 </head>
 <body>
-<nav class="bg-blue-400 text-blue-900 min-w-full flex shrink-0 justify-between py-2 px-4">
+<nav class="bg-blue-400 text-blue-700 min-w-full flex shrink-0 justify-between py-2 px-4">
         <ul class="inline-flex items-center">
             <h3 class="mr-2 uppercase font-bold tracking-wider">Shelfie</h3>
             <ul class="" id="pills-tab" role="tablist">
                 <li class="inline-block mr-2"
                     role="presentation">
-                    <a class="nav-link active" id="pills-playing-tab" data-bs-toggle="pill"
+                    <button class="text-blue-900" onclick="onClick('#pills-playing')" id="pills-playing-tab" data-bs-toggle="pill"
                        data-bs-target="#pills-playing" type="button" role="tab" aria-controls="pills-playing"
-                       aria-selected="true"><i class="fas fa-record-vinyl fa-2x"></i>
-                    </a>
+                       aria-selected="true"><i class="fill-current fas fa-record-vinyl fa-2x"></i>
+                    </button>
                 </li>
                 <li class="inline-block mr-2" role="presentation">
-                    <button class="nav-link" id="pills-collection-tab" data-bs-toggle="pill"
+                    <button class="" onclick="onClick('#pills-collection')" id="pills-collection-tab" data-bs-toggle="pill"
                             data-bs-target="#pills-collection"
                             type="button" role="tab" aria-controls="pills-collection" aria-selected="false"><i
                             class="fas fa-list fa-2x "></i>
                     </button>
                 </li>
                 <li class="inline-block mr-2" role="presentation">
-                    <button class="nav-link" id="pills-stats-tab" data-bs-toggle="pill"
+                    <button class="" onclick="onClick('#pills-stats')" id="pills-stats-tab" data-bs-toggle="pill"
                             data-bs-target="#pills-stats"
                             type="button" role="tab" aria-controls="pills-stats" aria-selected="false"><i
                             class="fas fa-chart-pie fa-2x"></i>
                     </button>
                 </li>
                 <li class="inline-block mr-2" role="presentation">
-                    <button class="nav-link" id="pills-options-tab" data-bs-toggle="pill"
+                    <button class="" onclick="onClick('#pills-options')" id="pills-options-tab" data-bs-toggle="pill"
                             data-bs-target="#pills-options"
                             type="button" role="tab" aria-controls="pills-options" aria-selected="false"><i
                             class="fas fa-cog fa-2x"></i>
@@ -79,7 +86,7 @@
                     <button class="btn" type="button" data-bs-toggle="collapse" data-bs-target="#lightOptions"
                             aria-expanded="false" aria-controls="lightOptions">
                         <i
-                            class="fas fa-lightbulb fa-2x text-black-50" onclick="changeLightBulb()"
+                            class="fas fa-lightbulb fa-2x text-blue-700" onclick="changeLightBulb()"
                             id="lightBulb"></i></button>
                 </li>
             @endif

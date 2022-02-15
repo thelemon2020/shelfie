@@ -51,9 +51,9 @@
     @if(\App\Models\User::query()->first())
         <div style="text-align: center;">
             <div class="tab-content" id="pills-tabContent">
-                <div class="tab-pane fade show active" id="pills-playing" role="tabpanel"
+                <div class="" id="pills-playing" role="tabpanel"
                      aria-labelledby="pills-playing-tab">
-                    {{--<div style="display: inline-block">
+                    <div style="display: inline-block">
                         <div class=d-flex">
                             <div class="row justify-content-start">
                                 <div class="align-self-start text-center">
@@ -68,9 +68,9 @@
                                 </div>
                             </div>
                         </div>
-                    </div>--}}
+                    </div>
                 </div>
-                <div class="tab-pane fade" id="pills-collection" role="tabpanel"
+                <div class="hidden" id="pills-collection" role="tabpanel"
                      aria-labelledby="pills-collection-tab">
                     <div style="display: inline-block">
                         <div class=d-flex">
@@ -80,13 +80,13 @@
                         </div>
                     </div>
                 </div>
-                <div class="tab-pane fade" id="pills-stats" role="tabpanel"
+                <div class="hidden" id="pills-stats" role="tabpanel"
                      aria-labelledby="pills-stats-tab">
                     <div class=d-flex">
                         <x-stats-comp :mostPlayed="$mostPlayed" :lastPlayed="$lastPlayed"></x-stats-comp>
                     </div>
                 </div>
-                <div class="tab-pane fade" id="pills-options" role="tabpanel"
+                <div class="hidden" id="pills-options" role="tabpanel"
                      aria-labelledby="pills-options-tab">
                     <div class=d-flex">
                         <div class="align-self-center text-center mt-1">
@@ -98,13 +98,13 @@
         </div>
         <x-modal></x-modal>
     @else
-        <div class="text-center">
+        <div class="text-center hidden">
             <a href="{{route('register')}}">
                 <button class="btn btn-primary">Register Your Account</button>
             </a>
         </div>
     @endif
-    @livewireScripts()
     <x-controls :nowPlaying="$nowPlaying"></x-controls>
+    @livewireScripts()
 </div>
 
