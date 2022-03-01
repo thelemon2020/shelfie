@@ -1,8 +1,8 @@
 
-<div class="modal fade" id="detailsModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+<div class="absolute top-0 left-0 bg-gray-500/50 h-full w-full flex" id="detailsModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
      aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered my-md-0 h-100" role="document">
-        <div class="modal-content h-100 d-flex">
+    <div class="mx-auto my-auto bg-white w-1/3" role="document">
+        <div class="h-100 p-2 shadow-lg">
             <div class="modal-header flex-shrink-0">
                 <h5 class="modal-title" id="modal-title">Record Details</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">

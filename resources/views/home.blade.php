@@ -96,7 +96,6 @@
                 </div>
             </div>
         </div>
-        <x-modal></x-modal>
     @else
         <div class="text-center hidden">
             <a href="{{route('register')}}">
@@ -105,6 +104,7 @@
         </div>
     @endif
     <x-controls :nowPlaying="$nowPlaying"></x-controls>
+    <x-modal></x-modal>
     @livewireScripts()
 </div>
 
