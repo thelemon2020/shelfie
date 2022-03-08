@@ -28,7 +28,7 @@
     }
 
 </script>
-<div class="bg-blue-500 absolute bottom-0 w-full" id="lightOptions">
+<div class="bg-blue-500 absolute bottom-0 w-full hidden" id="lightOptions">
     <h4 class="text-white text-center">LED Options</h4>
     <div class=" p-4 flex justify-around flex-shrink-0">
         <button class="text-white bg-blue-900 text-lg px-4 py-2 rounded" onclick="toggleLights()">On/Off</button>

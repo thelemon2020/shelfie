@@ -46,6 +46,9 @@
         function closeModal() {
             $('#detailsModal').hide();
         }
+        function toggleLightOptions(){
+            $('#lightOptions').toggle();
+        }
     </script>
 </head>
 <body>
@@ -84,17 +87,18 @@
             </ul>
         </ul>
     <ul class="inline-block">
-        @if(\App\Models\User::all()->first())
-            @if((\App\Models\User::all()->first()->userSettings->wled_ip != null) && (\App\Models\User::all()->first()->userSettings->wled_ip != ""))
+{{--        @if(\App\Models\User::all()->first())--}}
+{{--            @if((\App\Models\User::all()->first()->userSettings->wled_ip != null) && (\App\Models\User::all()->first()->userSettings->wled_ip != ""))--}}
                 <li class="mt-1">
-                    <button class="btn" type="button" data-bs-toggle="collapse" data-bs-target="#lightOptions"
+                    <button onclick="toggleLightOptions()" class="btn" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#lightOptions"
                             aria-expanded="false" aria-controls="lightOptions">
                         <i
                             class="fas fa-lightbulb fa-2x text-blue-700" onclick="changeLightBulb()"
                             id="lightBulb"></i></button>
                 </li>
-            @endif
-        @endif
+{{--            @endif--}}
+{{--        @endif--}}
     </ul>
     </div>
 </nav>
