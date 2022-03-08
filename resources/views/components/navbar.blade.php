@@ -49,6 +49,14 @@
         function toggleLightOptions(){
             $('#lightOptions').toggle();
         }
+
+        function toggleAccordionContent(e) {
+            let currentlyHidden = $(e).parent().find('.accordion-content').hasClass('hidden');
+            $('.accordion-content').addClass('hidden');
+            if(currentlyHidden){
+                $(e).parent().find('.accordion-content').removeClass('hidden');
+            }
+        }
     </script>
 </head>
 <body>
