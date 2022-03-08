@@ -42,6 +42,10 @@
             $(pageId).toggleClass('hidden')
             $(pageId + '-tab').addClass('text-blue-900')
         }
+
+        function closeModal() {
+            $('#detailsModal').hide();
+        }
     </script>
 </head>
 <body>
