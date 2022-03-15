@@ -49,25 +49,19 @@
 </script>
 <div id="home" style="overflow-x: hidden;">
     @if(\App\Models\User::query()->first())
-        <div style="text-align: center;">
             <div class="tab-content" id="pills-tabContent">
-                <div class="" id="pills-playing" role="tabpanel"
+                <div id="pills-playing" role="tabpanel" class="min-w-screen min-h-screen text-center flex items-center justify-center"
                      aria-labelledby="pills-playing-tab">
-                    <div style="display: inline-block">
-                        <div class=d-flex">
-                            <div class="row justify-content-start">
-                                <div class="align-self-start text-center">
-                                    <h3 class="mt-2 mb-0">Now Playing</h3>
-                                    <br>
-                                    @if(!$nowPlaying)
-                                        <h4>Nothing! Go Spin A Record!</h4>
-                                    @else
-                                        <img id="lastPlayed" class="w-75" src="{{$nowPlaying->full_image  ?? ''}}">
-                                        <h4>{{$nowPlaying->artist ?? ''}} - {{$nowPlaying->title ?? ''}}</h4>
-                                    @endif
-                                </div>
-                            </div>
-                        </div>
+                    <div>
+                        <h3>Now Playing</h3>
+                        <br>
+                        @if(!$nowPlaying)
+                            <h4>Nothing! Go Spin A Record!</h4>
+                        @else
+                            <img id="lastPlayed" src="{{$nowPlaying->full_image  ?? ''}}">
+                            <h4>{{$nowPlaying->artist ?? ''}} - {{$nowPlaying->title ?? ''}}</h4>
+                        @endif
+
                     </div>
                 </div>
                 <div class="hidden" id="pills-collection" role="tabpanel"
@@ -94,7 +88,6 @@
                         </div>
                     </div>
                 </div>
-            </div>
         </div>
     @else
         <div class="text-center hidden">
