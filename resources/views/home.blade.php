@@ -50,7 +50,7 @@
 <div id="home" style="overflow-x: hidden;">
     @if(\App\Models\User::query()->first())
             <div class="tab-content" id="pills-tabContent">
-                <div id="pills-playing" role="tabpanel" class="min-w-screen min-h-screen text-center flex items-center justify-center"
+                <div id="pills-playing" role="tabpanel" class="hidden min-w-screen min-h-screen text-center flex items-center justify-center"
                      aria-labelledby="pills-playing-tab">
                     <div>
                         <h3>Now Playing</h3>
@@ -64,15 +64,9 @@
 
                     </div>
                 </div>
-                <div class="hidden" id="pills-collection" role="tabpanel"
+                <div id="pills-collection" role="tabpanel"
                      aria-labelledby="pills-collection-tab">
-                    <div style="display: inline-block">
-                        <div class=d-flex">
-                            <div class="align-self-center text-center mt-1">
-                                <livewire:search/>
-                            </div>
-                        </div>
-                    </div>
+                    <livewire:search/>
                 </div>
                 <div class="hidden" id="pills-stats" role="tabpanel"
                      aria-labelledby="pills-stats-tab">

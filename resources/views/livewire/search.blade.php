@@ -22,25 +22,21 @@
             </button>
         </div>
         <div>
-            <div class="d-flex mt-1 mr-1">
-                <div class="dropdown show mr-1">
-                    <select class="form-control" wire:model="pagination">
-                        <option value=10>10</option>
-                        <option value=25>25</option>
-                        <option selected value=50>50</option>
-                        <option value=75>75</option>
-                        <option value=100>100</option>
-                    </select>
-                </div>
-                @if(\App\Models\User::all()->first->discogs_username)
-                    <button class="btn btn-primary mr-2" wire:click="refreshCollection">
-                        <i class="fas fa-sync"></i>
-                    </button>
-                @else()
-                    <a href="{{route('release.create')}}"
-                       type="button" class="btn btn-info mr-1">+</a>
-                @endif
-            </div>
+            <select class="appearance-none" wire:model="pagination">
+                <option value=10>10</option>
+                <option value=25>25</option>
+                <option selected value=50>50</option>
+                <option value=75>75</option>
+                <option value=100>100</option>
+            </select>
+            @if(\App\Models\User::all()->first->discogs_username)
+                <button class="text-white bg-blue-700 p-2 mx-2" wire:click="refreshCollection">
+                    <i class="fas fa-sync"></i>
+                </button>
+            @else()
+                <a href="{{route('release.create')}}"
+                   type="button" class="">+</a>
+            @endif
         </div>
     </div>
     <div wire:loading.flex wire:target="refreshCollection">
@@ -53,42 +49,43 @@
             </div>
         </div>
     </div>
-    <div wire:loading.remove wire:target="refreshCollection" style="overflow-y: auto; height: 84vh">
-        <table class="table">
-            <thead style="position: sticky; top: 0">
+    <div wire:loading.remove wire:target="refreshCollection">
+        <table class="w-full align-top">
+            <thead class="bg-black text-white font-bold">
             <tr>
-                <th style="background-color: black; color: white" scope="col"></th>
-                <th style="background-color: black; color: white" class="w-25" scope="col"></th>
-                <th style="background-color: black; color: white" scope="col">Artist</th>
-                <th style="background-color: black; color: white" scope="col">Title</th>
-                <th style="background-color: black; color: white" scope="col">Genre</th>
-                <th style="background-color: black; color: white" scope="col">Year</th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+                <th scope="col">Artist</th>
+                <th scope="col">Title</th>
+                <th scope="col">Genre</th>
+                <th scope="col">Year</th>
             </tr>
             </thead>
             <tbody>
             @foreach($releases as $release)
                 <tr>
-                    <td class="align-middle">
-                        <i class="fas fa-info-circle fa-5x p-2" style="cursor: pointer"
+                    <td class="w-48 text-center">
+                        <i class="fas fa-info-circle fa-5x"
                            onClick="getDetails({{$release->id}})"></i>
                     </td>
                     <td>
-                        <img class="img-thumbnail img-fluid w-50 h-50"
+                        <img class="w-64 py-2"
                              src="{{$release->full_image}}"
                              alt="{{$release->artist . "-" . $release->title}}"/>
                     </td>
-                    <td>{{$release->artist}}</td>
-                    <td>{{$release->title}}</td>
-                    <td>{{$release->genre->name ?? "Uncategorized"}}</td>
-                    <td>{{$release->release_year}}</td>
+                    <td class="align-top text-center pt-2">{{$release->artist}}</td>
+                    <td class="align-top text-center pt-2">{{$release->title}}</td>
+                    <td class="align-top text-center pt-2">{{$release->genre->name ?? "Uncategorized"}}</td>
+                    <td class="align-top text-center pt-2">{{$release->release_year}}</td>
                 </tr>
             @endforeach
             </tbody>
         </table>
-        <div class="d-flex">
-            <div class="mx-auto">
+        <div>
+            <div>
                 {{ $releases->links() }}
             </div>
         </div>
     </div>
 </div>
+ß
