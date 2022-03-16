@@ -1,13 +1,14 @@
-<div xmlns:wire="http://www.w3.org/1999/xhtml">
+<div xmlns:wire="http://www.w3.org/1999/xhtml" class="h-screen">
     <script>
         window.addEventListener('keypress', event => {
             let element = event.target;
             element.dispatchEvent(new Event('input'));
         })
     </script>
-    <div class="justify-between flex">
+    <div class="justify-between flex sticky">
         <div class="flex py-2 px-4 items-center">
-            <input wire:model="search" class="mr-2 text-lg leading-none border border-gray-400 rounded p-2" id="searchField" type="text"
+            <input wire:model="search" class="mr-2 text-lg leading-none border border-gray-400 rounded p-2"
+                   id="searchField" type="text"
                    placeholder="Search records..." {{$sort == 'shelf_order' ? 'disabled' : ''}}/>
             <select wire:model="sort" class="mr-2 text-lg border leading-none border-gray-400 rounded p-2">
                 <option value="artist">Artist</option>
@@ -49,9 +50,9 @@
             </div>
         </div>
     </div>
-    <div wire:loading.remove wire:target="refreshCollection">
-        <table class="w-full h-screen align-top">
-            <thead class="bg-black text-white font-bold">
+    <div wire:loading.remove wire:target="refreshCollection" class="h-1/3">
+        <table class="w-full align-top">
+            <thead class="bg-black text-white font-bold sticky">
             <tr>
                 <th scope="col"></th>
                 <th scope="col"></th>

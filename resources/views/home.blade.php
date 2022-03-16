@@ -19,7 +19,7 @@
                 $('#lastPlayedAt').text(release.data.last_played_at ?? "Never")
                 $('#edit').attr("href", `/release/${release.data.id}/edit`)
                 $('#releaseId').val(release.data.id)
-                $('#detailsModal').modal('show')
+                $('#detailsModal').show()
             })
             .catch(error => {
                 console.log(error);
@@ -31,7 +31,6 @@
         axios.get(`/api/release/${id}`)
             .then((release) => {
                 console.log('release', release.data)
-                $('#detailsModal').modal('show')
                 $('#thumbnail').attr("src", release.data.full_image)
                 $('#artist').text(release.data.artist)
                 $('#title').text(release.data.title)
@@ -40,6 +39,7 @@
                 $('#lastPlayedAt').text(release.data.last_played_at ?? "Never")
                 $('#edit').attr("href", `/release/${release.data.id}/edit`)
                 $('#releaseId').val(release.data.id)
+                $('#detailsModal').show()
             })
             .catch(error => {
                 console.log(error);
