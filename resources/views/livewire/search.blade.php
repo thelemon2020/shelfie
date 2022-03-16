@@ -21,8 +21,8 @@
                 <i class="fas fa-random"></i>
             </button>
         </div>
-        <div>
-            <select class="appearance-none" wire:model="pagination">
+        <div class="py-2">
+            <select wire:model="pagination">
                 <option value=10>10</option>
                 <option value=25>25</option>
                 <option selected value=50>50</option>
@@ -30,7 +30,7 @@
                 <option value=100>100</option>
             </select>
             @if(\App\Models\User::all()->first->discogs_username)
-                <button class="text-white bg-blue-700 p-2 mx-2" wire:click="refreshCollection">
+                <button class="text-white rounded bg-blue-700 p-2 mx-2" wire:click="refreshCollection">
                     <i class="fas fa-sync"></i>
                 </button>
             @else()
@@ -50,7 +50,7 @@
         </div>
     </div>
     <div wire:loading.remove wire:target="refreshCollection">
-        <table class="w-full align-top">
+        <table class="w-full h-screen align-top">
             <thead class="bg-black text-white font-bold">
             <tr>
                 <th scope="col"></th>
@@ -65,7 +65,7 @@
             @foreach($releases as $release)
                 <tr>
                     <td class="w-48 text-center">
-                        <i class="fas fa-info-circle fa-5x"
+                        <i class="fas fa-info-circle fa-4x"
                            onClick="getDetails({{$release->id}})"></i>
                     </td>
                     <td>
@@ -83,9 +83,9 @@
         </table>
         <div>
             <div>
-                {{ $releases->links() }}
+                {{ $releases->links()}}
             </div>
         </div>
     </div>
 </div>
-ß
+
