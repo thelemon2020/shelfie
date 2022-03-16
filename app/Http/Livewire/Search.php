@@ -108,6 +108,7 @@ class Search extends Component
             $lastUpdatedAt = Release::query()->latest('updated_at')->first()->updated_at;
             $releases->each(function ($item) use ($user, &$i, $lastUpdatedAt, &$nextPage) {
                 if ($item->date_added >= $lastUpdatedAt) {
+                    //todo update this loop to actually refresh the whole account
                     $newRelease = Release::query()->create(
                         [
                             'artist' => $item->basic_information->artists[0]->name,
