@@ -44,7 +44,7 @@
         }
 
         function closeModal() {
-            $('#detailsModal').hide();
+            $('#detailsModal').toggleClass('hidden');
         }
         function toggleLightOptions(){
             $('#lightOptions').toggle();
