@@ -1,4 +1,5 @@
-<div class="absolute hidden top-0 left-0 bg-gray-500/50 h-full w-full flex" id="detailsModal" tabindex="-1"
+<div class="absolute hidden top-0 left-0 bg-gray-500/50 items-center grid h-screen w-screen" id="detailsModal"
+     tabindex="-1"
      role="dialog"
      aria-labelledby="detailsModal"
      aria-hidden="true">

@@ -44,16 +44,17 @@
         }
 
         function closeModal() {
-            $('#detailsModal').hide();
+            $('#detailsModal').toggleClass('hidden');
         }
-        function toggleLightOptions(){
+
+        function toggleLightOptions() {
             $('#lightOptions').toggle();
         }
 
         function toggleAccordionContent(e) {
             let currentlyHidden = $(e).parent().find('.accordion-content').hasClass('hidden');
             $('.accordion-content').addClass('hidden');
-            if(currentlyHidden){
+            if (currentlyHidden) {
                 $(e).parent().find('.accordion-content').removeClass('hidden');
             }
         }

@@ -8,22 +8,7 @@
 
     function chooseRandom(maxInt) {
         let id = Math.floor(Math.random() * (maxInt - 1) + 1)
-        axios.get(`/api/lights/light/${id}/on`)
-        axios.get(`/api/release/${id}`)
-            .then((release) => {
-                $('#thumbnail').attr("src", release.data.full_image)
-                $('#artist').text(release.data.artist)
-                $('#title').text(release.data.title)
-                $('#genre').text(release.data.genre)
-                $('#timesPlayed').text(release.data.times_played ?? "0")
-                $('#lastPlayedAt').text(release.data.last_played_at ?? "Never")
-                $('#edit').attr("href", `/release/${release.data.id}/edit`)
-                $('#releaseId').val(release.data.id)
-                $('#detailsModal').show()
-            })
-            .catch(error => {
-                console.log(error);
-            })
+        getDetails(id)
     }
 
     function getDetails(id) {
@@ -39,7 +24,7 @@
                 $('#lastPlayedAt').text(release.data.last_played_at ?? "Never")
                 $('#edit').attr("href", `/release/${release.data.id}/edit`)
                 $('#releaseId').val(release.data.id)
-                $('#detailsModal').show()
+                $('#detailsModal').toggleClass('hidden')
             })
             .catch(error => {
                 console.log(error);
