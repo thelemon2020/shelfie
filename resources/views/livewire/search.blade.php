@@ -86,10 +86,10 @@
             @endforeach
             </tbody>
         </table>
-        <div class="d-flex">
-            <div class="mx-auto">
-                {{ $releases->links() }}
-            </div>
+    </div>
+    <div class="d-flex">
+        <div class="mx-auto">
+            {{ $releases->links() }}
         </div>
     </div>
 </div>
