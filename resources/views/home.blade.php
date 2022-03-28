@@ -64,7 +64,7 @@
 
                     </div>
                 </div>
-                <div id="pills-collection" role="tabpanel"
+                <div class="hidden" id="pills-collection" role="tabpanel"
                      aria-labelledby="pills-collection-tab">
                     <livewire:search/>
                 </div>
@@ -74,7 +74,7 @@
                         <x-stats-comp :mostPlayed="$mostPlayed" :lastPlayed="$lastPlayed"></x-stats-comp>
                     </div>
                 </div>
-                <div class="hidden" id="pills-options" role="tabpanel"
+                <div id="pills-options" role="tabpanel"
                      aria-labelledby="pills-options-tab">
                     <div class=d-flex">
                         <div class="align-self-center text-center mt-1">
@@ -82,7 +82,7 @@
                         </div>
                     </div>
                 </div>
-        </div>
+            </div>
     @else
         <div class="text-center hidden">
             <a href="{{route('register')}}">

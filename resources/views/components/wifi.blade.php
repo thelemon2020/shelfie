@@ -1,4 +1,5 @@
-<div class="modal fade" id="wifiModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+<div class="absolute hidden top-0 left-0 bg-gray-500/50 h-full w-full flex" id="wifiModal" tabindex="-1" role="dialog"
+     aria-labelledby="exampleModalCenterTitle"
      aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">

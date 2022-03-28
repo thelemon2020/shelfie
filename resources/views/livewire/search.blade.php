@@ -1,11 +1,11 @@
-<div xmlns:wire="http://www.w3.org/1999/xhtml" class="h-screen">
+<div xmlns:wire="http://www.w3.org/1999/xhtml">
     <script>
         window.addEventListener('keypress', event => {
             let element = event.target;
             element.dispatchEvent(new Event('input'));
         })
     </script>
-    <div class="justify-between flex sticky">
+    <div class="justify-between flex">
         <div class="flex py-2 px-4 items-center">
             <input wire:model="search" class="mr-2 text-lg leading-none border border-gray-400 rounded p-2"
                    id="searchField" type="text"
@@ -50,9 +50,9 @@
             </div>
         </div>
     </div>
-    <div wire:loading.remove wire:target="refreshCollection" class="h-1/3">
+    <div wire:loading.remove wire:target="refreshCollection" class="h-2/3">
         <table class="w-full align-top">
-            <thead class="bg-black text-white font-bold sticky">
+            <thead class="bg-black text-white font-bold">
             <tr>
                 <th scope="col"></th>
                 <th scope="col"></th>
@@ -82,10 +82,10 @@
             @endforeach
             </tbody>
         </table>
+    </div>
+    <div>
         <div>
-            <div>
-                {{ $releases->links()}}
-            </div>
+            {{ $releases->links()}}
         </div>
     </div>
 </div>
