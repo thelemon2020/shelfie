@@ -7,10 +7,10 @@
                    id="wled" wire:model="userSettings.wled_ip">
             <p>Leave Blank If Not Using WLED</p>
             @error('userSettings.wled_ip') <span class="error">{{ $message }}</span> @enderror
-            <input class="p-4 bg-blue-500 rounded-lg text-xs text-white" type="submit">
+            <input class="p-4 bg-blue-500 rounded-lg cursor-pointer text-xs text-white" type="submit">
         </div>
         <div>
-            <button type="button" class="p-4 bg-blue-500 rounded-lg text-xs text-white" onclick="openWifiModal()">
+            <button type="button" class="p-4 bg-blue-500 rounded-lg text-xs text-white" onclick="toggleWifiModal()">
                 Connect To Wifi
             </button>
 
@@ -18,7 +18,7 @@
     </form>
     <x-wifi></x-wifi>
     <script>
-        function openWifiModal() {
+        function toggleWifiModal() {
             $('#wifiModal').toggleClass('hidden');
         }
     </script>
