@@ -7,7 +7,7 @@
     </script>
 
     <div class="justify-between flex">
-        <div class="flex py-2 px-4 items-center">
+        <div class="flex flex py-2 px-4 items-center">
             <input wire:model="search" class="mr-2 text-lg leading-none border border-gray-400 rounded p-2"
                    id="searchField" type="text"
                    placeholder="Search records..." {{$sort == 'shelf_order' ? 'disabled' : ''}}/>
@@ -84,10 +84,6 @@
             </tbody>
         </table>
     </div>
-    <div>
-        <div>
-            {{ $releases->links()}}
-        </div>
-    </div>
+    {{ $releases->links() }}
 </div>
 
