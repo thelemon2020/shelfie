@@ -9,7 +9,6 @@ class UserSettings extends Component
 {
     public \App\Models\UserSettings $userSettings;
 
-
     protected $rules = [
         'userSettings.wled_ip' => 'sometimes|ip',
 
