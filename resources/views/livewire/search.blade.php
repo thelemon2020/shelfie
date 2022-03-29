@@ -5,6 +5,7 @@
             element.dispatchEvent(new Event('input'));
         })
     </script>
+
     <div class="justify-between flex">
         <div class="flex py-2 px-4 items-center">
             <input wire:model="search" class="mr-2 text-lg leading-none border border-gray-400 rounded p-2"
@@ -50,9 +51,9 @@
             </div>
         </div>
     </div>
-    <div wire:loading.remove wire:target="refreshCollection" class="h-2/3">
+    <div wire:loading.remove wire:target="refreshCollection" class="h-[84vh] overflow-y-scroll">
         <table class="w-full align-top">
-            <thead class="bg-black text-white font-bold">
+            <thead class="bg-black text-white font-bold sticky top-0">
             <tr>
                 <th scope="col"></th>
                 <th scope="col"></th>
