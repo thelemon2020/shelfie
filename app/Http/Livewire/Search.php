@@ -75,7 +75,7 @@ class Search extends Component
         $response = Http::withHeaders([
             'Content-Type' => 'application/x-www-form-urlencoded',
             'Authorization' => $auth,
-            'User-Agent' => config('User-Agent')
+            'User-Agent' => config('auth.user_agent')
         ])->get("https://api.discogs.com/users/$user->discogs_username/collection/folders");
         $folders = json_decode($response->body())->folders;
         foreach ($folders as $folder) {
@@ -100,7 +100,7 @@ class Search extends Component
             $response = Http::withHeaders([
                 'Content-Type' => 'application/x-www-form-urlencoded',
                 'Authorization' => $auth,
-                'User-Agent' => config('User-Agent')
+                'User-Agent' => config('auth.user_agent')
             ])->get($nextPage);
             $releasesArray = json_decode($response->body());
             $nextPage = $releasesArray->pagination->urls->next ?? null;
