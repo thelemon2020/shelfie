@@ -1,4 +1,5 @@
 <div>
+
     <form wire:submit.prevent="submit" class="flex justify-around items-center py-2">
         <div>
             <label for="wled">WLED IP</label>
@@ -16,6 +17,12 @@
 
         </div>
     </form>
+    <div class="col-auto ms-2 mb-3">
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                data-bs-target="#wifiModal">
+            Connect To Wifi
+        </button>
+    </div>
     <x-wifi></x-wifi>
     <script>
         function toggleWifiModal() {
