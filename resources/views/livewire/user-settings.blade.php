@@ -15,7 +15,6 @@
                 Connect To Wifi
             </button>
 
-
         </div>
     </form>
     <div class="col-auto ms-2 mb-3">

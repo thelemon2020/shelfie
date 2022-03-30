@@ -15,7 +15,6 @@
                     <input type="text" class="mr-2 text-lg leading-none border border-gray-400 rounded px-4 py-2"
                            wire:model="ssid" name="ssid" id="wifi_ssid">
 
-                   
                 </div>
                 <div class="col-auto">
                     <label for="SSID">Wifi Password</label>
@@ -35,7 +34,6 @@
                 </button>
             </div>
         </div>
-
             <div wire:loading.flex wire:target="submit">
                 <div class="mx-auto text-center">
                     <div class="spinner-border" role="status">
