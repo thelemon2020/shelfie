@@ -67,6 +67,15 @@
                         </div>
                     </div>
                 </div>
+                <div class="hidden" id="pills-register" role="tabpanel"
+                     aria-labelledby="pills-register-tab">
+                    <div class=d-flex">
+                        <div class="align-self-center text-center mt-1">
+                            <x-register></x-register>
+                        </div>
+                    </div>
+                </div>
+
             </div>
     @else
         <div class="text-center hidden">

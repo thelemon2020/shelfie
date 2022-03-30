@@ -9,7 +9,15 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <title>Shelfie</title>
-    <script>function changeLightBulb() {
+    <script>
+        window.addEventListener('showLightBulb', event => {
+            $('#lightBulbButton').removeClass('hidden')
+        })
+        window.addEventListener('hideLightBulb', event => {
+            $('#lightBulbButton').addClass('hidden')
+        })
+
+        function changeLightBulb() {
             console.log('here')
             if ($('#lightBulb').hasClass('text-blue-900')) {
                 $('#lightBulb').removeClass('text-blue-900')
@@ -112,18 +120,15 @@
     </ul>
     </ul>
     <ul class="inline-block">
-        @if(\App\Models\User::all()->first())
-            @if((\App\Models\User::all()->first()->userSettings->wled_ip != null) && (\App\Models\User::all()->first()->userSettings->wled_ip != ""))
-                <li class="mt-1">
-                    <button onclick="toggleLightOptions()" class="btn" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#lightOptions"
-                            aria-expanded="false" aria-controls="lightOptions">
-                        <i
-                            class="fas fa-lightbulb fa-2x text-blue-700" onclick="changeLightBulb()"
-                            id="lightBulb"></i></button>
-                </li>
-            @endif
-        @endif
+        <li class="mt-1">
+            <button onclick="toggleLightOptions()"
+                    class="@if(\App\Models\User::all()->first()?->userSettings->wled_ip === null) hidden @endif"
+                    type="button" id="lightBulbButton"
+                    aria-expanded="false" aria-controls="lightOptions">
+                <i
+                    class="fas fa-lightbulb fa-2x text-blue-700" onclick="changeLightBulb()"
+                    id="lightBulb"></i></button>
+        </li>
     </ul>
     </div>
 </nav>
