@@ -16,8 +16,6 @@ class Search extends Component
 {
     use withPagination;
 
-    protected $paginationTheme = 'bootstrap';
-
     public $search = '';
     public $sort = 'artist';
     public $pagination = 50;

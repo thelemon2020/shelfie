@@ -1,29 +1,25 @@
-<div class="m-4">
+<div class="overflow-x-scroll">
     <script>
         window.addEventListener('reloadLightsComponent', event => {
             location.reload()
         })
     </script>
-    <div class="d-inline text-center">
-        <form wire:submit.prevent="submit">
-            <ul class="list-group-horizontal"
-                style="display: grid; grid-template-columns: repeat(9, 1fr); grid-auto-rows: 1fr; gap: 10px">
-                @foreach($segments as $segment)
-                    <livewire:update-light-segments :segment="$segment" :wire:key="$segment->id"/>
-                @endforeach
-                <li class="d-flex justify-content-center align-items-center">
-                    <button type="button" class="btn btn-primary h-100" wire:click="createSegment">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                             class="bi bi-plus-circle" viewBox="0 0 16 16">
-                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-                            <path
-                                d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
-                        </svg>
-                        Add LED Segment
-                    </button>
-                </li>
-            </ul>
-            <button type="submit" class="btn btn-primary mt-1">Submit</button>
-        </form>
-    </div>
+    <form wire:submit.prevent="submit">
+        <div class="flex flex-row">
+            @foreach($segments as $segment)
+                <livewire:update-light-segments :segment="$segment" :wire:key="$segment->id"/>
+            @endforeach
+            <button type="button" class="bg-blue-500 p-4 m-1 h-72 w-72 rounded rounded-lg text-white"
+                    wire:click="createSegment">
+                <svg xmlns="http://www.w3.org/2000/svg" class="inline-block h-6 w-6" fill="none" viewBox="0 0 24 24"
+                     stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                          d="M17 14v6m-3-3h6M6 10h2a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v2a2 2 0 002 2zm10 0h2a2 2 0 002-2V6a2 2 0 00-2-2h-2a2 2 0 00-2 2v2a2 2 0 002 2zM6 20h2a2 2 0 002-2v-2a2 2 0 00-2-2H6a2 2 0 00-2 2v2a2 2 0 002 2z"/>
+                </svg>
+                <br>
+                Add LED Segment
+            </button>
+        </div>
+        <button type="submit" class="bg-blue-500 rounded p-4 rounded-md text-lg mb-1 text-white">Update</button>
+    </form>
 </div>
