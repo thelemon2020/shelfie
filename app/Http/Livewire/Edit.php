@@ -63,6 +63,7 @@ class Edit extends Component
 
     public function updatedGenre()
     {
+        dd($this->release->genre);
         if ($this->release->genre === "add-modal") {
             $this->dispatchBrowserEvent('add-genre');
             $this->release->genre = null;
