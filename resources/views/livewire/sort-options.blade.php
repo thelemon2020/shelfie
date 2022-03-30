@@ -41,6 +41,6 @@
                 @error('userSettings.sort_order') <span class="error">{{ $message }}</span> @enderror
             </div>
         </div>
-        <button class="p-4 bg-blue-500 rounded-lg text-white" wire:click="submit">Submit</button>
+        <button class="p-4 bg-blue-500 rounded-lg mb-2 text-white" wire:click="submit">Submit</button>
     </form>
 </div>

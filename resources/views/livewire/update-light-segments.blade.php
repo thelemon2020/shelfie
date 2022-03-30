@@ -1,4 +1,4 @@
-<div class="m-1 border border-gray-500 shadow-lg relative">
+<div class="m-1 border border-gray-500 h-72 w-72 shadow-lg relative">
     <button wire:click="deleteSegment" type="button" class="absolute top-0 left-0 text-red-500 pl-4" aria-label="Close">
         X
     </button>
