@@ -62,18 +62,21 @@
 </head>
 <body>
 <nav class="bg-blue-400 text-blue-700 min-w-full flex shrink-0 justify-between py-2 px-4">
-        <ul class="inline-flex items-center">
-            <h3 class="mr-2 uppercase font-bold tracking-wider">Shelfie</h3>
+    <ul class="inline-flex items-center">
+        <h3 class="mr-2 uppercase font-bold tracking-wider">Shelfie</h3>
+        @if(\App\Models\User::all()->first())
             <ul class="" id="pills-tab" role="tablist">
                 <li class="inline-block mr-2"
                     role="presentation">
-                    <button class="text-blue-900" onclick="onClick('#pills-playing')" id="pills-playing-tab" data-bs-toggle="pill"
-                       data-bs-target="#pills-playing" type="button" role="tab" aria-controls="pills-playing"
-                       aria-selected="true"><i class="fill-current fas fa-record-vinyl fa-2x"></i>
+                    <button class="text-blue-900" onclick="onClick('#pills-playing')" id="pills-playing-tab"
+                            data-bs-toggle="pill"
+                            data-bs-target="#pills-playing" type="button" role="tab" aria-controls="pills-playing"
+                            aria-selected="true"><i class="fill-current fas fa-record-vinyl fa-2x"></i>
                     </button>
                 </li>
                 <li class="inline-block mr-2" role="presentation">
-                    <button class="" onclick="onClick('#pills-collection')" id="pills-collection-tab" data-bs-toggle="pill"
+                    <button class="" onclick="onClick('#pills-collection')" id="pills-collection-tab"
+                            data-bs-toggle="pill"
                             data-bs-target="#pills-collection"
                             type="button" role="tab" aria-controls="pills-collection" aria-selected="false"><i
                             class="fas fa-list fa-2x "></i>
@@ -94,10 +97,23 @@
                     </button>
                 </li>
             </ul>
-        </ul>
+        @else
+            <li class="inline-block mr-2" role="presentation">
+                <button onclick="onClick('#pills-register')" class="flex justify-center items-center"
+                        id="pills-register-tab"
+                        type="button" role="tab" aria-controls="pills-options" aria-selected="false">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" viewBox="0 0 20 20" fill="currentColor">
+                        <path
+                            d="M8 9a3 3 0 100-6 3 3 0 000 6zM8 11a6 6 0 016 6H2a6 6 0 016-6zM16 7a1 1 0 10-2 0v1h-1a1 1 0 100 2h1v1a1 1 0 102 0v-1h1a1 1 0 100-2h-1V7z"/>
+                    </svg>
+                </button>
+            </li>
+        @endif
+    </ul>
+    </ul>
     <ul class="inline-block">
-{{--        @if(\App\Models\User::all()->first())--}}
-{{--            @if((\App\Models\User::all()->first()->userSettings->wled_ip != null) && (\App\Models\User::all()->first()->userSettings->wled_ip != ""))--}}
+        @if(\App\Models\User::all()->first())
+            @if((\App\Models\User::all()->first()->userSettings->wled_ip != null) && (\App\Models\User::all()->first()->userSettings->wled_ip != ""))
                 <li class="mt-1">
                     <button onclick="toggleLightOptions()" class="btn" type="button" data-bs-toggle="collapse"
                             data-bs-target="#lightOptions"
@@ -106,8 +122,8 @@
                             class="fas fa-lightbulb fa-2x text-blue-700" onclick="changeLightBulb()"
                             id="lightBulb"></i></button>
                 </li>
-{{--            @endif--}}
-{{--        @endif--}}
+            @endif
+        @endif
     </ul>
     </div>
 </nav>
