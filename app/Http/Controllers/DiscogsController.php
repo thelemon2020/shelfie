@@ -37,7 +37,7 @@ class DiscogsController extends Controller
             $response = Http::withHeaders([
                 'Content-Type' => 'application/x-www-form-urlencoded',
                 'Authorization' => $auth,
-                'User-Agent' => 'RecordCollectionDisplay/0.2 +https://github.com/thelemon2020/RecordCollectionDisplay'
+                'User-Agent' => 'Shelfie/0.2 +https://github.com/thelemon2020/RecordCollectionDisplay'
             ])->get('https://api.discogs.com/oauth/request_token');
         } catch (\Exception $ex) {
             dd($ex);
@@ -98,7 +98,7 @@ class DiscogsController extends Controller
         $response = Http::withHeaders([
             'Content-Type' => 'application/x-www-form-urlencoded',
             'Authorization' => $auth,
-            'User-Agent' => config('User-Agent')
+            'User-Agent' => config('auth.user_agent')
         ])->get("https://api.discogs.com/users/$user->discogs_username/collection/folders");
         $folders = json_decode($response->body())->folders;
         foreach ($folders as $key => $folder) {
@@ -134,14 +134,14 @@ class DiscogsController extends Controller
             $response = Http::withHeaders([
                 'Content-Type' => 'application/x-www-form-urlencoded',
                 'Authorization' => $auth,
-                'User-Agent' => config('User-Agent')
+                'User-Agent' => config('auth.user_agent')
             ])->get('https://api.discogs.com/oauth/identity');
             $jsonUsername = json_decode($response->body());
             $user->discogs_username = $jsonUsername->username;
             $response = Http::withHeaders([
                 'Content-Type' => 'application/x-www-form-urlencoded',
                 'Authorization' => $auth,
-                'User-Agent' => config('User-Agent')
+                'User-Agent' => config('auth.user_agent')
             ])->get('https://api.discogs.com/users/' . $user->discogs_username);
             $userDetails = json_decode($response->body());
             $fullName = explode(' ', $userDetails->name);

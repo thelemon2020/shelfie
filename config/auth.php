@@ -127,6 +127,6 @@ return [
     'discogs_API_secret' => env('DISCOGS_CLIENT_SECRET'),
 
     'defaultPassword' => env('DEFAULT_PASSWORD'),
-
+    'user_agent' => env('USER_AGENT'),
     'rp_password' => env('RP_PASSWORD', null),
 ];
