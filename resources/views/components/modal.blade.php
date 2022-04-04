@@ -5,7 +5,7 @@
      aria-hidden="true">
     <div class="mx-auto my-auto bg-white w-1/4">
         <div class="h-2/4 p-2 shadow-lg">
-            <div id="detailsSection" class="hidden">
+            <div id="detailsSection">
                 <div class="relative border-b border-black">
                     <h5 class="text-lg" id="modal-title">Record Details</h5>
                     <button onclick="closeModal()" type="button" class="absolute top-0 right-0" aria-label="Close">
@@ -35,8 +35,9 @@
                         <button type="button" class="p-4 bg-blue-500 rounded-lg text-white" onclick="closeModal()">
                             Close
                         </button>
-                        <a class="p-4 bg-yellow-500 rounded-lg text-white" id="edit" onclick="turnOffLight()"
-                           href="">Edit</a>
+                        <button class="p-4 bg-yellow-500 rounded-lg text-white" id="edit" onclick="openEditModal()"
+                                href="">Edit
+                        </button>
                         <button type="button" class="p-4 bg-red-500 rounded-lg text-white" onclick="deleteRecord()">
                             Delete
                         </button>
@@ -50,25 +51,18 @@
                     </div>
                 </div>
             </div>
-            <div id="editSection">
-                <div class="relative border-b border-black">
-                    <h5 class="text-lg" id="modal-title">Record Details</h5>
-                    <button onclick="closeModal()" type="button" class="absolute top-0 right-0" aria-label="Close">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                             stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                  d="M6 18L18 6M6 6l12 12"/>
-                        </svg>
-                    </button>
-                </div>
-                <div class="flex justify-around items-center py-2">
-                    <livewire:edit/>
-                </div>
-            </div>
+
         </div>
     </div>
 </div>
 <script>
+    function openEditModal() {
+        let releaseId = $('#releaseId').val()
+        Livewire.emit('editRelease', releaseId)
+        $('#detailsModal').toggleClass('hidden')
+        $('#editModal').toggleClass('hidden')
+    }
+
     function turnOffLight() {
         axios.get(`/api/lights/light/off`)
     }

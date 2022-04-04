@@ -15,7 +15,8 @@ class Images extends Component
     {
         return [
             'getImages' => 'getImages',
-            'imageSelected' => 'imageSelected'
+            'imageSelected' => 'imageSelected',
+            'imageRefresh' => 'render'
         ];
     }
 
@@ -31,13 +32,19 @@ class Images extends Component
         return view('livewire.images', ['images' => $this->images ?? null]);
     }
 
+    public function resetComponent()
+    {
+        $this->reset();
+        $this->emitSelf('imageRefresh');
+    }
+
     public function getImages($artist = null, $title = null)
     {
-        $this->images = null;
         $requestUrl = "http://musicbrainz.org/ws/2/release/?query=artist:" . $artist . " AND " . "release:" . $title;
         $cachedResults = Cache::get($requestUrl);
         if ($cachedResults) {
             $this->images = $cachedResults;
+            $this->emitSelf('imageRefresh');
             return;
         }
         $response = Http::withHeaders(['accept' => 'application/json'])->get($requestUrl);
@@ -58,5 +65,6 @@ class Images extends Component
         }
         Cache::put($requestUrl, $imageArray);
         $this->images = $imageArray;
+        $this->emitSelf('imageRefresh');
     }
 }

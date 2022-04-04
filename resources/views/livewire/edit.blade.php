@@ -4,67 +4,59 @@
             $('#genreModal').toggleClass('hidden')
         })
         window.addEventListener('image-modal', event => {
-            const elementsToRemove = document.getElementsByClassName('carousel-item');
+            const elementsToRemove = $('.image-content img');
             console.log(elementsToRemove)
             for (var i = 0; i < elementsToRemove.length; i++) {
                 elementsToRemove[i].remove()
             }
-            $('#imageModal').modal('toggle')
+            $('#imageModal').toggleClass('hidden')
         })
     </script>
-    <form class="" wire:submit.prevent="submit">
-        <label>Cover Image</label>
-        <br>
-        <img id="coverImage" class=""
-             src="{{$full_image ?? ''}}">
-        <br>
-        <btn class="" wire:click="loadImages">
-            Change Cover Image
-        </btn>
-        @error('release.full_image')<span class="error">{{ $message }}</span> @enderror
+    <form class="grid grid-cols-2" wire:submit.prevent="submit">
+        <div class="mr-2">
+            <label>Cover Image</label>
+            <br>
+            <img id="coverImage" class=""
+                 src="{{$full_image ?? ''}}">
+            <br>
+            <btn class="w-full px-6 py-2 mt-4 text-white bg-blue-600 rounded-lg hover:bg-blue-900"
+                 wire:click="loadImages">
+                Change Cover Image
+            </btn>
+            @error('release.full_image')<span class="error">{{ $message }}</span> @enderror
+        </div>
+        <div class="ml-2">
+            <label class="block" for="artist">Artist</label>
+            <input type="text" class="" name="artist" id="artistEdit" wire:model="release.artist">
+            @error('release.artist') <span class="error">{{ $message }}</span> @enderror
 
-        <div class="">
-            <div class="">
-                <label for="artist">Artist</label>
-                <br>
-                <input type="text" class="" name="artist" id="artistEdit" wire:model="release.artist">
-                @error('release.artist') <span class="error">{{ $message }}</span> @enderror
-            </div>
-            <div class="">
-                <label for="title">Title</label>
-                <br>
-                <input type="text" class="" name="title" id="titleEdit" wire:model="release.title">
-                @error('release.title') <span class="error">{{ $message }}</span> @enderror
-            </div>
-            <div class="">
-                <label for="release_year">Release Year</label>
-                <br>
-                <input type="number" class="" name="release_year" id="releaseYearEdit"
-                       wire:model="release.release_year">
-                @error('release.release_year') <span class="error">{{ $message }}</span> @enderror
-            </div>
-            <div class="">
-                <label for="shelf_order">Shelf Position</label>
-                <br>
-                <input type="number" class="" id="shelfOrderEdit" min="1"
-                       wire:model="release.shelf_order">
-                @error('release.shelf_order') <span class="error">{{ $message }}</span> @enderror
-            </div>
-            <div class="">
-                <label for="genre">Genre</label>
-                <br>
-                <select class="" wire:model="release.genre_id">
-                    <option selected="selected">Choose a Genre...</option>
-                    @foreach($allGenres as $genreItem)
-                        <option value="{{$genreItem->id}}">{{$genreItem->name}}</option>
-                    @endforeach
-                    <option value="add-modal">Add Genre...</option>
-                </select>
-                @error('release.genre_id') <span class="error">{{ $message }}</span> @enderror
-            </div>
+
+            <label class="block" for="title">Title</label>
+            <input type="text" class="" name="title" id="titleEdit" wire:model="release.title">
+            @error('release.title') <span class="error">{{ $message }}</span> @enderror
+
+            <label class="block" for="release_year">Release Year</label>
+            <input type="number" class="" name="release_year" id="releaseYearEdit"
+                   wire:model="release.release_year">
+            @error('release.release_year') <span class="error">{{ $message }}</span> @enderror
+
+            <label class="block" for="shelf_order">Shelf Position</label>
+            <input type="number" class="" id="shelfOrderEdit" min="1"
+                   wire:model="release.shelf_order">
+            @error('release.shelf_order') <span class="error">{{ $message }}</span> @enderror
+
+            <label class="block" for="genre">Genre</label>
+            <select class="" wire:model="genre">
+                <option selected="selected">Choose a Genre...</option>
+                @foreach($allGenres as $genreItem)
+                    <option value="{{$genreItem->id}}">{{$genreItem->name}}</option>
+                @endforeach
+                <option value="add-modal">Add Genre...</option>
+            </select>
+            @error('release.genre_id') <span class="error">{{ $message }}</span> @enderror
         </div>
 
-        <div class="">
+        <div class="col-span-2 py-2 mt-4 text-center text-white bg-blue-600 rounded-lg hover:bg-blue-900">
             <input type="submit">
         </div>
         @if (session()->has('message'))
@@ -78,35 +70,7 @@
             </div>
         @endif
     </form>
-    <div class="absolute hidden top-0 left-0 bg-gray-500/50 items-center grid h-screen w-screen" id="genreModal"
-         tabindex="-1"
-         role="dialog"
-         aria-labelledby="detailsModal"
-         aria-hidden="true">
-        <div class="mx-auto my-auto bg-white w-1/4">
-            <div class="h-2/4 p-2 shadow-lg">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="modal-title">Record Details</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <livewire:genres/>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="modal fade" role="dialog" id="imageModal">
-        <div class="modal-dialog modal-dialog-centered" style="max-width: max-content; min-width: 27%" role="document">
-            <div class="modal-content w-auto">
-                <div class="modal-body" style="min-height: 100%; min-width: 100%">
-                    <div class="carousel lazy" data-interval="false" id="image-carousel">
-                        <livewire:images/>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    <x-genre-modal></x-genre-modal>
+    <x-image-modal></x-image-modal>
 </div>
 

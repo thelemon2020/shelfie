@@ -22,7 +22,13 @@ class Edit extends Component
         return [
             'genreAdded' => 'newGenre',
             'changeImage' => 'changeImage',
+            'editRelease' => 'refreshComponent'
         ];
+    }
+
+    public function mount()
+    {
+        $this->allGenres = Genre::all();
     }
 
     public function changeImage($newImage, $newThumbnail)
@@ -34,13 +40,15 @@ class Edit extends Component
 
     public function loadImages()
     {
+        $this->emitTo('images', 'resetComponent', $this->release['artist'], $this->release['title']);
         $this->dispatchBrowserEvent('image-modal');
         $this->emitTo('images', 'getImages', $this->release['artist'], $this->release['title']);
     }
 
-    public function mount($release = null)
+    public function refreshComponent($releaseId = null)
     {
-        if ($release) {
+        if ($releaseId) {
+            $release = Release::query()->where('id', $releaseId)->first();
             $this->full_image = $release->full_image;
             $this->genre = Genre::query()->where('id', $release->genre?->id)->first()->id ?? null;
         } else {
@@ -48,12 +56,11 @@ class Edit extends Component
         }
         $this->release = $release;
         $this->originalShelfOrder = $release->shelf_order;
-        $this->allGenres = Genre::all();
     }
 
     public function render()
     {
-        return view('livewire.edit', ['release' => $this->release]);
+        return view('livewire.edit');
     }
 
     public function updated($propertyName)
@@ -63,18 +70,18 @@ class Edit extends Component
 
     public function updatedGenre()
     {
-        dd($this->release->genre);
-        if ($this->release->genre === "add-modal") {
+        if ($this->genre === "add-modal") {
             $this->dispatchBrowserEvent('add-genre');
             $this->release->genre = null;
         }
+        $this->release->genre_id = $this->genre;
     }
 
     public function submit()
     {
         $this->validate();
         try {
-            if (!$this->release->exists) {
+            if (!$this->release->exists()) {
                 $this->release->create(
                     [
                         'artist' => $this->release->artist,
