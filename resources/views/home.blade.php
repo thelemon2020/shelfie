@@ -55,11 +55,11 @@
 
                 </div>
             </div>
-            <div class="" id="pills-collection" role="tabpanel"
+            <div class="hidden" id="pills-collection" role="tabpanel"
                  aria-labelledby="pills-collection-tab">
                 <livewire:search/>
             </div>
-            <div class="hidden" id="pills-stats" role="tabpanel"
+            <div class="overflow-x-hidden" id="pills-stats" role="tabpanel"
                  aria-labelledby="pills-stats-tab">
                 <div class="d-flex">
                     <x-stats-comp :mostPlayed="$mostPlayed" :lastPlayed="$lastPlayed"></x-stats-comp>
