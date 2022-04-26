@@ -1,8 +1,8 @@
 <script src="https://unpkg.com/echarts/dist/echarts.min.js"></script>
 <!-- Chartisan -->
 <script src="https://unpkg.com/@chartisan/echarts/dist/chartisan_echarts.js"></script>
-<div id="statsCarousel" class="min-w-screen text-center flex items-center justify-center">
-    <div id="mostPlayedStat" class="c">
+<div id="statsCarousel" class="slideshow-container min-w-screen text-center flex items-center justify-center">
+    <div id="mostPlayedStat" class="mySlides fade">
         <h3>Most Played Records</h3>
         <table>
             <thead>
@@ -23,7 +23,7 @@
             </tbody>
         </table>
     </div>
-    <div class="hidden" id="lastPlayedStat">
+    <div class="mySlides fade" id="lastPlayedStat">
         <h3>Last Played</h3>
         @if(!$lastPlayed)
             <h4>Nothing! Go Spin A Record!</h4>
@@ -35,13 +35,13 @@
         @endif
     </div>
 
-    <div id="chart-days" class="hidden w-full h-72"></div>
+    <div id="chart-days" class="mySlides fade w-full h-72"></div>
 
 
-    <div id="chart-genre" class="hidden w-full h-72"></div>
+    <div id="chart-genre" class="mySlides fade w-full h-72"></div>
 
 
-    <div id="chart-artists" class="hidden w-full h-[72vh]"></div>
+    <div id="chart-artists" class="mySlides fade w-full h-[72vh]"></div>
 
 </div>
 <script>
@@ -83,4 +83,21 @@
             .title('Top Genres')
             .datasets([{type: 'pie'}])
     });
+
+    let slideIndex = 0;
+    showSlides();
+
+    function showSlides() {
+        let i;
+        let slides = document.getElementsByClassName("mySlides");
+        for (i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";
+        }
+        slideIndex++;
+        if (slideIndex > slides.length) {
+            slideIndex = 1
+        }
+        slides[slideIndex - 1].style.display = "block";
+        setTimeout(showSlides, 10000); // Change image every 2 seconds
+    }
 </script>
