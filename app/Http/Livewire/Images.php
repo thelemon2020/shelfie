@@ -8,7 +8,7 @@ use Livewire\Component;
 
 class Images extends Component
 {
-    protected $images;
+    protected $images = [];
 
 
     public function getListeners()
@@ -16,7 +16,7 @@ class Images extends Component
         return [
             'getImages' => 'getImages',
             'imageSelected' => 'imageSelected',
-            'imageRefresh' => 'render'
+            'refreshImagePage' => '$refresh'
         ];
     }
 
@@ -35,7 +35,7 @@ class Images extends Component
     public function resetComponent()
     {
         $this->reset();
-        $this->emitSelf('imageRefresh');
+        $this->emitSelf('refreshImagePage');
     }
 
     public function getImages($artist = null, $title = null)
@@ -44,7 +44,7 @@ class Images extends Component
         $cachedResults = Cache::get($requestUrl);
         if ($cachedResults) {
             $this->images = $cachedResults;
-            $this->emitSelf('imageRefresh');
+            $this->emitSelf('refreshImagePage');
             return;
         }
         $response = Http::withHeaders(['accept' => 'application/json'])->get($requestUrl);
@@ -65,6 +65,6 @@ class Images extends Component
         }
         Cache::put($requestUrl, $imageArray);
         $this->images = $imageArray;
-        $this->emitSelf('imageRefresh');
+        $this->emitSelf('refreshImagePage');
     }
 }

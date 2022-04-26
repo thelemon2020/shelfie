@@ -12,10 +12,11 @@ use Livewire\Component;
 class Edit extends Component
 {
     public $release;
-    public $full_image;
     public $allGenres;
     public $genre;
+    public $full_image;
     private $originalShelfOrder;
+    public bool $newRelease;
 
     protected function getListeners()
     {
@@ -40,32 +41,30 @@ class Edit extends Component
 
     public function loadImages()
     {
-        $this->emitTo('images', 'resetComponent', $this->release['artist'], $this->release['title']);
-        $this->dispatchBrowserEvent('image-modal');
-        $this->emitTo('images', 'getImages', $this->release['artist'], $this->release['title']);
+        $this->dispatchBrowserEvent('open-image-modal');
+        $this->dispatchBrowserEvent('load-images', ['artist' => $this->release->artist, 'title' => $this->release->title]);
     }
 
     public function refreshComponent($releaseId = null)
     {
+        $this->newRelease = false;
         if ($releaseId) {
             $release = Release::query()->where('id', $releaseId)->first();
             $this->full_image = $release->full_image;
             $this->genre = Genre::query()->where('id', $release->genre?->id)->first()->id ?? null;
         } else {
             $release = Release::query()->make();
+            $this->newRelease = true;
+            $this->full_image = null;
         }
         $this->release = $release;
         $this->originalShelfOrder = $release->shelf_order;
+        $this->render();
     }
 
     public function render()
     {
         return view('livewire.edit');
-    }
-
-    public function updated($propertyName)
-    {
-        $this->validateOnly($propertyName);
     }
 
     public function updatedGenre()
@@ -81,8 +80,8 @@ class Edit extends Component
     {
         $this->validate();
         try {
-            if (!$this->release->exists()) {
-                $this->release->create(
+            if ($this->newRelease) {
+                $this->release = Release::query()->create(
                     [
                         'artist' => $this->release->artist,
                         'title' => $this->release->title,
@@ -93,13 +92,6 @@ class Edit extends Component
                         'genre_id' => $this->release->genre_id
                     ]);
                 $this->changeShelfOrder();
-                $this->reset(
-                    [
-                        'full_image',
-                        'genre',
-                        'release',
-                    ]);
-                $this->release = Release::query()->make();
             } else {
                 $this->changeExistingShelfOrder();
                 $this->release->update([
@@ -118,7 +110,14 @@ class Edit extends Component
             return false;
         }
         session()->flash('message', 'Release successfully updated.');
-        $this->dispatchBrowserEvent('refreshPage');
+        $this->dispatchBrowserEvent('new-release-updated', ['id' => $this->release->id]);
+        $this->reset(
+            [
+                'full_image',
+                'genre',
+                'release',
+            ]);
+        return true;
     }
 
     public function newGenre()

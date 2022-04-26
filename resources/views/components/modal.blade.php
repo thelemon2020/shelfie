@@ -89,9 +89,4 @@
             })
     }
 
-    $(function () {
-        $('#detailsModal').on('hide.bs.modal', function (e) {
-            turnOffLight()
-        })
-    })
 </script>

@@ -13,14 +13,15 @@
                 </button>
             </div>
             <div class="flex justify-around items-center py-2">
-                <livewire:images/>
+                <x-images></x-images>
             </div>
         </div>
     </div>
     <script>
         function closeImageModal() {
-            Livewire.emit('resetImages')
             $('#imageModal').toggleClass('hidden')
+            $('#loadingSpinner').toggleClass('hidden')
+            $('#image-carousel').toggleClass('hidden')
         }
     </script>
 </div>

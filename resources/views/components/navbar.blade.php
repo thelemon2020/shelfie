@@ -53,6 +53,7 @@
 
         function closeModal() {
             $('#detailsModal').toggleClass('hidden');
+            turnOffLight();
         }
 
         function toggleLightOptions() {

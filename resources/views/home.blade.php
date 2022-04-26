@@ -11,6 +11,11 @@
         getDetails(id)
     }
 
+    window.addEventListener('new-release-updated', event => {
+        getDetails(event.detail.id)
+        $('#editModal').toggleClass('hidden')
+    })
+
     function getDetails(id) {
         axios.get(`/api/lights/light/${id}/on`)
         axios.get(`/api/release/${id}`)
@@ -23,6 +28,7 @@
                 $('#timesPlayed').text(release.data.times_played ?? "0")
                 $('#lastPlayedAt').text(release.data.last_played_at ?? "Never")
                 $('#releaseId').val(release.data.id)
+                $('#coverImage').attr("src", release.data.full_image)
                 $('#detailsModal').toggleClass('hidden')
             })
             .catch(error => {

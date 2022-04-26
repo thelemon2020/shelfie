@@ -12,7 +12,7 @@
                 </div>
                 <div class="image-content">
                     @foreach($images as $key => $image)
-                        <img id="{{'albumImage-' . $key}}" wire:key="{{ $image['image'] }}"
+                        <img id="{{'albumImage-' . $key}}"
                              class="@if($key===0)active-image @else hidden @endif w-72 h-72"
                              src={{$image['image']}} alt={{$image['thumbnail']}}/>
                     @endforeach
@@ -27,7 +27,7 @@
                 </div>
             </div>
         @else
-            <div class="text-center right-0 top-1/2">
+            <div class="loading-spinner text-center right-0 top-1/2">
                 <div class="spinner-border" role="status">
                     <span class="sr-only">Loading...</span>
                 </div>
@@ -44,6 +44,7 @@
         window.addEventListener('image-selected', event => {
             const selectedImage = $('.active-image')[0]
             Livewire.emitTo('edit', 'changeImage', selectedImage.src, selectedImage.alt)
+            $('#coverImage').removeClass('hidden')
         })
 
         function nextImage() {

@@ -9,7 +9,10 @@
                 <h5 class="text-lg" id="modal-title">Edit Record</h5>
                 <button onclick="function closeEditModal() {
                     $('#editModal').toggleClass('hidden')
-                    $('#detailsModal').toggleClass('hidden')
+                    if ($('#releaseId').val())
+                    {
+                        $('#detailsModal').toggleClass('hidden')
+                    }
                 }
                 closeEditModal()" type="button" class="absolute top-0 right-0" aria-label="Close">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
