@@ -8,14 +8,15 @@ use Livewire\Component;
 
 class Images extends Component
 {
-    protected $images;
+    protected $images = [];
 
 
     public function getListeners()
     {
         return [
             'getImages' => 'getImages',
-            'imageSelected' => 'imageSelected'
+            'imageSelected' => 'imageSelected',
+            'refreshImagePage' => '$refresh'
         ];
     }
 
@@ -31,13 +32,19 @@ class Images extends Component
         return view('livewire.images', ['images' => $this->images ?? null]);
     }
 
+    public function resetComponent()
+    {
+        $this->reset();
+        $this->emitSelf('refreshImagePage');
+    }
+
     public function getImages($artist = null, $title = null)
     {
-        $this->images = null;
         $requestUrl = "http://musicbrainz.org/ws/2/release/?query=artist:" . $artist . " AND " . "release:" . $title;
         $cachedResults = Cache::get($requestUrl);
         if ($cachedResults) {
             $this->images = $cachedResults;
+            $this->emitSelf('refreshImagePage');
             return;
         }
         $response = Http::withHeaders(['accept' => 'application/json'])->get($requestUrl);
@@ -58,5 +65,6 @@ class Images extends Component
         }
         Cache::put($requestUrl, $imageArray);
         $this->images = $imageArray;
+        $this->emitSelf('refreshImagePage');
     }
 }

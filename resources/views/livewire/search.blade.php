@@ -4,8 +4,12 @@
             let element = event.target;
             element.dispatchEvent(new Event('input'));
         })
-    </script>
 
+        function addRelease() {
+            Livewire.emit('editRelease')
+            $('#editModal').toggleClass('hidden')
+        }
+    </script>
     <div class="justify-between flex">
         <div class="flex flex py-2 px-4 items-center">
             <input wire:model="search" class="mr-2 text-lg leading-none border border-gray-400 rounded p-2"
@@ -31,14 +35,12 @@
                 <option value=75>75</option>
                 <option value=100>100</option>
             </select>
-            @if(\App\Models\User::all()->first->discogs_username)
-                <button class="text-white rounded bg-blue-700 p-2 mx-2" wire:click="refreshCollection">
-                    <i class="fas fa-sync"></i>
-                </button>
-            @else()
-                <a href="{{route('release.create')}}"
-                   type="button" class="">+</a>
-            @endif
+            <button class="text-white rounded bg-blue-700 p-2 mx-1" wire:click="refreshCollection">
+                <i class="fas fa-sync"></i>
+            </button>
+            <button onclick="addRelease()"
+                    type="button" class="text-white rounded bg-blue-700 p-2 mx-1">+
+            </button>
         </div>
     </div>
     <div wire:loading.flex wire:target="refreshCollection">
