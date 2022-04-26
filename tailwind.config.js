@@ -9,7 +9,8 @@ module.exports = {
     ],
     theme: {
         screens: {
-            ...defaultTheme.screens
+            ...defaultTheme.screens,
+            'raspi': {'raw': '(min-height:400),(min-width:800)'},
         },
         extend: {},
     },
