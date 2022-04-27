@@ -1,5 +1,5 @@
 <div>
-    <div {{$images ? 'wire:ignore' : ''}}>
+{{--    <div {{$images ? 'wire:ignore' : ''}}>--}}
         @if($images)
             <div class="flex justify-between items-center">
                 <div>

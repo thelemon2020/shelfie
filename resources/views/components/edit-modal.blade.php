@@ -3,8 +3,8 @@
      role="dialog"
      aria-labelledby="editModal"
      aria-hidden="true">
-    <div class="mx-auto my-auto bg-white w-1/4">
-        <div class="h-2/4 p-2 shadow-lg">
+    <div class="mx-auto my-auto bg-white raspi:w-full w-1/4">
+        <div class="h-2/4 raspi:h-1/6 p-2 shadow-lg">
             <div class="relative border-b border-black">
                 <h5 class="text-lg" id="modal-title">Edit Record</h5>
                 <button onclick="function closeEditModal() {

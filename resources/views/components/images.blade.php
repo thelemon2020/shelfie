@@ -9,6 +9,7 @@
             </button>
         </div>
         <div id="image-content" class="image-content">
+            <img class="raspi:max-w-52" id="coverImage" src="https://img.discogs.com/D4sQeozP2N0syrTXlmPL8Z-AHfg=/fit-in/600x606/filters:strip_icc():format(jpeg):mode_rgb():quality(90)/discogs-images/R-3155658-1402218436-4768.jpeg.jpg" alt="">
         </div>
         <div>
             <button onclick="nextImage()">
