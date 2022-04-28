@@ -47,7 +47,7 @@
                 @error('release.shelf_order') <span class="error">{{ $message }}</span> @enderror
 
                 <label class="block" for="genre">Genre</label>
-                <select wire:model="genre">
+                <select wire:model="genre" class="overflow-hidden">
                     <option selected="selected">Choose a Genre...</option>
                     @foreach($allGenres as $genreItem)
                         <option value="{{$genreItem->id}}">{{$genreItem->name}}</option>

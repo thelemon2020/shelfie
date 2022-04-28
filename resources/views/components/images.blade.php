@@ -64,7 +64,7 @@
                 })
             }
             images.forEach(function (image, key) {
-                let newElement = "<img id=\"albumImage-" + key + "\" class=\"" + (key === 0 ? "active-image " : "hidden ") + "w-72 h-72\" src=\"" + image.full_image + "\" alt=\"" + image.thumbnail + "\" />"
+                let newElement = "<img id=\"albumImage-" + key + "\" class=\"" + (key === 0 ? "active-image " : "hidden ") + "w-72 h-72 raspi:w-60 raspi:h-60 \" src=\"" + image.full_image + "\" alt=\"" + image.thumbnail + "\" />"
                 $('#image-content').append(newElement)
             })
             $('#loadingSpinner').toggleClass('hidden')

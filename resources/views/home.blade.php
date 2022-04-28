@@ -59,7 +59,7 @@
                  aria-labelledby="pills-collection-tab">
                 <livewire:search/>
             </div>
-            <div class="overflow-x-hidden" id="pills-stats" role="tabpanel"
+            <div class="overflow-x-hidden hidden" id="pills-stats" role="tabpanel"
                  aria-labelledby="pills-stats-tab">
                 <div class="d-flex">
                     <x-stats-comp :mostPlayed="$mostPlayed" :lastPlayed="$lastPlayed"></x-stats-comp>
@@ -73,7 +73,7 @@
                     </div>
                 </div>
             </div>
-            <div class="hidden" id="pills-register" role="tabpanel"
+            <div class="" id="pills-register" role="tabpanel"
                  aria-labelledby="pills-register-tab">
                 <div class=d-flex">
                     <div class="align-self-center text-center mt-1">
