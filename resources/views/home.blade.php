@@ -41,25 +41,25 @@
     @if(\App\Models\User::query()->first())
         <div class="tab-content" id="pills-tabContent">
             <div id="pills-playing" role="tabpanel"
-                 class="hidden min-w-screen min-h-screen text-center flex items-center justify-center"
+                 class="hidden min-w-screen min-h-screen"
                  aria-labelledby="pills-playing-tab">
-                <div>
+                <div class="text-center">
                     <h3>Now Playing</h3>
                     <br>
                     @if(!$nowPlaying)
                         <h4>Nothing! Go Spin A Record!</h4>
                     @else
-                        <img id="lastPlayed" src="{{$nowPlaying->full_image  ?? ''}}">
+                        <img class="raspi:w-48 h-48 inline-flex" id="lastPlayed"
+                             src="{{$nowPlaying->full_image  ?? ''}}">
                         <h4>{{$nowPlaying->artist ?? ''}} - {{$nowPlaying->title ?? ''}}</h4>
                     @endif
-
                 </div>
             </div>
             <div class="hidden" id="pills-collection" role="tabpanel"
                  aria-labelledby="pills-collection-tab">
                 <livewire:search/>
             </div>
-            <div class="overflow-x-hidden" id="pills-stats" role="tabpanel"
+            <div class="overflow-x-hidden hidden" id="pills-stats" role="tabpanel"
                  aria-labelledby="pills-stats-tab">
                 <div class="d-flex">
                     <x-stats-comp :mostPlayed="$mostPlayed" :lastPlayed="$lastPlayed"></x-stats-comp>
@@ -73,7 +73,7 @@
                     </div>
                 </div>
             </div>
-            <div class="hidden" id="pills-register" role="tabpanel"
+            <div class="" id="pills-register" role="tabpanel"
                  aria-labelledby="pills-register-tab">
                 <div class=d-flex">
                     <div class="align-self-center text-center mt-1">

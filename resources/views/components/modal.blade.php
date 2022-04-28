@@ -3,8 +3,8 @@
      role="dialog"
      aria-labelledby="detailsModal"
      aria-hidden="true">
-    <div class="mx-auto my-auto bg-white w-1/4">
-        <div class="h-2/4 p-2 shadow-lg">
+    <div class="mx-auto my-auto bg-white raspi:w-full w-1/4">
+        <div class="h-2/4 raspi:h-1/6 p-2 shadow-lg">
             <div id="detailsSection">
                 <div class="relative border-b border-black">
                     <h5 class="text-lg" id="modal-title">Record Details</h5>
@@ -18,16 +18,20 @@
                 </div>
                 <div class="flex justify-around items-center py-2">
                     <img id="thumbnail" class="p-1 w-60">
-                    <div class="p-1 w-1/4">
-                        <label><b>Artist</b></label>
-                        <p id="artist" class="mb-2"></p>
-                        <label><b>Title</b></label>
-                        <p id="title" class="mb-2"></p>
-                        <label><b>Genre</b></label>
-                        <p id="genre" class="mb-2"></p>
-                        <p class="mb-2">Played <span id="timesPlayed"></span> times</p>
-                        <p class="mb-2">Last played on<br><span id="lastPlayedAt"></span></p>
-                        <input id="releaseId" hidden value="">
+                    <div class="p-1 w-2/4 raspi:flex">
+                        <div class="px-2">
+                            <label><b>Artist</b></label>
+                            <p id="artist" class="mb-2"></p>
+                            <label><b>Title</b></label>
+                            <p id="title" class="mb-2"></p>
+                            <label><b>Genre</b></label>
+                            <p id="genre" class="mb-2"></p>
+                        </div>
+                        <div class="px-2">
+                            <p class="mb-2">Played <span id="timesPlayed"></span> times</p>
+                            <p class="mb-2">Last played on<br><span id="lastPlayedAt"></span></p>
+                            <input id="releaseId" hidden value="">
+                        </div>
                     </div>
                 </div>
                 <div class="flex border-t border-black justify-between pt-2">

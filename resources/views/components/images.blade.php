@@ -9,6 +9,7 @@
             </button>
         </div>
         <div id="image-content" class="image-content">
+            <img class="raspi:max-w-52" id="coverImage" src="https://img.discogs.com/D4sQeozP2N0syrTXlmPL8Z-AHfg=/fit-in/600x606/filters:strip_icc():format(jpeg):mode_rgb():quality(90)/discogs-images/R-3155658-1402218436-4768.jpeg.jpg" alt="">
         </div>
         <div>
             <button onclick="nextImage()">
@@ -63,7 +64,7 @@
                 })
             }
             images.forEach(function (image, key) {
-                let newElement = "<img id=\"albumImage-" + key + "\" class=\"" + (key === 0 ? "active-image " : "hidden ") + "w-72 h-72\" src=\"" + image.full_image + "\" alt=\"" + image.thumbnail + "\" />"
+                let newElement = "<img id=\"albumImage-" + key + "\" class=\"" + (key === 0 ? "active-image " : "hidden ") + "w-72 h-72 raspi:w-60 raspi:h-60 \" src=\"" + image.full_image + "\" alt=\"" + image.thumbnail + "\" />"
                 $('#image-content').append(newElement)
             })
             $('#loadingSpinner').toggleClass('hidden')

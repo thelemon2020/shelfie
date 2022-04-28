@@ -28,7 +28,7 @@
         @if(!$lastPlayed)
             <h4>Nothing! Go Spin A Record!</h4>
         @else
-            <img id="lastPlayed" class="rounded mx-auto" src="{{$lastPlayed->full_image  ?? ''}}">
+            <img id="lastPlayed" class="rounded mx-auto raspi:w-60" src="{{$lastPlayed->full_image  ?? ''}}">
             <h4>{{$lastPlayed->artist ?? ''}} - {{$lastPlayed->title ?? ''}}</h4>
             <h4>Last Played
                 At: {{\Carbon\Carbon::parse($lastPlayed->last_played_at)->setTimezone('America/Toronto')->format('g:i a d/m/y') ?? ''}}</h4>
@@ -41,7 +41,7 @@
     <div id="chart-genre" class="mySlides fade w-full h-72"></div>
 
 
-    <div id="chart-artists" class="mySlides fade w-full h-[72vh]"></div>
+    <div id="chart-artists" class="mySlides fade w-full h-[72vh] raspi:h-[100vh]"></div>
 
 </div>
 <script>
