@@ -1,8 +1,8 @@
-<div class="m-1 border border-gray-500 h-72 w-72 shadow-lg relative">
+<div class="m-1 border border-gray-500 raspi:h-[65vh] raspi:w-[65vh] h-72 w-72 shadow-lg relative">
     <button wire:click="deleteSegment" type="button" class="absolute top-0 left-0 text-red-500 pl-4" aria-label="Close">
         X
     </button>
-    <div class="grid grid-rows-4 items-center pt-4 ml-2">
+    <div class="grid grid-rows-4 items-center pt-3 ml-2">
         <div>
             <label for="segment-name">Segment Name</label>
             <input type="text" id="segment-name"
@@ -22,13 +22,11 @@
         <div>
             <label for="segment-size">Size</label>
             <br>
-            <input type="number" class="mr-2 text-lg leading-none border border-gray-400 rounded px-4 py-2"
+            <input type="number" class="mr-2 text-lg leading-none border border-gray-400 rounded px-4"
                    id='segment-size' wire:model="segment.size"
                    @if(\App\Models\User::all()->first()->userSettings->sort_method != 'custom') disabled @endif>
         </div>
         <div>
-            <label for="segment-colour">Light Colour</label>
-            <br>
             <input type="color" id="segment-colour" wire:model="segment.colour">
         </div>
     </div>
