@@ -3,7 +3,7 @@
      role="dialog"
      aria-labelledby="detailsModal"
      aria-hidden="true">
-    <div class="mx-auto my-auto bg-white raspi:w-full w-1/4">
+    <div class="mx-auto my-auto bg-white raspi:w-5/6 w-1/4">
         <div class="h-2/4 raspi:h-1/6 p-2 shadow-lg">
             <div id="detailsSection">
                 <div class="relative border-b border-black">

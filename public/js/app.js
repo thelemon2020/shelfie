@@ -369,9 +369,9 @@ eval("// shim for using process in browser\nvar process = module.exports = {};\n
 /***/ }),
 
 /***/ "./node_modules/axios/package.json":
-/*!*****************************************!*\
-  !*** ./node_modules/axios/package.json ***!
-  \*****************************************/
+        /*!*****************************************!*\
+          !*** ./node_modules/axios/package.json ***!
+          \*****************************************/
         /***/ ((module) => {
 
             "use strict";
