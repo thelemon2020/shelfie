@@ -69,11 +69,11 @@
             @foreach($releases as $release)
                 <tr>
                     <td class="w-48 text-center">
-                        <i class="fas fa-info-circle fa-4x"
+                        <i class="fas fa-info-circle raspi:fa-2x fa-4x"
                            onClick="getDetails({{$release->id}})"></i>
                     </td>
                     <td>
-                        <img class="w-64 py-2"
+                        <img class="w-64 raspi:-ml-5 py-2"
                              src="{{$release->full_image}}"
                              alt="{{$release->artist . "-" . $release->title}}"/>
                     </td>
