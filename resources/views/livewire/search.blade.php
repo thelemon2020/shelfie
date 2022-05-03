@@ -79,7 +79,7 @@
                     </td>
                     <td class="align-top text-center pt-2">{{$release->artist}}</td>
                     <td class="align-top text-center pt-2">{{$release->title}}</td>
-                    <td class="align-top text-center pt-2">{{$release->genre->name ?? "Uncategorized"}}</td>
+                    <td class="align-top text-center pt-2 raspi:break-all">{{$release->genre->name ?? "Uncategorized"}}</td>
                     <td class="align-top text-center pt-2">{{$release->release_year}}</td>
                 </tr>
             @endforeach
