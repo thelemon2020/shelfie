@@ -69,7 +69,7 @@
             @foreach($releases as $release)
                 <tr>
                     <td class="w-48 text-center">
-                        <i class="fas fa-info-circle raspi:fa-1x fa-4x"
+                        <i class="fas fa-info-circle raspi:fa-sm fa-4x"
                            onClick="getDetails({{$release->id}})"></i>
                     </td>
                     <td>
