@@ -63,6 +63,7 @@
                 <x-stats-comp :mostPlayed="$mostPlayed" :lastPlayed="$lastPlayed"></x-stats-comp>
             </div>
         </div>
+        @if(\App\Models\UserSettings::query()->count() > 0)
         <div class="hidden" id="pills-options" role="tabpanel"
              aria-labelledby="pills-options-tab">
             <div class=d-flex">
@@ -71,6 +72,7 @@
                 </div>
             </div>
         </div>
+        @endif
         <div class="@if(\App\Models\User::query()->count() >=1) hidden @endif" id="pills-register" role="tabpanel"
              aria-labelledby="pills-register-tab">
             <div class=d-flex">
