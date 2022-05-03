@@ -40,7 +40,7 @@
 <div id="home" class="overflow-hidden">
     @if(\App\Models\User::query()->first())
         <div class="tab-content" id="pills-tabContent">
-            <div id="pills-playing" role="tabpanel"
+            <div id="pills-playing" class="@if(\App\Models\User::query()->count() <1) hidden @endif" role="tabpanel"
                  aria-labelledby="pills-playing-tab">
                 <div class="text-center">
                     <h3>Now Playing</h3>
@@ -72,7 +72,7 @@
                     </div>
                 </div>
             </div>
-            <div class="hidden" id="pills-register" role="tabpanel"
+            <div class="@if(\App\Models\User::query()->count() >=1) hidden @endif" id="pills-register" role="tabpanel"
                  aria-labelledby="pills-register-tab">
                 <div class=d-flex">
                     <div class="align-self-center text-center mt-1">
