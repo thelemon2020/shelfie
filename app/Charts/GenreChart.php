@@ -35,5 +35,6 @@ class GenreChart extends BaseChart
         } catch (\Exception $e) {
             Log::error($e->getMessage());
         }
+        return Chartisan::build();
     }
 }
