@@ -10,7 +10,7 @@ module.exports = {
     theme: {
         screens: {
             ...defaultTheme.screens,
-            'raspi': {'raw': '(max-height:400px)'},
+            'raspi': {'raw': '(max-height:450px)'},
         },
         extend: {},
     },

@@ -41,7 +41,7 @@
     @if(\App\Models\User::query()->first())
         <div class="tab-content" id="pills-tabContent">
             <div id="pills-playing" role="tabpanel"
-                 class="hidden min-w-screen min-h-screen"
+                 class="min-w-screen min-h-screen"
                  aria-labelledby="pills-playing-tab">
                 <div class="text-center">
                     <h3>Now Playing</h3>
@@ -73,7 +73,7 @@
                     </div>
                 </div>
             </div>
-            <div class="" id="pills-register" role="tabpanel"
+            <div class="hidden" id="pills-register" role="tabpanel"
                  aria-labelledby="pills-register-tab">
                 <div class=d-flex">
                     <div class="align-self-center text-center mt-1">
