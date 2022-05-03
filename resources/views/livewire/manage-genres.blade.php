@@ -1,11 +1,11 @@
-<div class="overflow-x-scroll">
+<div>
     <script>
         window.addEventListener('reloadPage', event => {
             location.reload()
         })
     </script>
     <form wire:submit.prevent="submit">
-        <div class="flex flex-row">
+        <div class="flex flex-row overflow-y-scroll mb-2">
             @foreach($genres as $genre)
                 <livewire:update-genres :genre="$genre" :wire:key="$genre->id"/>
             @endforeach

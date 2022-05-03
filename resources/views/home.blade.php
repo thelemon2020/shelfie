@@ -41,7 +41,6 @@
     @if(\App\Models\User::query()->first())
         <div class="tab-content" id="pills-tabContent">
             <div id="pills-playing" role="tabpanel"
-                 class="min-w-screen min-h-screen"
                  aria-labelledby="pills-playing-tab">
                 <div class="text-center">
                     <h3>Now Playing</h3>
