@@ -41,7 +41,7 @@
     <div id="chart-genre" class="mySlides fade w-full h-72"></div>
 
 
-    <div id="chart-artists" class="mySlides fade w-full h-[72vh] raspi:h-[100vh]"></div>
+    <div id="chart-artists" class="mySlides fade w-full h-[72vh] raspi:h-screen"></div>
 
 </div>
 <script>
