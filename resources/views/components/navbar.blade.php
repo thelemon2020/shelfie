@@ -108,7 +108,7 @@
             </ul>
         @else
             <li class="inline-block mr-2" role="presentation">
-                <button onclick="onClick('#pills-register')" class="flex justify-center items-center bg-blue-900"
+                <button onclick="onClick('#pills-register')" class="flex justify-center items-center text-blue-900"
                         id="pills-register-tab"
                         type="button" role="tab" aria-controls="pills-options" aria-selected="false">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" viewBox="0 0 20 20" fill="currentColor">
