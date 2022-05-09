@@ -8,12 +8,17 @@
                     <button class="btn btn-primary" wire:click="getNetworks"><i class="fas fa-redo"></i></button>
                 </div>
                 <div class="col-auto">
-
                     <label for="ssid">Wifi Network Name</label>
                     <br>
-
-                    <input type="text" class="mr-2 text-lg leading-none border border-gray-400 rounded px-4 py-2"
-                           wire:model="ssid" name="ssid" id="wifi_ssid">
+                    <select class="mr-2 text-lg leading-none border border-gray-400 rounded px-2 py-2"
+                            wire:model="ssid">
+                        <option selected value="">Choose Network</option>
+                        @if ($networks)
+                            @foreach($networks as $network)
+                                <option value={{$network}}>{{$network}}</option>
+                            @endforeach
+                        @endif
+                    </select>
 
                 </div>
                 <div class="col-auto">
