@@ -10,12 +10,14 @@
             @error('userSettings.wled_ip') <span class="error">{{ $message }}</span> @enderror
             <input class="p-4 bg-blue-500 rounded-lg cursor-pointer text-white" type="submit">
         </div>
-        <div>
-            <button type="button" class="p-4 bg-blue-500 rounded-lg text-white" onclick="toggleWifiModal()">
-                Connect To Wifi
-            </button>
+        @if(config('app.env') != 'production')
+            <div>
+                <button type="button" class="p-4 bg-blue-500 rounded-lg text-white" onclick="toggleWifiModal()">
+                    Connect To Wifi
+                </button>
 
-        </div>
+            </div>
+        @endif
     </form>
     <x-wifi></x-wifi>
     <script>
