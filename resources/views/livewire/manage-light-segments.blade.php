@@ -1,11 +1,11 @@
-<div class="overflow-x-scroll">
+<div>
     <script>
         window.addEventListener('reloadLightsComponent', event => {
             location.reload()
         })
     </script>
     <form wire:submit.prevent="submit">
-        <div class="flex flex-row">
+        <div class="flex flex-row overflow-x-scroll">
             @foreach($segments as $segment)
                 <livewire:update-light-segments :segment="$segment" :wire:key="$segment->id"/>
             @endforeach
@@ -21,7 +21,7 @@
                 Add LED Segment
             </button>
         </div>
-        <button type="submit"
+        <button wire:click="submit" type="submit"
                 class="bg-blue-500 rounded p-4 raspi:p-1 rounded-md raspi:text-md text-lg mb-1 text-white">Update
         </button>
     </form>
