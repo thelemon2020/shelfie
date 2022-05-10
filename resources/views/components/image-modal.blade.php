@@ -1,6 +1,6 @@
 <div class="absolute hidden top-0 left-0 bg-gray-500/50 items-center grid h-screen w-screen" role="dialog"
      id="imageModal">
-    <div class="mx-auto my-auto bg-white w-1/2">
+    <div class="mx-auto my-auto bg-white raspi:w-1/2 w-1/4">
         <div class="h-1/4 p-2 shadow-lg">
             <div class="relative border-b border-black">
                 <h5 class="text-lg" id="modal-title">Choose Image</h5>

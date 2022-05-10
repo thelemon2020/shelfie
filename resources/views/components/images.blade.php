@@ -9,7 +9,6 @@
             </button>
         </div>
         <div id="image-content" class="image-content">
-            <img class="raspi:max-w-52" id="coverImage" src="https://img.discogs.com/D4sQeozP2N0syrTXlmPL8Z-AHfg=/fit-in/600x606/filters:strip_icc():format(jpeg):mode_rgb():quality(90)/discogs-images/R-3155658-1402218436-4768.jpeg.jpg" alt="">
         </div>
         <div>
             <button onclick="nextImage()">
@@ -23,8 +22,8 @@
                 onclick="imageSelected()">Select
         </button>
     </div>
-    <div id="loadingSpinner" class="text-center right-0 top-1/2">
-        <div class="spinner-border">
+    <div id="loadingSpinner" class="flex flex-col">
+        <div class="spinner-border flex justify-center">
             <svg role="status" class="w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
                  viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path
@@ -55,7 +54,6 @@
             let images = [];
             for (const release of releases) {
                 await axios.get("http://coverartarchive.org/release/" + release).then(function (response) {
-                    console.log(response)
                     images.push({
                         'full_image': response['data']['images'][0]['image'],
                         'thumbnail': response['data']['images'][0]['thumbnails']['small']

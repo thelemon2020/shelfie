@@ -4,9 +4,9 @@
             $('#genreModal').toggleClass('hidden')
         })
         window.addEventListener('open-image-modal', event => {
-            const elementsToRemove = $('.image-content img');
-            console.log(elementsToRemove)
-            for (var i = 0; i < elementsToRemove.length; i++) {
+            const elementsToRemove = $('#image-content').children('img');
+            console.log('here', elementsToRemove)
+            for (let i = 0; i < elementsToRemove.length; i++) {
                 elementsToRemove[i].remove()
             }
             $('#imageModal').toggleClass('hidden')
