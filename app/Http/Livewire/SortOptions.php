@@ -46,7 +46,7 @@ class SortOptions extends Component
 
     public function generateAlphabet()
     {
-        if ($this->userSettings->sort_order != 'desc') {
+        if ($this->userSettings->sort_order != 'asc') {
             return range('A', 'Z');
         }
 
