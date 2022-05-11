@@ -11,6 +11,10 @@ network={\n\
 }"
 
 printf "$3\n" | sudo -S sh -c "printf \"%b\" \"$OUTPUT\" > \"$DESTDIR\""
-ifup --force wlan0
+printf "$3\n" | sudo -S wpa_cli reconnect
 sleep 20
-echo ifconfig wlan0 | grep -q "inet addr:"
+if [[ "$(ping -c 1 8.8.8.8 | grep '100% packet loss' )" != "" ]]; then
+            exit 1
+        else
+            exit 0
+        fi
