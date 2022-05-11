@@ -49,6 +49,7 @@ class Wifi extends Component
         if ($wifiScript->getStatus() != 0) {
             Log::error($wifiScript->getErrorOutput());
             $this->addError('connection', 'Could Not Connect To Network');
+            return;
         }
         if (config('app.initial_setup') === false) {
             config()->set('app.initial_setup', true);
