@@ -11,4 +11,6 @@ network={\n\
 }"
 
 printf "$3\n" | sudo -S sh -c "printf \"%b\" \"$OUTPUT\" > \"$DESTDIR\""
-printf "$3\n" | sudo -S reboot
+ifup --force wlan0
+sleep 20
+echo ifconfig wlan0 | grep -q "inet addr:"
