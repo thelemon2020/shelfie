@@ -10,7 +10,7 @@
                 <div class="col-auto">
                     <label for="ssid">Wifi Network Name</label>
                     <br>
-                    <select class="mr-2 text-lg leading-none border border-gray-400 rounded px-2 py-2"
+                    <select class="mr-2 text-lg leading-none border w-60 border-gray-400 rounded px-2 py-2"
                             wire:model="ssid">
                         <option selected value="">Choose Network</option>
                         @if ($networks)
@@ -29,24 +29,19 @@
                            id="wifi_password">
                 </div>
             </div>
-            <div class="flex justify-between">
-                <button type="button" class="p-4 bg-blue-500 rounded-lg text-white" onclick="toggleWifiModal()">
-                    Close
-                </button>
-
+            <div class="mx-auto">
                 <button type="submit" class="p-4 bg-blue-500 rounded-lg text-white">
                     Connect
                 </button>
             </div>
         </div>
-            <div wire:loading.flex wire:target="submit">
-                <div class="mx-auto text-center">
-                    <div class="spinner-border" role="status">
-                        <span class="sr-only">Connecting...</span>
-                    </div>
+        <div wire:loading.flex wire:target="submit">
+            <div class="mx-auto text-center">
+                <div class="spinner-border" role="status">
+                    <span class="sr-only">Connecting...</span>
+                </div>
                     <div>
                     <h1>Trying To Connect</h1>
-
                 </div>
             </div>
         </div>

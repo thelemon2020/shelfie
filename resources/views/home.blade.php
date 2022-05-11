@@ -6,6 +6,10 @@
         element.dispatchEvent(new Event('input'));
     })
 
+    window.addEventListener('showRegister', event => {
+        $('#')
+    })
+
     function chooseRandom(maxInt) {
         let id = Math.floor(Math.random() * (maxInt - 1) + 1)
         getDetails(id)
@@ -76,12 +80,15 @@
         <div class="@if(\App\Models\User::query()->count() >=1) hidden @endif" id="pills-register" role="tabpanel"
              aria-labelledby="pills-register-tab">
             <div class=d-flex">
-                <div class="align-self-center text-center mt-1">
+                <div
+                    class="align-self-center text-center mt-1 @if(config('app.initial_setup') === false) hidden @endif">
                     <x-register></x-register>
+                </div>
+                <div class="align-self-center @if(config('app.initial_setup') === true) hidden @endif text-center mt-1">
+                    <livewire:wifi/>
                 </div>
             </div>
         </div>
-
     </div>
     <x-controls :nowPlaying="$nowPlaying"></x-controls>
     <x-modal></x-modal>
