@@ -37,9 +37,9 @@
             onclick="toggleNowPlayingLight()">Last Played
         </button>
         <button class="text-white bg-blue-900 text-lg px-4 py-2 rounded" onclick="lightSegments()">Segments</button>
-        <div class="flex justify-center flex-col">
+        <div class="flex flex-col items-center">
             <button class="text-white bg-blue-900 text-lg px-4 py-2 rounded" onclick="lightStrip()">Solid</button>
-            <input type="color" id="stripColour">
+            <input class="mt-1" type="color" id="stripColour">
         </div>
     </div>
     <input type="hidden" id="nowPlaying"
