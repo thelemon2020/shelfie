@@ -1,5 +1,5 @@
-<div class="flex flex-row items-center justify-around overflow-y-hidden">
-    <div class="flex items-center justify-center min-h-screen">
+<div class="grid grid-cols-3 justify-center content-center raspi:mt-24">
+    <div class="flex items-center justify-center">
         <div class="px-8 py-6 raspi:py-0 raspi:mt-1 mx-4 mt-4 text-left bg-white">
             <h3 class="text-2xl raspi:text-md font-bold text-center">Register</h3>
             <form action="{{route('register')}}">
@@ -23,8 +23,10 @@
             </form>
         </div>
     </div>
-    <h1 class="text-2xl"><strong>OR</strong></h1>
-    <div class="flex items-center justify-center min-h-screen">
+    <div class="mx-auto my-auto">
+        <h1 class="text-2xl"><strong>OR</strong></h1>
+    </div>
+    <div class="flex items-center justify-center">
         <div class="px-8 py-6 mx-4 mt-4 text-center bg-white">
             <h3 class="text-2xl font-bold text-center">Authenicate With Discogs</h3>
             <br>

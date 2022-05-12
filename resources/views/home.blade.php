@@ -44,7 +44,7 @@
 </script>
 <div id="home" class="overflow-hidden">
     <div class="tab-content" id="pills-tabContent">
-        <div id="pills-playing" class="@if(\App\Models\User::query()->count() <1) hidden @endif" role="tabpanel"
+        <div id="pills-playing" class="hidden @if(\App\Models\User::query()->count() <1) hidden @endif" role="tabpanel"
              aria-labelledby="pills-playing-tab">
             <div class="text-center">
                 <h3>Now Playing</h3>
@@ -78,11 +78,11 @@
             </div>
         </div>
         @endif
-        <div class="@if(\App\Models\User::query()->count() >=1) hidden @endif" id="pills-register" role="tabpanel"
+        <div id="pills-register" role="tabpanel"
              aria-labelledby="pills-register-tab">
             <div class=d-flex">
                 <div id="registerTab"
-                     class="align-self-center text-center mt-1 @if(config('app.initial_setup') === false) hidden @endif">
+                     class="align-self-center text-center mt-1">
                     <x-register></x-register>
                 </div>
                 <div id="wifiTab"
