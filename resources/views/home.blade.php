@@ -7,7 +7,8 @@
     })
 
     window.addEventListener('showRegister', event => {
-        $('#')
+        $('#wifiTab').addClass('hidden')
+        $('#registerTab').removeClass('hidden')
     })
 
     function chooseRandom(maxInt) {
@@ -80,11 +81,12 @@
         <div class="@if(\App\Models\User::query()->count() >=1) hidden @endif" id="pills-register" role="tabpanel"
              aria-labelledby="pills-register-tab">
             <div class=d-flex">
-                <div
-                    class="align-self-center text-center mt-1 @if(config('app.initial_setup') === false) hidden @endif">
+                <div id="registerTab"
+                     class="align-self-center text-center mt-1 @if(config('app.initial_setup') === false) hidden @endif">
                     <x-register></x-register>
                 </div>
-                <div class="align-self-center @if(config('app.initial_setup') === true) hidden @endif text-center mt-1">
+                <div id="wifiTab"
+                     class="align-self-center @if(config('app.initial_setup') === true) hidden @endif text-center mt-1">
                     <livewire:wifi/>
                 </div>
             </div>
