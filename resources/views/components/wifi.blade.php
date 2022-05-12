@@ -13,7 +13,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <livewire:wifi/>
+                <livewire:wifi wire:key="modal"/>
             </div>
         </div>
     </div>
