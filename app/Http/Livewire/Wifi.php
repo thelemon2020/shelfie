@@ -46,7 +46,7 @@ class Wifi extends Component
         $this->validate();
         $wifiScript = new Process(['/var/www/html/shelfie/resources/wifiScript.sh', $this->ssid, $this->password, config('auth.rp_password')]);
         $wifiScript->run();
-        if ($wifiScript->getStatus() != '0') {
+        if ($wifiScript->getStatus() != 0) {
             Log::error($wifiScript->getErrorOutput());
             $this->addError('connection', 'Could Not Connect To Network');
             return;
