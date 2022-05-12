@@ -22,7 +22,8 @@ class GenreChart extends BaseChart
     {
         try {
             $mostPlayedGenres = Plays::query()
-                ->join('genres', 'plays.genre_id', '=', 'genres.id')
+                ->join('releases', 'plays.release_id', '=', 'releases.id')
+                ->join('genres', 'releases.genre_id', '=', 'genres.id')
                 ->select('genres.name', DB::raw("count(*) as times_played"))
                 ->groupBy('genres.name')
                 ->orderBy('times_played', 'DESC')
