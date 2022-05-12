@@ -15,7 +15,8 @@
                 type="button" role="option-tab" aria-controls="pills-collection" aria-selected="false">Sort Options
         </button>
     </li>
-    <li class="inline-block mr-2" role="presentation">
+    <li class="inline-block mr-2 @if(!\App\Models\UserSettings::query()->first()?->wled_ip) hidden @endif"
+        id="lightsPill" role="presentation">
         <button class="p-4 raspi:p-1 bg-blue-500 rounded-lg text-white"
                 onclick="changeOptionTab('#pills-light-segments')" id="pills-light-segments-tab" data-bs-toggle="pill"
                 data-bs-target="#pills-stats"
@@ -52,6 +53,7 @@
 </div>
 
 <script>
+
     function changeOptionTab(pageId) {
         $("[role='option-panel']").addClass('hidden')
         $("[role='option-tab']").addClass('bg-blue-500')

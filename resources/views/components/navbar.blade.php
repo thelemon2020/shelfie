@@ -10,11 +10,13 @@
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <title>Shelfie</title>
     <script>
-        window.addEventListener('showLightBulb', event => {
+        window.addEventListener('showLightSettings', event => {
             $('#lightBulbButton').removeClass('hidden')
+            $('#lightsPill').removeClass('hidden')
         })
-        window.addEventListener('hideLightBulb', event => {
+        window.addEventListener('hideLightSettings', event => {
             $('#lightBulbButton').addClass('hidden')
+            $('#lightsPill').addClass('hidden')
         })
 
         function changeLightBulb() {

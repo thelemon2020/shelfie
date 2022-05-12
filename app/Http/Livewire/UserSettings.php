@@ -29,9 +29,9 @@ class UserSettings extends Component
         $this->validate();
         $this->userSettings->save();
         if ($this->userSettings->wled_ip) {
-            $this->dispatchBrowserEvent('showLightBulb');
+            $this->dispatchBrowserEvent('showLightSettings');
         } else {
-            $this->dispatchBrowserEvent('hideLightBulb');
+            $this->dispatchBrowserEvent('hideLightSettings');
         }
     }
 }
