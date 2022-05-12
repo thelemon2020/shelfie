@@ -68,12 +68,12 @@
             <tbody>
             @foreach($releases as $release)
                 <tr>
-                    <td class="w-48 text-center">
+                    <td class="raspi:w-24 w-48 text-center">
                         <i class="fas fa-info-circle raspi:fa-sm fa-4x"
                            onClick="getDetails({{$release->id}})"></i>
                     </td>
                     <td>
-                        <img class="w-64 raspi:-ml-5 raspi:w-80 py-2"
+                        <img class="w-64 raspi:w-80 py-2"
                              src="{{$release->full_image}}"
                              alt="{{$release->artist . "-" . $release->title}}"/>
                     </td>
