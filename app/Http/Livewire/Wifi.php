@@ -5,7 +5,6 @@ namespace App\Http\Livewire;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Livewire\Component;
-use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\Process;
 
 class Wifi extends Component
@@ -32,7 +31,7 @@ class Wifi extends Component
             if (!$wifiScript->isSuccessful()) {
                 Log::error($wifiScript->getErrorOutput());
                 $this->addError('connection', 'Internal Server Error');
-                throw new ProcessFailedException($wifiScript);
+                return;
             }
             $listOfNetworks = $wifiScript->getOutput();
             $this->networks = explode("\n", Str::remove(['ESSID:', '"'], $listOfNetworks));

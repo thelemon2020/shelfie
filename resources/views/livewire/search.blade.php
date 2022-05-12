@@ -53,7 +53,7 @@
             </div>
         </div>
     </div>
-    <div wire:loading.remove wire:target="refreshCollection" class="h-[84vh] raspi:h-[66vh] overflow-y-scroll">
+    <div wire:loading.remove wire:target="refreshCollection" class="h-[83vh] raspi:h-[66vh] overflow-y-scroll">
         <table class="w-full align-top">
             <thead class="bg-black text-white font-bold sticky top-0">
             <tr>
@@ -68,12 +68,19 @@
             <tbody>
             @foreach($releases as $release)
                 <tr>
-                    <td class="raspi:w-24 w-48 text-center">
-                        <i class="fas fa-info-circle raspi:fa-sm fa-4x"
-                           onClick="getDetails({{$release->id}})"></i>
+                    <td class="w-48 raspi:w-24 text-center">
+                        <button
+                            onClick="getDetails({{$release->id}})">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="raspi:h-16 raspi:w-16 h-32 w-32"
+                                 viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd"
+                                      d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+                                      clip-rule="evenodd"/>
+                            </svg>
+                        </button>
                     </td>
                     <td>
-                        <img class="w-64 raspi:w-80 py-2"
+                        <img class="raspi:w-64 w-80"
                              src="{{$release->full_image}}"
                              alt="{{$release->artist . "-" . $release->title}}"/>
                     </td>
