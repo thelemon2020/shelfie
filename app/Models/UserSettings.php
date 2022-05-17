@@ -13,6 +13,7 @@ class UserSettings extends Model
         'user_id',
         'sort_method',
         'wled_ip',
+        'sort_order'
     ];
 
     public function user()

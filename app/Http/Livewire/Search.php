@@ -92,10 +92,28 @@ class Search extends Component
 
     public function refreshReleases($auth, $user)
     {
-        $userSettings = \App\Models\UserSettings::query()->first()->get();
-
-        $nextPage = "https://api.discogs.com/users/$user->discogs_username/collection/folders/0/releases?page=1&sort=added&sort_order=desc";
+        $userSettings = \App\Models\UserSettings::query()->first()->get()[0];
         $i = 1;
+        if ($userSettings->sort_method == "genre_id") {
+            Genre::query()->where('name', '!=', 'All')->get()->sortBy('name', null, $userSettings->sort_method == 'desc' ? true : false)->each(function ($genre) use (&$i, $userSettings, $user, $auth) {
+                $nextPage = "https://api.discogs.com/users/$user->discogs_username/collection/folders/$genre->folder_number/releases?page=1&sort=added&sort_order=$userSettings->sort_order";
+                $this->generateCollectionFromPayload($nextPage, $auth, $user, $i);
+            });
+            return;
+        }
+        $sortMethod = $userSettings->sort_method === 'release_year' ? 'year' : $userSettings->sort_method;
+        $nextPage = "https://api.discogs.com/users/$user->discogs_username/collection/folders/0/releases?page=1&sort=$sortMethod&sort_order=$userSettings->sort_order";
+        $this->generateCollectionFromPayload($nextPage, $auth, $user, $i);
+    }
+
+    /**
+     * @param string|null $nextPage
+     * @param $auth
+     * @param $user
+     * @param int $i
+     */
+    private function generateCollectionFromPayload(?string $nextPage, $auth, $user, int &$i)
+    {
         while ($nextPage != null) {
             $response = Http::withHeaders([
                 'Content-Type' => 'application/x-www-form-urlencoded',
@@ -105,8 +123,7 @@ class Search extends Component
             $releasesArray = json_decode($response->body());
             $nextPage = $releasesArray->pagination->urls->next ?? null;
             $releases = collect($releasesArray->releases);
-            $releases->each(function ($item) use ($user, &$i, &$nextPage) {
-                //todo update this loop to actually refresh the whole account
+            $releases->each(function ($item) use ($user, &$i) {
                 $newRelease = Release::query()->updateOrCreate(
                     [
                         'artist' => $item->basic_information->artists[0]->name,
