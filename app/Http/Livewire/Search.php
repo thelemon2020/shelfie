@@ -92,6 +92,8 @@ class Search extends Component
 
     public function refreshReleases($auth, $user)
     {
+        $userSettings = \App\Models\UserSettings::query()->first()->get();
+
         $nextPage = "https://api.discogs.com/users/$user->discogs_username/collection/folders/0/releases?page=1&sort=added&sort_order=desc";
         $i = 1;
         while ($nextPage != null) {
@@ -103,28 +105,25 @@ class Search extends Component
             $releasesArray = json_decode($response->body());
             $nextPage = $releasesArray->pagination->urls->next ?? null;
             $releases = collect($releasesArray->releases);
-            $lastUpdatedAt = Release::query()->latest('updated_at')->first()->updated_at;
-            $releases->each(function ($item) use ($user, &$i, $lastUpdatedAt, &$nextPage) {
-                if ($item->date_added >= $lastUpdatedAt) {
-                    //todo update this loop to actually refresh the whole account
-                    $newRelease = Release::query()->create(
-                        [
-                            'artist' => $item->basic_information->artists[0]->name,
-                            'title' => $item->basic_information->title,
-                            'release_year' => $item->basic_information->year,
-                            'genre_id' => Genre::query()->where('folder_number', $item->folder_id)->first()->id,
-                            'thumbnail' => $item->basic_information->thumb,
-                            'full_image' => $item->basic_information->cover_image,
-                            'shelf_order' => $i,
-                        ]);
-                    $i++;
-                    UserRelease::query()->updateOrCreate([
-                        'user_id' => $user->id,
-                        'release_id' => $newRelease->id,
+            $releases->each(function ($item) use ($user, &$i, &$nextPage) {
+                //todo update this loop to actually refresh the whole account
+                $newRelease = Release::query()->updateOrCreate(
+                    [
+                        'artist' => $item->basic_information->artists[0]->name,
+                        'title' => $item->basic_information->title,
+                    ],
+                    [
+                        'release_year' => $item->basic_information->year,
+                        'genre_id' => Genre::query()->where('folder_number', $item->folder_id)->first()->id,
+                        'thumbnail' => $item->basic_information->thumb,
+                        'full_image' => $item->basic_information->cover_image,
+                        'shelf_order' => $i,
                     ]);
-                } else {
-                    $nextPage = null;
-                }
+                $i++;
+                UserRelease::query()->updateOrCreate([
+                    'user_id' => $user->id,
+                    'release_id' => $newRelease->id,
+                ]);
             });
         }
     }
