@@ -52,7 +52,7 @@
                 @if(!$nowPlaying)
                     <h4>Nothing! Go Spin A Record!</h4>
                 @else
-                    <img class="raspi:w-48 raspi:h-48 inline-flex" id="lastPlayed"
+                    <img class="raspi:w-64 raspi:h-64 inline-flex" id="lastPlayed"
                          src="{{$nowPlaying->full_image  ?? ''}}">
                     <h4>{{$nowPlaying->artist ?? ''}} - {{$nowPlaying->title ?? ''}}</h4>
                 @endif

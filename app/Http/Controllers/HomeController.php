@@ -32,7 +32,7 @@ class HomeController extends Controller
             ->select('releases.id', 'releases.artist', 'releases.title', 'releases.full_image', DB::raw("count(*) as times_played"))
             ->groupBy('releases.id', 'releases.artist', 'releases.title', 'releases.full_image',)
             ->orderBy('times_played', 'DESC')
-            ->take(10)
+            ->take(5)
             ->get();
         return view('home', ['user' => $user, 'nowPlaying' => $nowPlaying, 'mostPlayed' => $mostPlayed, 'lastPlayed' => $lastPlayed]);
     }
