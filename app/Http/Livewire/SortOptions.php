@@ -6,11 +6,11 @@ use App\Models\Genre;
 use App\Models\LightSegment;
 use App\Models\Release;
 use App\Models\User;
+use Illuminate\Support\Collection;
 use Livewire\Component;
 
 class SortOptions extends Component
 {
-    public $originalSortMethod;
 
     protected $rules = [
         'userSettings.sort_method' => 'required|in:artist,title,genre_id,release_year',
@@ -20,7 +20,6 @@ class SortOptions extends Component
     public function mount()
     {
         $this->userSettings = User::all()->first()->userSettings;
-        $this->originalSortMethod = $this->userSettings->sort_method;
     }
 
     public function render()
@@ -33,81 +32,83 @@ class SortOptions extends Component
         $this->validate();
         $this->userSettings->save();
         $sort_method = $this->userSettings->sort_method;
-        if ($sort_method != $this->originalSortMethod) {
-            $segments = LightSegment::all();
-            $segments->each(fn($segment) => $segment->delete());
-            if ($sort_method != 'custom') {
-                $this->generateNewLightSegments($sort_method);
-            }
+        $sort_order = $this->userSettings->sort_order;
+        $segments = LightSegment::all();
+        $segments->each(fn($segment) => $segment->delete());
+        if ($sort_method != 'custom') {
+            $this->reorderCollection($sort_method, $sort_order);
         }
-        $this->originalSortMethod = $this->userSettings->sort_method;
         $this->emit('refreshSegments');
     }
 
     public function generateAlphabet()
     {
-        if ($this->userSettings->sort_order != 'asc') {
-            return range('A', 'Z');
+        if ($this->userSettings->sort_order != 'desc') {
+            $range = array_merge(range('0', '9'), range('A', 'Z'));
+        } else {
+            $range = array_merge(range('Z', 'A'), range('9', '0'));
         }
-
-        return range('Z', 'A');
-
+        return array_map(function ($range) {
+            return
+                [
+                    'name' => $range,
+                    'sortBy' => "$range%",
+                    'needsLike' => true,
+                ];
+        }, $range);
     }
 
-    public function generateNewLightSegments($sort_method): void
+    public function reorderCollection($sort_method, $sort_order): void
     {
+        $i = 1;
+        $releases = Release::all()->sortBy($sort_method, SORT_REGULAR, !($sort_order === 'asc'));
+        $releases->each(function ($release) use (&$i) {
+            $release->update([
+                'shelf_order' => $i++,
+            ]);
+        });
+        $segmentsToGenerate = null;
         if ($sort_method === 'artist' || $sort_method === 'title') {
-            $alphabet = $this->generateAlphabet();
-            foreach ($alphabet as $key => $letter) {
-                LightSegment::query()->create([
-                    'name' => $letter,
-                    'shelf_order' => $key + 1,
-                    'size' => Release::query()->where($sort_method, 'LIKE', $letter . '%')->count(),
-                ]);
-            }
-            $segments = LightSegment::all();
-            $segments->each(function ($segment) use ($sort_method) {
-                $releases = Release::query()->where($sort_method, 'LIKE', $segment->name . '%')->orderBy($sort_method)->get();
-                $this->updateReleases($releases, $segment);
-            });
+            $segmentsToGenerate = $this->generateAlphabet();
         } else if ($sort_method === 'genre_id') {
-            $genres = Genre::all();
-            foreach ($genres as $key => $genre) {
-                LightSegment::query()->create([
+            $segmentsToGenerate = Genre::all()->map(function ($genre) {
+                return [
                     'name' => $genre->name,
-                    'shelf_order' => $key + 1,
-                    'size' => Release::query()->where($sort_method, $genre->id)->count(),
-                ]);
-            }
-            $segments = LightSegment::all();
-            $segments->each(function ($segment) use ($sort_method) {
-                $releases = Release::query()->where($sort_method, Genre::query()->where('name', $segment->name)->first()->id)->get();
-                $this->updateReleases($releases, $segment);
+                    'sortBy' => $genre->id,
+                    'needsLike' => false,
+                ];
             });
         } else if ($sort_method === 'release_year') {
-            $releaseYears = Release::query()->groupBy('release_year')->pluck('release_year');
-            foreach ($releaseYears as $key => $releaseYear) {
-                LightSegment::query()->create([
-                    'name' => $releaseYear,
-                    'shelf_order' => $key + 1,
-                    'size' => Release::query()->where($sort_method, $releaseYear)->count(),
-                ]);
-            }
-            $segments = LightSegment::all();
-            $segments->each(function ($segment) use ($sort_method) {
-                $releases = Release::query()->where($sort_method, $segment->name)->get();
-                $this->updateReleases($releases, $segment);
-            });
+            $segmentsToGenerate = Release::query()
+                ->groupBy('release_year')
+                ->orderBy('release_year', $sort_order)
+                ->pluck('release_year')
+                ->map(function ($releaseYear) {
+                    return [
+                        'name' => $releaseYear,
+                        'sortBy' => $releaseYear,
+                        'needsLike' => false,
+                    ];
+                });
         }
+        $this->generateNewLightSegments($segmentsToGenerate, $sort_method);
     }
 
-    private function updateReleases($releases, $segment): void
+    private function generateNewLightSegments(array|Collection|null $segmentsToGenerate, $sort_method)
     {
-        foreach ($releases as $key => $release) {
-            $release->update([
-                'segment_id' => $segment->id,
-                'shelf_order' => $key + 1
+        $i = 1;
+        foreach ($segmentsToGenerate as $segment) {
+            $releasesInSegment = Release::query()->where($sort_method, $segment['needsLike'] ? 'LIKE' : '=', $segment['sortBy'])->get();
+            $newSegment = LightSegment::query()->create([
+                'name' => $segment['name'],
+                'shelf_order' => $i++,
+                'size' => $releasesInSegment->count(),
             ]);
+            $releasesInSegment->each(function ($release) use ($newSegment) {
+                $release->update([
+                    'segment_id' => $newSegment->id,
+                ]);
+            });
         }
     }
 }

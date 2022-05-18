@@ -14,6 +14,9 @@ class Release extends Model
     use EloquentJoin;
 
     protected $guarded = [];
+    protected $casts = [
+        'release_year' => 'integer'
+    ];
 
     public function genre()
     {
