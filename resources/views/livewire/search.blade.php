@@ -15,7 +15,7 @@
             <input wire:model="search" class="mr-2 text-lg leading-none border border-gray-400 rounded p-2"
                    id="searchField" type="text"
                    placeholder="Search records..." {{$sort == 'shelf_order' ? 'disabled' : ''}}/>
-            <select wire:model="sort" class="mr-2 text-lg border leading-none border-gray-400 rounded p-2">
+            <select wire:model="sort" class="mr-2 w-36 text-lg border leading-none border-gray-400 rounded p-2">
                 <option value="artist">Artist</option>
                 <option value="title">Title</option>
                 <option value="genre">Genre</option>
