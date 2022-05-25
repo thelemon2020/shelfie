@@ -28,6 +28,7 @@
                             <p id="genre" class="mb-2"></p>
                         </div>
                         <div class="px-2">
+                            <p class="mb-2">Released in <span id="releaseYear"></span></p>
                             <p class="mb-2">Played <span id="timesPlayed"></span> times</p>
                             <p class="mb-2">Last played on<br><span id="lastPlayedAt"></span></p>
                             <input id="releaseId" hidden value="">

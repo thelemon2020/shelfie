@@ -31,6 +31,7 @@
                 $('#title').text(release.data.title)
                 $('#genre').text(release.data.genre)
                 $('#timesPlayed').text(release.data.times_played ?? "0")
+                $('#releaseYear').text(release.data.release_year ?? "Unknown")
                 $('#lastPlayedAt').text(release.data.last_played_at ?? "Never")
                 $('#releaseId').val(release.data.id)
                 $('#coverImage').attr("src", release.data.full_image)
