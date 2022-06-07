@@ -126,6 +126,7 @@ class Loading extends Component
             $releases = collect($releasesArray->releases);
             $releases->each(function ($item, $key) use ($user, &$i) {
                 $this->currentRelease = Release::query()->updateOrCreate([
+                    'uuid' => $item->id,
                     'artist' => $item->basic_information->artists[0]->name,
                     'title' => $item->basic_information->title,
                     'release_year' => $item->basic_information->year,

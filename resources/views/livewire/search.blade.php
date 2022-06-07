@@ -86,6 +86,8 @@
             </tbody>
         </table>
     </div>
-    {{ $releases->links() }}
+    <div wire:loading.remove wire:target="refreshCollection">
+        {{ $releases->links() }}
+    </div>
 </div>
 

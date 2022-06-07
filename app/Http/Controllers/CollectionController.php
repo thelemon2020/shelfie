@@ -93,18 +93,18 @@ class CollectionController extends Controller
             $nextPage = $releasesArray->pagination->urls->next ?? null;
             $releases = collect($releasesArray->releases);
             $releases->each(function ($item) use ($user, &$i) {
-                $newRelease = Release::query()->updateOrCreate(
+                $newRelease = Release::query()->create(
                     [
+                        'uuid' => $item->id,
                         'artist' => $item->basic_information->artists[0]->name,
                         'title' => $item->basic_information->title,
                         'release_year' => $item->basic_information->year,
-                    ],
-                    [
                         'genre_id' => Genre::query()->where('folder_number', $item->folder_id)->first()->id,
                         'thumbnail' => $item->basic_information->thumb,
                         'full_image' => $item->basic_information->cover_image,
                         'shelf_order' => $i,
                     ]);
+                dd($newRelease);
                 $i++;
                 UserRelease::query()->updateOrCreate([
                     'user_id' => $user->id,

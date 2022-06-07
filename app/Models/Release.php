@@ -47,4 +47,22 @@ class Release extends Model
         Cache::put('selected-record', $selectRecord);
         Http::timeout(2)->post(User::all()->first()->userSettings->wled_ip . '/json', $selectRecord);
     }
+
+    public static function sort()
+    {
+        $user = User::query()->first()->get()[0];
+        $i = 1;
+        $sortOptions = [
+            [$user->userSettings->sort_method, $user->userSettings->sort_order],
+        ];
+        if ($user->userSettings->sort_method != 'artist') {
+            $sortOptions[] = ['artist', $user->userSettings->sort_order];
+        }
+        $releases = Release::all()->sortBy($sortOptions);
+        $releases->each(function ($release) use (&$i) {
+            $release->update([
+                'shelf_order' => $i++,
+            ]);
+        });
+    }
 }

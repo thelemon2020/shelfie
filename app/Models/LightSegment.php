@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Http;
 
 class LightSegment extends Model
@@ -87,5 +88,72 @@ class LightSegment extends Model
 
         $response = Http::timeout(2)->post(User::all()->first()->userSettings->wled_ip . '/json', $payload);
         return $response;
+    }
+
+    private static function generateAlphabet($sortOrder)
+    {
+        if ($sortOrder != 'desc') {
+            $range = array_merge(range('0', '9'), range('A', 'Z'));
+        } else {
+            $range = array_merge(range('Z', 'A'), range('9', '0'));
+        }
+        return array_map(function ($range) {
+            return
+                [
+                    'name' => $range,
+                    'sortBy' => "$range%",
+                    'needsLike' => true,
+                ];
+        }, $range);
+    }
+
+    public static function generateSegments()
+    {
+        $userSettings = UserSettings::query()->first()->get();
+        $segments = LightSegment::all();
+        $segments->each(fn($segment) => $segment->delete());
+        $segmentsToGenerate = null;
+        if ($userSettings->sort_method === 'artist' || $userSettings->sort_method === 'title') {
+            $segmentsToGenerate = LightSegment::generateAlphabet($userSettings->sort_order);
+        } else if ($userSettings->sort_method === 'genre_id') {
+            $segmentsToGenerate = Genre::all()->map(function ($genre) {
+                return [
+                    'name' => $genre->name,
+                    'sortBy' => $genre->id,
+                    'needsLike' => false,
+                ];
+            });
+        } else if ($userSettings->sort_method === 'release_year') {
+            $segmentsToGenerate = Release::query()
+                ->groupBy('release_year')
+                ->orderBy('release_year', $userSettings->sort_order)
+                ->pluck('release_year')
+                ->map(function ($releaseYear) {
+                    return [
+                        'name' => $releaseYear,
+                        'sortBy' => $releaseYear,
+                        'needsLike' => false,
+                    ];
+                });
+        }
+        LightSegment::generateNewLightSegments($segmentsToGenerate, $userSettings->sort_method);
+    }
+
+    private static function generateNewLightSegments(array|Collection|null $segmentsToGenerate, $sort_method)
+    {
+        $i = 1;
+        foreach ($segmentsToGenerate as $segment) {
+            $releasesInSegment = Release::query()->where($sort_method, $segment['needsLike'] ? 'LIKE' : '=', $segment['sortBy'])->get();
+            $newSegment = LightSegment::query()->create([
+                'name' => $segment['name'],
+                'shelf_order' => $i++,
+                'size' => $releasesInSegment->count(),
+            ]);
+            $releasesInSegment->each(function ($release) use ($newSegment) {
+                $release->update([
+                    'segment_id' => $newSegment->id,
+                ]);
+            });
+        }
     }
 }

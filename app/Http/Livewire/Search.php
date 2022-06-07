@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Models\Genre;
+use App\Models\LightSegment;
 use App\Models\Release;
 use App\Models\User;
 use App\Models\UserRelease;
@@ -94,16 +95,22 @@ class Search extends Component
     {
         $userSettings = \App\Models\UserSettings::query()->first()->get()[0];
         $i = 1;
+        $sortOrder = $userSettings->sort_order === 'asc' ? 'desc' : 'asc';
         if ($userSettings->sort_method == "genre_id") {
-            Genre::query()->where('name', '!=', 'All')->get()->sortBy('name', null, $userSettings->sort_method == 'desc' ? true : false)->each(function ($genre) use (&$i, $userSettings, $user, $auth) {
-                $nextPage = "https://api.discogs.com/users/$user->discogs_username/collection/folders/$genre->folder_number/releases?page=1&sort=added&sort_order=$userSettings->sort_order";
+            Genre::query()->where('name', '!=', 'All')->get()->sortBy('name', null, $userSettings->sort_order == 'desc')->each(function ($genre) use ($sortOrder, &$i, $userSettings, $user, $auth) {
+                $nextPage = "https://api.discogs.com/users/$user->discogs_username/collection/folders/$genre->folder_number/releases?page=1&sort=added&sort_order=$sortOrder";
                 $this->generateCollectionFromPayload($nextPage, $auth, $user, $i);
             });
             return;
         }
         $sortMethod = $userSettings->sort_method === 'release_year' ? 'year' : $userSettings->sort_method;
-        $nextPage = "https://api.discogs.com/users/$user->discogs_username/collection/folders/0/releases?page=1&sort=$sortMethod&sort_order=$userSettings->sort_order";
+        $nextPage = "https://api.discogs.com/users/$user->discogs_username/collection/folders/0/releases?page=1&sort=$sortMethod&sort_order=$sortOrder";
         $this->generateCollectionFromPayload($nextPage, $auth, $user, $i);
+        Release::sort();
+        if ($userSettings->wled_ip) {
+            LightSegment::generateSegments();
+        }
+
     }
 
     /**
@@ -124,22 +131,32 @@ class Search extends Component
             $nextPage = $releasesArray->pagination->urls->next ?? null;
             $releases = collect($releasesArray->releases);
             $releases->each(function ($item) use ($user, &$i) {
-                $newRelease = Release::query()->updateOrCreate(
-                    [
-                        'artist' => $item->basic_information->artists[0]->name,
-                        'title' => $item->basic_information->title,
-                    ],
-                    [
+                $release = Release::query()->where('uuid', $item->id)->first();
+                if ($release) {
+                    $release->update([
                         'release_year' => $item->basic_information->year,
                         'genre_id' => Genre::query()->where('folder_number', $item->folder_id)->first()->id,
                         'thumbnail' => $item->basic_information->thumb,
                         'full_image' => $item->basic_information->cover_image,
                         'shelf_order' => $i,
                     ]);
+                } else {
+                    $release = Release::query()->create(
+                        [
+                            'uuid' => $item->id,
+                            'artist' => $item->basic_information->artists[0]->name,
+                            'title' => $item->basic_information->title,
+                            'release_year' => $item->basic_information->year,
+                            'genre_id' => Genre::query()->where('folder_number', $item->folder_id)->first()->id,
+                            'thumbnail' => $item->basic_information->thumb,
+                            'full_image' => $item->basic_information->cover_image,
+                            'shelf_order' => $i,
+                        ]);
+                }
                 $i++;
                 UserRelease::query()->updateOrCreate([
                     'user_id' => $user->id,
-                    'release_id' => $newRelease->id,
+                    'release_id' => $release->id,
                 ]);
             });
         }
