@@ -53,7 +53,7 @@
             </div>
         </div>
     </div>
-    <div wire:loading.remove wire:target="refreshCollection" class="h-[83vh] raspi:h-[66vh] overflow-y-scroll">
+    <div wire:loading.remove wire:target="refreshCollection" class="h-[calc(100vh_-_9.5rem)] overflow-y-scroll">
         <table class="w-full align-top">
             <thead class="bg-black text-white font-bold sticky top-0">
             <tr>
