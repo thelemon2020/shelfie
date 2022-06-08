@@ -116,7 +116,7 @@ class LightSegment extends Model
         if ($userSettings->sort_method === 'artist' || $userSettings->sort_method === 'title') {
             $segmentsToGenerate = LightSegment::generateAlphabet($userSettings->sort_order);
         } else if ($userSettings->sort_method === 'genre_id') {
-            $segmentsToGenerate = Genre::all()->map(function ($genre) {
+            $segmentsToGenerate = Genre::all()->sortBy(['name', $userSettings->sort_order])->map(function ($genre) {
                 return [
                     'name' => $genre->name,
                     'sortBy' => $genre->id,
