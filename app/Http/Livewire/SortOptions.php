@@ -30,7 +30,6 @@ class SortOptions extends Component
         $this->validate();
         $this->userSettings->save();
         $sort_method = $this->userSettings->sort_method;
-        $sort_order = $this->userSettings->sort_order;
         $segments = LightSegment::all();
         $segments->each(fn($segment) => $segment->delete());
         if ($sort_method != 'custom') {

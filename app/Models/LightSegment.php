@@ -109,7 +109,7 @@ class LightSegment extends Model
 
     public static function generateSegments()
     {
-        $userSettings = UserSettings::query()->first()->get();
+        $userSettings = UserSettings::query()->first()->get()[0];
         $segments = LightSegment::all();
         $segments->each(fn($segment) => $segment->delete());
         $segmentsToGenerate = null;
