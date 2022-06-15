@@ -58,6 +58,7 @@ class Release extends Model
         if ($user->userSettings->sort_method != 'artist') {
             $sortOptions[] = ['artist', $user->userSettings->sort_order];
         }
+        //todo: sort genre properly
         $releases = Release::all()->sortBy($sortOptions);
         $releases->each(function ($release) use (&$i) {
             $release->update([

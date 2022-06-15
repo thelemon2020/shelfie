@@ -12,8 +12,7 @@
         <div>
             <label for="segment-shelf-order">Shelf Order</label>
             <br>
-            <select id="segment-shelf-order" wire:model="segment.shelf_order"
-                    @if(\App\Models\User::all()->first()->userSettings->sort_order != 'custom') disabled @endif>
+            <select id="segment-shelf-order" wire:model="segment.shelf_order">
                 @for($i = 1; $i <= count(\App\Models\LightSegment::all()) + 1; $i++)
                     <option value="{{$i}}">{{$i}}</option>
                 @endfor
