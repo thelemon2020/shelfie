@@ -18,9 +18,9 @@ class Release extends Model
         'release_year' => 'integer'
     ];
 
-    public function genre()
+    public function genres()
     {
-        return $this->belongsTo(Genre::class);
+        return $this->belongsToMany(Genre::class);
     }
 
     public function user()

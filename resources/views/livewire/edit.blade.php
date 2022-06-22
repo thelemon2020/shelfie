@@ -50,11 +50,21 @@
                 <select wire:model="genre" class="overflow-hidden">
                     <option selected="selected">Choose a Genre...</option>
                     @foreach($allGenres as $genreItem)
-                        <option value="{{$genreItem->id}}">{{$genreItem->name}}</option>
+                        <option @if(!$genres?->where('id',$genreItem->id)->isEmpty()) disabled
+                                @endif value="{{$loop->index}}">{{$genreItem->name}}</option>
                     @endforeach
                     <option value="add-modal">Add Genre...</option>
                 </select>
                 @error('release.genre_id') <span class="error">{{ $message }}</span> @enderror
+                @if($genres)
+                    @foreach($genres as $genre)
+                        <button type="button" :wire:key="'genre-'{{$genre->id}}"
+                                wire:click="removeGenre({{$genre->id}})">
+                            {{$genre->name}}
+                        </button>
+                        <span> </span>
+                    @endforeach
+                @endif
             </div>
         </div>
 
