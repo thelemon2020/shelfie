@@ -3,8 +3,11 @@
 namespace App\Http\Livewire;
 
 use App\Models\Genre;
+use App\Models\GenreRelease;
 use App\Models\Release;
 use App\Models\ReleaseGenre;
+use App\Models\ReleaseSubgenre;
+use App\Models\Subgenre;
 use App\Models\User;
 use App\Models\UserRelease;
 use Carbon\Carbon;
@@ -80,6 +83,7 @@ class Loading extends Component
             $releases = collect($releasesArray->releases);
             $releases->each(function ($item) use ($user) {
                 $genres = [];
+                $subGenres = [];
                 Log::info('genres', $item->basic_information->styles);
                 array_map(function ($genre) use (&$genres) {
                     $createdGenre = Genre::query()->where('name', $genre)->first();
@@ -90,6 +94,15 @@ class Loading extends Component
                     }
                     $genres[] = $createdGenre;
                 }, $item->basic_information->genres);
+                array_map(function ($subGenre) use (&$subGenres) {
+                    $createdSubgenre = Subgenre::query()->where('name', $subGenre)->first();
+                    if (!$createdSubgenre) {
+                        $createdSubgenre = Subgenre::query()->create([
+                            'name' => $subGenre
+                        ]);
+                    }
+                    $subGenres[] = $createdSubgenre;
+                }, $item->basic_information->styles);
                 $this->currentRelease = Release::query()->updateOrCreate([
                     'uuid' => $item->id,
                     'artist' => $item->basic_information->artists[0]->name,
@@ -100,11 +113,17 @@ class Loading extends Component
                 ]);
                 sleep(.5);
                 array_map(function ($genre) {
-                    ReleaseGenre::query()->create([
+                    GenreRelease::query()->create([
                         'genre_id' => $genre->id,
                         'release_id' => $this->currentRelease->id
                     ]);
                 }, $genres);
+                array_map(function ($subGenre) {
+                    ReleaseSubGenre::query()->create([
+                        'subgenre_id' => $subGenre->id,
+                        'release_id' => $this->currentRelease->id
+                    ]);
+                }, $subGenres);
                 UserRelease::query()->updateOrCreate([
                     'user_id' => $user->id,
                     'release_id' => $this->currentRelease->id,

@@ -23,6 +23,11 @@ class Release extends Model
         return $this->belongsToMany(Genre::class);
     }
 
+    public function subgenres()
+    {
+        return $this->belongsToMany(Subgenre::class);
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);

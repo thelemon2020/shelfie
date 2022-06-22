@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateReleaseGenreTable extends Migration
+class CreateReleaseSubgenresTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,11 @@ class CreateReleaseGenreTable extends Migration
      */
     public function up()
     {
-        Schema::create('genre_release', function (Blueprint $table) {
+        Schema::create('release_subgenre', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
-            $table->unsignedBigInteger('genre_id');
             $table->unsignedBigInteger('release_id');
+            $table->unsignedBigInteger('subgenre_id');
+            $table->timestamps();
         });
     }
 
@@ -28,6 +28,6 @@ class CreateReleaseGenreTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('genre_release');
+        Schema::dropIfExists('release_subgenre');
     }
 }

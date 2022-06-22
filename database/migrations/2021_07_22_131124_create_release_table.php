@@ -22,7 +22,6 @@ class CreateReleaseTable extends Migration
             $table->string('thumbnail');
             $table->string('full_image');
             $table->integer('shelf_order')->nullable();
-            $table->unsignedBigInteger('genre_id');
             $table->timestamp('last_played_at')->nullable();
             $table->unsignedBigInteger('times_played')->nullable();
         });
