@@ -5,6 +5,7 @@ namespace App\Http\Livewire;
 use App\Models\Genre;
 use App\Models\GenreRelease;
 use App\Models\Release;
+use App\Models\Subgenre;
 use Carbon\Carbon;
 use Exception;
 use Livewire\Component;
@@ -18,19 +19,25 @@ class Edit extends Component
     public $genres;
     public $full_image;
     private $originalShelfOrder;
-    public bool $newRelease;
+    public $newRelease;
+    public $allSubgenres;
+    public $subgenres;
+    public $subgenre;
 
     protected function getListeners()
     {
         return [
+            'subgenreAdded' => 'newSubgenre',
             'genreAdded' => 'newGenre',
             'changeImage' => 'changeImage',
             'editRelease' => 'refreshComponent'
         ];
     }
+
     public function mount()
     {
         $this->allGenres = Genre::all();
+        $this->allSubgenres = Subgenre::all();
     }
 
     public function changeImage($newImage, $newThumbnail)
@@ -54,6 +61,14 @@ class Edit extends Component
         $this->genres->forget($key);
     }
 
+    public function removeSubgenre($id)
+    {
+        $key = $this->subgenres->search(function ($subgenre) use ($id) {
+            return $subgenre->id === $id;
+        });
+        $this->subgenres->forget($key);
+    }
+
     public function refreshComponent($releaseId = null)
     {
         $this->newRelease = false;
@@ -61,6 +76,7 @@ class Edit extends Component
             $release = Release::query()->where('id', $releaseId)->first();
             $this->full_image = $release->full_image;
             $this->genres = $release->genres;
+            $this->subgenres = $release->subgenres;
         } else {
             $release = Release::query()->make();
             $this->newRelease = true;
@@ -69,6 +85,7 @@ class Edit extends Component
         $this->release = $release;
         $this->originalShelfOrder = $release->shelf_order;
         $this->genre = null;
+        $this->subgenre = null;
         $this->render();
     }
 
@@ -84,7 +101,15 @@ class Edit extends Component
         } else {
             $this->genres->push($this->allGenres[$this->genre]);
         }
-        $this->release->genre = null;
+    }
+
+    public function updatedSubgenre()
+    {
+        if ($this->subgenre === "add-modal") {
+            $this->dispatchBrowserEvent('add-subgenre');
+        } else {
+            $this->subgenres->push($this->allSubgenres[$this->subgenre]);
+        }
     }
 
     public function submit()
@@ -142,6 +167,7 @@ class Edit extends Component
                 'full_image',
                 'genre',
                 'release',
+                'subgenre'
             ]);
         return true;
     }
@@ -149,6 +175,12 @@ class Edit extends Component
     public function newGenre()
     {
         $this->allGenres = Genre::all();
+        $this->render();
+    }
+
+    public function newSubgenre()
+    {
+        $this->allSubgenres = Subgenre::all();
         $this->render();
     }
 
@@ -161,18 +193,6 @@ class Edit extends Component
             'release.thumbnail' => ['required', 'url'],
             'release.full_image' => ['required', 'url'],
         ];
-    }
-
-    private function changeShelfOrder()
-    {
-        $releasesToLowerInOrder = Release::query()->where('shelf_order', '>=', $this->release->shelf_order)->where('id', '!=', $this->release->id)->get();
-        $releasesToLowerInOrder->each(fn($release) => $release->update(['shelf_order' => (int)$release->shelf_order + 1]));
-    }
-
-    private function changeExistingShelfOrder()
-    {
-        $releasesToLowerInOrder = Release::query()->whereBetween('shelf_order', [$this->originalShelfOrder + 1, $this->release->shelf_order])->get();
-        $releasesToLowerInOrder->each(fn($release) => $release->update(['shelf_order' => (int)$release->shelf_order - 1]));
     }
 }
 

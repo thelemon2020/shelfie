@@ -4,7 +4,6 @@ namespace App\Http\Livewire;
 
 use App\Models\Genre;
 use App\Models\User;
-use Illuminate\Support\Str;
 use Livewire\Component;
 
 class Genres extends Component
@@ -30,7 +29,6 @@ class Genres extends Component
         $this->validate();
         Genre::query()->create([
             'name' => $this->genre,
-            'folder_number' => Str::uuid(),
             'user_id' => User::all()->first()->id,
         ]);
         $this->emitUp('genreAdded');

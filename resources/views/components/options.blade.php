@@ -10,8 +10,6 @@
     <li class="inline-block mr-2" role="presentation">
         <button class="p-4 raspi:p-1 bg-blue-500 rounded-lg text-white" onclick="changeOptionTab('#pills-sort-options')"
                 id="pills-sort-options-tab"
-                data-bs-toggle="pill"
-                data-bs-target="#pills-collection"
                 type="button" role="option-tab" aria-controls="pills-collection" aria-selected="false">Sort Options
         </button>
     </li>
@@ -19,15 +17,21 @@
         id="lightsPill" role="presentation">
         <button class="p-4 raspi:p-1 bg-blue-500 rounded-lg text-white"
                 onclick="changeOptionTab('#pills-light-segments')" id="pills-light-segments-tab" data-bs-toggle="pill"
-                data-bs-target="#pills-stats"
                 type="button" role="option-tab" aria-controls="pills-stats" aria-selected="false">Manage Light Segments
         </button>
     </li>
     <li class="inline-block mr-2" role="presentation">
         <button class="p-4 raspi:p-1 bg-blue-500 rounded-lg text-white"
                 onclick="changeOptionTab('#pills-manage-genres')" id="pills-manage-genres-tab" data-bs-toggle="pill"
-                data-bs-target="#pills-options"
-                type="button" role="option-tab" aria-controls="pills-options" aria-selected="false">Manage Genres
+                type="button" role="option-tab" aria-controls="pills-options" aria-selected="false">Manage Primary
+            Genres
+        </button>
+    </li>
+    <li class="inline-block mr-2" role="presentation">
+        <button class="p-4 raspi:p-1 bg-blue-500 rounded-lg text-white"
+                onclick="changeOptionTab('#pills-manage-subgenres')" id="pills-manage-genres-tab" data-bs-toggle="pill"
+                type="button" role="option-tab" aria-controls="pills-options" aria-selected="false">Manage Secondary
+            Genres
         </button>
     </li>
 </ul>
@@ -49,6 +53,10 @@
     <div class="hidden" id="pills-manage-genres" role="option-panel"
          aria-labelledby="pills-options-tab">
         <livewire:manage-genres/>
+    </div>
+    <div class="hidden" id="pills-manage-subgenres" role="option-panel"
+         aria-labelledby="pills-options-tab">
+        <livewire:manage-subgenres/>
     </div>
 </div>
 
