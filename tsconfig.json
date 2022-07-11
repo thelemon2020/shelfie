@@ -1,0 +1,11 @@
+{
+    "include": [
+        "resources/ts/*"
+    ],
+    "compilerOptions": {
+        "target": "es5",
+        "jsx": "react",
+        "allowSyntheticDefaultImports": true,
+        "esModuleInterop": true
+    }
+}
