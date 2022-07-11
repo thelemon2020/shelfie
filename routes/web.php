@@ -34,6 +34,8 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'home'])->name('home');
 
+Route::get('/react/home', [App\Http\Controllers\ReactHomeController::class, 'index'])->name('react.home');
+
 Route::post('/register', [RegisterController::class, 'register'])->name('register');
 
 Route::post('/login', [LoginController::class, 'login'])->name('login');
