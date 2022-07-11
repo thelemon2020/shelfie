@@ -5,10 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 
-class UserRelease extends Pivot
+class GenreRelease extends Pivot
 {
     use HasFactory;
 
-    protected $table = 'release_user';
+    protected $table = 'genre_release';
 
 }

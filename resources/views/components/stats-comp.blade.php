@@ -40,6 +40,7 @@
 
     <div id="chart-genre" class="mySlides fade w-full h-72"></div>
 
+    <div id="chart-subgenre" class="mySlides fade w-full h-72"></div>
 
     <div id="chart-artists" class="mySlides fade w-full h-[72vh] raspi:h-screen"></div>
 
@@ -81,6 +82,17 @@
             .tooltip()
             .legend()
             .title('Top Genres')
+            .datasets([{type: 'pie'}])
+    });
+
+    const subgenreChart = new Chartisan({
+        el: '#chart-subgenre',
+        url: "@chart('subgenre_chart')",
+        hooks: new ChartisanHooks()
+            .axis(false)
+            .tooltip()
+            .legend()
+            .title('Top Subgenres')
             .datasets([{type: 'pie'}])
     });
 

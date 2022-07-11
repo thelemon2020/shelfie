@@ -25,7 +25,7 @@
                             <label><b>Title</b></label>
                             <p id="title" class="mb-2"></p>
                             <label><b>Genre</b></label>
-                            <p id="genre" class="mb-2"></p>
+                            <p id="genre_names" class="mb-2"></p>
                         </div>
                         <div class="px-2">
                             <p class="mb-2">Released in <span id="releaseYear"></span></p>

@@ -77,7 +77,17 @@
                     </td>
                     <td class="align-top text-center pt-2 ml-2">{{$release->artist}}</td>
                     <td class="align-top text-center pt-2">{{$release->title}}</td>
-                    <td class="align-top text-center pt-2">{{$release->genre->name ?? "Uncategorized"}}</td>
+                    <td class="align-top text-center pt-2">
+                        <label class="font-bold">Primary</label>
+                        <br>
+                        <span>{{$release->genres?->pluck('name')->join(', ') ?? "Uncategorized"}}
+                        </span>
+                        <br>
+                        <label class="font-bold">Secondary</label>
+                        <br>
+                        <span>{{$release->subgenres?->pluck('name')->join(', ') ?? "Uncategorized"}}
+                        </span>
+                    </td>
                     @if(config('app.env') != 'raspi')
                         <td class="align-top text-center pt-2">{{$release->release_year}}</td>
                     @endif
@@ -87,7 +97,7 @@
         </table>
     </div>
     <div wire:loading.remove wire:target="refreshCollection">
-        {{ $releases->links() }}
+        {{ $releases?->links() }}
     </div>
 </div>
 

@@ -29,7 +29,7 @@
                 $('#thumbnail').attr("src", release.data.full_image)
                 $('#artist').text(release.data.artist)
                 $('#title').text(release.data.title)
-                $('#genre').text(release.data.genre)
+                $('#genre_names').text(release.data.genre_names)
                 $('#timesPlayed').text(release.data.times_played ?? "0")
                 $('#releaseYear').text(release.data.release_year ?? "Unknown")
                 $('#lastPlayedAt').text(release.data.last_played_at ?? "Never")

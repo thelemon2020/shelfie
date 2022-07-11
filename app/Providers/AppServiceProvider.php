@@ -6,6 +6,7 @@ namespace App\Providers;
 use App\Charts\ArtistChart;
 use App\Charts\GenreChart;
 use App\Charts\PlayDaysChart;
+use App\Charts\SubgenreChart;
 use ConsoleTVs\Charts\Registrar as Charts;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
@@ -34,6 +35,7 @@ class AppServiceProvider extends ServiceProvider
             PlayDaysChart::class,
             GenreChart::class,
             ArtistChart::class,
+            SubgenreChart::class,
         ]);
     }
 }

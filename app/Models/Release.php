@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Fico7489\Laravel\EloquentJoin\Traits\EloquentJoin;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Cache;
@@ -11,16 +10,20 @@ use Illuminate\Support\Facades\Http;
 class Release extends Model
 {
     use HasFactory;
-    use EloquentJoin;
 
     protected $guarded = [];
     protected $casts = [
         'release_year' => 'integer'
     ];
 
-    public function genre()
+    public function genres()
     {
-        return $this->belongsTo(Genre::class);
+        return $this->belongsToMany(Genre::class);
+    }
+
+    public function subgenres()
+    {
+        return $this->belongsToMany(Subgenre::class);
     }
 
     public function user()

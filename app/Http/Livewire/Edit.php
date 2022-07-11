@@ -3,7 +3,9 @@
 namespace App\Http\Livewire;
 
 use App\Models\Genre;
+use App\Models\GenreRelease;
 use App\Models\Release;
+use App\Models\Subgenre;
 use Carbon\Carbon;
 use Exception;
 use Livewire\Component;
@@ -14,13 +16,18 @@ class Edit extends Component
     public $release;
     public $allGenres;
     public $genre;
+    public $genres;
     public $full_image;
     private $originalShelfOrder;
-    public bool $newRelease;
+    public $newRelease;
+    public $allSubgenres;
+    public $subgenres;
+    public $subgenre;
 
     protected function getListeners()
     {
         return [
+            'subgenreAdded' => 'newSubgenre',
             'genreAdded' => 'newGenre',
             'changeImage' => 'changeImage',
             'editRelease' => 'refreshComponent'
@@ -30,6 +37,7 @@ class Edit extends Component
     public function mount()
     {
         $this->allGenres = Genre::all();
+        $this->allSubgenres = Subgenre::all();
     }
 
     public function changeImage($newImage, $newThumbnail)
@@ -45,13 +53,30 @@ class Edit extends Component
         $this->dispatchBrowserEvent('load-images', ['artist' => $this->release->artist, 'title' => $this->release->title]);
     }
 
+    public function removeGenre($id)
+    {
+        $key = $this->genres->search(function ($genre) use ($id) {
+            return $genre->id === $id;
+        });
+        $this->genres->forget($key);
+    }
+
+    public function removeSubgenre($id)
+    {
+        $key = $this->subgenres->search(function ($subgenre) use ($id) {
+            return $subgenre->id === $id;
+        });
+        $this->subgenres->forget($key);
+    }
+
     public function refreshComponent($releaseId = null)
     {
         $this->newRelease = false;
         if ($releaseId) {
             $release = Release::query()->where('id', $releaseId)->first();
             $this->full_image = $release->full_image;
-            $this->genre = Genre::query()->where('id', $release->genre?->id)->first()->id ?? null;
+            $this->genres = $release->genres;
+            $this->subgenres = $release->subgenres;
         } else {
             $release = Release::query()->make();
             $this->newRelease = true;
@@ -59,6 +84,8 @@ class Edit extends Component
         }
         $this->release = $release;
         $this->originalShelfOrder = $release->shelf_order;
+        $this->genre = null;
+        $this->subgenre = null;
         $this->render();
     }
 
@@ -71,9 +98,18 @@ class Edit extends Component
     {
         if ($this->genre === "add-modal") {
             $this->dispatchBrowserEvent('add-genre');
-            $this->release->genre = null;
+        } else {
+            $this->genres->push($this->allGenres[$this->genre]);
         }
-        $this->release->genre_id = $this->genre;
+    }
+
+    public function updatedSubgenre()
+    {
+        if ($this->subgenre === "add-modal") {
+            $this->dispatchBrowserEvent('add-subgenre');
+        } else {
+            $this->subgenres->push($this->allSubgenres[$this->subgenre]);
+        }
     }
 
     public function submit()
@@ -93,7 +129,6 @@ class Edit extends Component
                     ]);
                 $this->changeShelfOrder();
             } else {
-                $this->changeExistingShelfOrder();
                 $this->release->update([
                     'artist' => $this->release->artist,
                     'title' => $this->release->title,
@@ -101,9 +136,25 @@ class Edit extends Component
                     'thumbnail' => $this->release->thumbnail,
                     'full_image' => $this->full_image,
                     'shelf_order' => $this->release->shelf_order,
-                    'genre_id' => $this->release->genre_id
                 ]);
             }
+            $this->release->genres->each(function ($currentGenre) {
+                $key = $this->genres->search(function ($updatedGenre) use ($currentGenre) {
+                    return $updatedGenre->id === $currentGenre;
+                });
+                if (!$key) {
+                    GenreRelease::query()
+                        ->where('release_id', $this->release->id)
+                        ->where('genre_id', $currentGenre->id)
+                        ->delete();
+                }
+            });
+            $this->genres->each(function ($genre) {
+                GenreRelease::query()->updateOrCreate([
+                    'release_id' => $this->release->id,
+                    'genre_id' => $genre->id
+                ]);
+            });
         } catch
         (Exception $e) {
             session()->flash('error', 'Release could not be updated.');
@@ -116,6 +167,7 @@ class Edit extends Component
                 'full_image',
                 'genre',
                 'release',
+                'subgenre'
             ]);
         return true;
     }
@@ -126,29 +178,21 @@ class Edit extends Component
         $this->render();
     }
 
+    public function newSubgenre()
+    {
+        $this->allSubgenres = Subgenre::all();
+        $this->render();
+    }
+
     protected function rules()
     {
         return [
             'release.artist' => 'required',
             'release.title' => 'required',
             'release.release_year' => ['required', 'integer', 'max:' . Carbon::now()->year],
-            'release.shelf_order' => ['required', 'integer', 'max:' . Release::query()->count() + 1],
             'release.thumbnail' => ['required', 'url'],
             'release.full_image' => ['required', 'url'],
-            'release.genre_id' => 'required'
         ];
-    }
-
-    private function changeShelfOrder()
-    {
-        $releasesToLowerInOrder = Release::query()->where('shelf_order', '>=', $this->release->shelf_order)->where('id', '!=', $this->release->id)->get();
-        $releasesToLowerInOrder->each(fn($release) => $release->update(['shelf_order' => (int)$release->shelf_order + 1]));
-    }
-
-    private function changeExistingShelfOrder()
-    {
-        $releasesToLowerInOrder = Release::query()->whereBetween('shelf_order', [$this->originalShelfOrder + 1, $this->release->shelf_order])->get();
-        $releasesToLowerInOrder->each(fn($release) => $release->update(['shelf_order' => (int)$release->shelf_order - 1]));
     }
 }
 

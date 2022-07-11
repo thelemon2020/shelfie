@@ -35,13 +35,15 @@ class Search extends Component
     {
         if ($this->sort == 'genre') {
             $releases = Release::query()
-                ->join('genres', 'releases.genre_id', '=', 'genres.id')
-                ->where('genres.name', "LIKE", "%$this->search%")
-                ->orderBy('genres.name', 'ASC')
-                ->select('releases.*')
+                ->join('genre_release', 'releases.id', '=', 'genre_release.release_id')
+                ->join('genres', 'genres.id', '=', 'genre_release.genre_id')
+                ->where('genres.name', 'LIKE', "%$this->search%")
+                ->select(['releases.*', 'genres.name'])
+                ->orderBy('genres.name')
+                ->orderBy('releases.artist')
                 ->paginate($this->pagination);
         } else {
-            $releases = Release::query()->where($this->sort, "LIKE", "%$this->search%")->orderBy($this->sort, 'ASC')->paginate($this->pagination);
+            $releases = Release::query()->where($this->sort, "LIKE", "%$this->search%")->orderBy($this->sort, 'asc')->paginate($this->pagination);
         }
         return view('livewire.search', [
             'releases' => $releases

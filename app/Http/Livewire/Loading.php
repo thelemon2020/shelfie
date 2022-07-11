@@ -3,13 +3,17 @@
 namespace App\Http\Livewire;
 
 use App\Models\Genre;
+use App\Models\GenreRelease;
 use App\Models\Release;
+use App\Models\ReleaseGenre;
+use App\Models\ReleaseSubgenre;
+use App\Models\Subgenre;
 use App\Models\User;
 use App\Models\UserRelease;
 use Carbon\Carbon;
 use Illuminate\Contracts\Auth\Authenticatable;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 use Livewire\Component;
 use Ramsey\Uuid\Uuid;
 
@@ -41,29 +45,8 @@ class Loading extends Component
         if (!$user->discogs_username) {
             $this->getUsername($auth, $user);
         }
-
-        if (count($user->genres) == 0) {
-            $this->getGenres($auth, $user);
-
-        }
         $this->getReleases($user, $auth);
         return redirect(route('home'));
-    }
-
-    public function showCollection(Request $request)
-    {
-        $user = User::query()->first();
-        $sort = $request->query('sort') ?? 'artist';
-        $paginationNumber = ($request->query('pagination')) ?? 50;
-        if ($sort == 'genre') {
-            $sort = $sort . '.name';
-        } else if ($sort == 'shelf_order') {
-            $sort = 'genre.shelf_order';
-        }
-        $releases = $user->releases()->orderByJoin($sort)->paginate((int)$paginationNumber);
-        $releases->appends(array('sort' => $sort, 'pagination' => $paginationNumber))->links();
-
-        return view('index', ['releases' => $releases]);
     }
 
     public function getUsername(string $auth, ?Authenticatable $user): void
@@ -81,31 +64,6 @@ class Loading extends Component
     }
 
     /**
-     * @param string $auth
-     * @param Authenticatable|null $user
-     */
-    public function getGenres(string $auth, ?Authenticatable $user): void
-    {
-        $response = Http::withHeaders([
-            'Content-Type' => 'application/x-www-form-urlencoded',
-            'Authorization' => $auth,
-            'User-Agent' => config('auth.user_agent')
-        ])->get("https://api.discogs.com/users/$user->discogs_username/collection/folders");
-        $folders = json_decode($response->body())->folders;
-        foreach ($folders as $folder) {
-            if ($folder->name == 'Strip') {
-                continue;
-            }
-            Genre::query()->create([
-                    'name' => $folder->name,
-                    'folder_number' => $folder->id,
-                    'user_id' => $user->id
-                ]
-            );
-        }
-    }
-
-    /**
      * @param Authenticatable|null $user
      * @param array|int|string $genre
      * @param array|string $pageNumber
@@ -114,7 +72,6 @@ class Loading extends Component
     public function getReleases(?Authenticatable $user, string $auth): void
     {
         $nextPage = "https://api.discogs.com/users/$user->discogs_username/collection/folders/0/releases?page=1&sort=artist";
-        $i = 1;
         while ($nextPage != null) {
             $response = Http::withHeaders([
                 'Content-Type' => 'application/x-www-form-urlencoded',
@@ -124,19 +81,49 @@ class Loading extends Component
             $releasesArray = json_decode($response->body());
             $nextPage = $releasesArray->pagination->urls->next ?? null;
             $releases = collect($releasesArray->releases);
-            $releases->each(function ($item, $key) use ($user, &$i) {
+            $releases->each(function ($item) use ($user) {
+                $genres = [];
+                $subGenres = [];
+                Log::info('genres', $item->basic_information->styles);
+                array_map(function ($genre) use (&$genres) {
+                    $createdGenre = Genre::query()->where('name', $genre)->first();
+                    if (!$createdGenre) {
+                        $createdGenre = Genre::query()->create([
+                            'name' => $genre
+                        ]);
+                    }
+                    $genres[] = $createdGenre;
+                }, $item->basic_information->genres);
+                array_map(function ($subGenre) use (&$subGenres) {
+                    $createdSubgenre = Subgenre::query()->where('name', $subGenre)->first();
+                    if (!$createdSubgenre) {
+                        $createdSubgenre = Subgenre::query()->create([
+                            'name' => $subGenre
+                        ]);
+                    }
+                    $subGenres[] = $createdSubgenre;
+                }, $item->basic_information->styles);
                 $this->currentRelease = Release::query()->updateOrCreate([
                     'uuid' => $item->id,
                     'artist' => $item->basic_information->artists[0]->name,
                     'title' => $item->basic_information->title,
                     'release_year' => $item->basic_information->year,
-                    'genre_id' => Genre::query()->where('folder_number', $item->folder_id)->first()->id,
                     'thumbnail' => $item->basic_information->thumb,
                     'full_image' => $item->basic_information->cover_image,
-                    'shelf_order' => $i,
                 ]);
                 sleep(.5);
-                $i++;
+                array_map(function ($genre) {
+                    GenreRelease::query()->create([
+                        'genre_id' => $genre->id,
+                        'release_id' => $this->currentRelease->id
+                    ]);
+                }, $genres);
+                array_map(function ($subGenre) {
+                    ReleaseSubGenre::query()->create([
+                        'subgenre_id' => $subGenre->id,
+                        'release_id' => $this->currentRelease->id
+                    ]);
+                }, $subGenres);
                 UserRelease::query()->updateOrCreate([
                     'user_id' => $user->id,
                     'release_id' => $this->currentRelease->id,

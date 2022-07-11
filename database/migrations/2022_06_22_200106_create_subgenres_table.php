@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePlaysTable extends Migration
+class CreateSubgenresTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class CreatePlaysTable extends Migration
      */
     public function up()
     {
-        Schema::create('plays', function (Blueprint $table) {
+        Schema::create('subgenres', function (Blueprint $table) {
             $table->id();
-            $table->integer('release_id');
+            $table->string('name');
             $table->timestamps();
         });
     }
@@ -27,6 +27,6 @@ class CreatePlaysTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('plays');
+        Schema::dropIfExists('subgenres');
     }
 }
