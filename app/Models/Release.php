@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Fico7489\Laravel\EloquentJoin\Traits\EloquentJoin;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Cache;
@@ -11,7 +10,6 @@ use Illuminate\Support\Facades\Http;
 class Release extends Model
 {
     use HasFactory;
-    use EloquentJoin;
 
     protected $guarded = [];
     protected $casts = [
