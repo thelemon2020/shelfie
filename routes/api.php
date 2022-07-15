@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\CollectionController;
 use App\Http\Controllers\DiscogsController;
 use App\Http\Controllers\Lights\Toggle;
 use App\Http\Controllers\Lights\TurnOff\Light;
@@ -30,12 +29,13 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-
-Route::get('/collection/build', [CollectionController::class, 'buildCollection'])->name('collection.build');
+Route::get('/release/nowplaying', \App\Http\Controllers\Release\NowPlaying\Index::class)->name('now-playing');
 
 Route::post('/discogs/authenticate', [DiscogsController::class, 'authenticate'])->name('discogs.authenticate');
 
 Route::get('/release/images', Images::class)->name('release.images');
+
+Route::get('/releases', \App\Http\Controllers\Release\Index::class)->name('releases.index');
 
 Route::get('/release/{id}', Show::class)->name('release.show');
 
